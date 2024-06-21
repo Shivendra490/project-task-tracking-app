@@ -1,10 +1,11 @@
 import styles from "./RegisterLogin.module.css";
 import authImg from "../../assets/authImg.png";
-import { TiUserOutline } from "react-icons/ti";
+// import { TiUserOutline } from "react-icons/ti";
 
 import { PiEnvelopeSimpleLight } from "react-icons/pi";
 import { CiLock } from "react-icons/ci";
 import { PiEyeLight } from "react-icons/pi";
+import userIcon from "../../assets/userIcon.svg"
 
 const Register = () => {
   return (
@@ -25,7 +26,7 @@ const Register = () => {
           <h1 className={styles.formHead}>Register</h1>
           <div className={styles.formBody}>
             <div className={styles.fieldWrapper}>
-              <TiUserOutline className={styles.icon} />
+              <img src={userIcon} className={styles.icon} />
 
               <input className={styles.input} type="text" placeholder="Name" />
             </div>

@@ -142,6 +142,10 @@
   border: 1.5px solid #17a2b8;
 }
 
+.primaryBtn,.secondaryBtn:hover{
+    cursor:pointer;
+}
+
 @media screen and (max-width: 768px) {
   .left {
     display: none;
