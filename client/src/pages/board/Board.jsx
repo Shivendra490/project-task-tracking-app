@@ -1,17 +1,32 @@
 import styles from "./Board.module.css";
 import collapseIcon from "../../assets/collapseIcon.svg";
 import menuIcon from "../../assets/menuIcon.svg";
+import peopleIcon from "../../assets/pepleIcon.svg";
 import arrDown from "../../assets/arrDown.svg";
+import addIcon from "../../assets/addIcon.svg"
+import { useState } from "react";
+import AddEditTask from "../add-edit-task/AddEditTask";
 
 const Board = () => {
+  const [isModalShow,setIsModalShow]=useState(false)
+  const toggleModal=()=>{
+    setIsModalShow((prev)=>!prev)
+  }
   return (
     <main className={styles.boardPage}>
+      {isModalShow && <AddEditTask onToggleModal={toggleModal}/>}
       <div className={styles.nameDateWrapper}>
         <h2 className={styles.name}>Welcome! Username</h2>
         <div className={styles.date}>12 Jan,2024</div>
       </div>
       <div className={styles.headingFilterWrapper}>
-        <h1 className={styles.heading}>Board</h1>
+        <div className={styles.boardIconWrapper}>
+          <h1 className={styles.heading}>Board</h1>
+          <div className={styles.peopleIconWrapper}>
+            <img src={peopleIcon} alt="people Icon" />
+            <span>Add People</span>
+          </div>
+        </div>
         <select className={styles.filter}>
           <option value="week">This Week</option>
           <option value="today">Today</option>
@@ -22,7 +37,8 @@ const Board = () => {
         <div className={styles.singleStatusContainer}>
           <div className={styles.statusIconWrapper}>
             <div className={styles.statusHeading}>Backlog</div>
-            <div>
+            <div className={styles.addCollapseIconWrapper}>
+              <img src={addIcon} alt="add icon" onClick={toggleModal}/>
               <img src={collapseIcon} alt="collapse icon" />
             </div>
           </div>
@@ -33,14 +49,14 @@ const Board = () => {
                   <p className={styles.greenDot}></p>
                   <span>HIGH PRIORITY</span>
                 </div>
-                {/* <div className={styles.dotIconWrapper}>
+                <div className={styles.dotIconWrapper}>
                   <img src={menuIcon} alt="doticon" />
                   <div className={styles.menuPopup}>
                     <div className={styles.popupText}>Edit</div>
                     <div className={styles.popupText}>Share</div>
                     <div className={styles.deletePopupText}>Delete</div>
                   </div>
-                </div> */}
+                </div>
               </div>
               <p className={styles.cardTitle}>Hero Section</p>
               <div className={styles.checkListWrapper}>
@@ -77,14 +93,14 @@ const Board = () => {
                   <p className={styles.greenDot}></p>
                   <span>HIGH PRIORITY</span>
                 </div>
-                {/* <div className={styles.dotIconWrapper}>
+                <div className={styles.dotIconWrapper}>
                   <img src={menuIcon} alt="doticon" />
                   <div className={styles.menuPopup}>
                     <div className={styles.popupText}>Edit</div>
                     <div className={styles.popupText}>Share</div>
                     <div className={styles.deletePopupText}>Delete</div>
                   </div>
-                </div> */}
+                </div>
               </div>
               <p className={styles.cardTitle}>Hero Section</p>
               <div className={styles.checkListWrapper}>
