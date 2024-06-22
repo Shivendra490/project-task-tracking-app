@@ -4,6 +4,7 @@ import settingIcon from "../../assets/settingIcon.svg";
 import analyticsIcon from "../../assets/analyticsIcon.svg";
 import boardIcon from "../../assets/boardIcon.svg";
 import logoutIcon from "../../assets/logoutIcon.svg";
+import { Outlet } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -34,7 +35,7 @@ const Home = () => {
           </div>
         </div>
       </aside>
-      <main className={styles.main}>grid</main>
+      <div className={styles.outlet}><Outlet/></div>
     </div>
   );
 };

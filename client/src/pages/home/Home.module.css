@@ -6,6 +6,7 @@
 .aside {
   width: 15%;
   height: 100%;
+  min-width: 150px;
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -52,7 +53,7 @@
   color: #cf3636;
 }
 
-.main {
+.outlet {
   width: 85%;
-  background-color: aqua;
+  
 }
