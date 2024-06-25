@@ -5,9 +5,26 @@ import authImg from "../../assets/authImg.png";
 import { PiEnvelopeSimpleLight } from "react-icons/pi";
 import { CiLock } from "react-icons/ci";
 import { PiEyeLight } from "react-icons/pi";
-import userIcon from "../../assets/userIcon.svg"
+import userIcon from "../../assets/userIcon.svg";
+import { useState } from "react";
+import { registerUser } from "../../services/auth";
+
+const initialUser={userName:"",email:"",password:"",confirmPassword:""}
 
 const Register = () => {
+  const [user,setUser]=useState(initialUser)
+
+  const onChangeHandler=(e)=>{
+    const {name,value}=e.target
+    setUser({...user,[name]:value})
+  }
+
+  const onSubmitHandler=async(e)=>{
+    e.preventDefault()
+    const response=await registerUser(user)
+    console.log('user',user,'res',response)
+
+  }
   return (
     <div className={styles.authPage}>
       <section className={styles.left}>
@@ -22,17 +39,17 @@ const Register = () => {
         </div>
       </section>
       <section className={styles.right}>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={onSubmitHandler}>
           <h1 className={styles.formHead}>Register</h1>
           <div className={styles.formBody}>
             <div className={styles.fieldWrapper}>
               <img src={userIcon} className={styles.icon} />
 
-              <input className={styles.input} type="text" placeholder="Name" />
+              <input className={styles.input} name="userName" value={user.userName} onChange={onChangeHandler} type="text" placeholder="Name" />
             </div>
             <div className={styles.fieldWrapper}>
               <PiEnvelopeSimpleLight className={styles.icon} />
-              <input className={styles.input} type="text" placeholder="Email" />
+              <input className={styles.input} type="text" name="email" value={user.email} onChange={onChangeHandler} placeholder="Email" />
             </div>
             <div className={styles.fieldWrapper}>
               <CiLock className={styles.icon} />
@@ -40,6 +57,7 @@ const Register = () => {
                 className={styles.input}
                 type="password"
                 placeholder="Confirm Password"
+                name="confirmPassword" value={user.confirmPassword} onChange={onChangeHandler}
               />
               <PiEyeLight className={styles.icon} />
             </div>
@@ -49,14 +67,15 @@ const Register = () => {
                 className={styles.input}
                 type="password"
                 placeholder="Password"
+                name="password" value={user.password} onChange={onChangeHandler}
               />
               <PiEyeLight className={styles.icon} />
             </div>
           </div>
           <div className={styles.formFooter}>
-            <button className={styles.primaryBtn}>Register</button>
+            <button type="submit" className={styles.primaryBtn}>Register</button>
             <p className={styles.haveAccount}>Have an account ?</p>
-            <button className={styles.secondaryBtn}>Login</button>
+            <button type="button" className={styles.secondaryBtn}>Login</button>
           </div>
         </form>
       </section>
