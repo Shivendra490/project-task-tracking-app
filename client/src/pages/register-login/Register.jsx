@@ -21,7 +21,14 @@ const Register = () => {
 
   const onSubmitHandler=async(e)=>{
     e.preventDefault()
-    const response=await registerUser(user)
+    const userDetails={
+      userName:user.userName,
+      email:user.email,
+      password:user.password
+    }
+    const response=await registerUser(userDetails)
+    setUser(initialUser)
+
     console.log('user',user,'res',response)
 
   }
