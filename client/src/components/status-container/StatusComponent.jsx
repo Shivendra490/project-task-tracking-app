@@ -18,7 +18,7 @@ const StatusComponent = (props) => {
   const toggleModal = () => {
     setIsModalShow((prev) => !prev);
   };
-  console.log('render')
+  // console.log('render')
   return (
     <div className={styles.singleStatusContainer}>
       {isModalShow && <AddEditTask onToggleModal={toggleModal} />}

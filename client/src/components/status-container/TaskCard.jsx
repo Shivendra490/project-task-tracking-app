@@ -23,7 +23,7 @@ const TaskCard = (props) => {
     setShowMore(false)
   },[props.collapseAll])
 
-  console.log("running taskCard", showMore);
+  // console.log("running taskCard", showMore);
   return (
     <div className={styles.card}>
       <div className={styles.cardHeader}>

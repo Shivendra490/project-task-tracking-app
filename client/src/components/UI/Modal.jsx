@@ -14,7 +14,7 @@ const Backdrop = (props) => {
 };
 
 const ModalOverlay = (props) => {
-  console.log('pp',props)
+  // console.log('pp',props)
   return (
     <div className={`${styles.modal} ${props.onCustomModal}`}>
       {props.children}
@@ -43,7 +43,7 @@ Backdrop.propTypes = {
 
 ModalOverlay.propTypes = {
   children: PropTypes.element,
-  onCustomModal:PropTypes.element
+  onCustomModal:PropTypes.string
 };
 
 Modal.propTypes = {
