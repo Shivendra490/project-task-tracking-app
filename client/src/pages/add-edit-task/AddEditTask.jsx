@@ -3,9 +3,11 @@ import Modal from "../../components/UI/Modal";
 import styles from "./AddEditTask.module.css";
 import deleteIcon from "../../assets/deleteIcon.svg";
 import plusIcon from "../../assets/plusIcon.svg";
-import {  useState } from "react";
+import {  useContext, useState } from "react";
 import { createTask } from "../../services/task";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import BoardContext from "../../store/board-context";
+
 
 const initialTask = {
   title: "",
@@ -18,7 +20,8 @@ const initialTask = {
 
 const AddEditTask = (props) => {
   const [task, setTask] = useState(initialTask);
-  const navigate=useNavigate()
+  const boardCtx=useContext(BoardContext)
+  // const navigate=useNavigate()
   // const dateRef=useRef()
 
   const priorityClickHandler = (selectedPriority) => {
@@ -61,6 +64,7 @@ const AddEditTask = (props) => {
     // console.log(value,'changeoption','target',e)
     
     
+    
 
   }
 
@@ -100,7 +104,8 @@ const AddEditTask = (props) => {
     console.log('task for submit',task)
     const response=await createTask(task)
     console.log('createTask',response)
-    navigate("/board")
+    boardCtx.addTask(task)
+    
 
   }
 
