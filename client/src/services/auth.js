@@ -4,8 +4,8 @@ import { DOMAIN } from "../constant"
 const registerUser=async(userDetails)=>{
     try{
         
-        const result=await axios.post(`${DOMAIN}/auth/register`,userDetails)
-        return result.response
+        const response=await axios.post(`${DOMAIN}/auth/register`,userDetails)
+        return response
 
     }catch(err){
         return err.response
@@ -15,10 +15,12 @@ const registerUser=async(userDetails)=>{
 const loginUser=async(userDetails)=>{
     try{
         console.log('userDet',userDetails)
-        const result=await axios.post(`${DOMAIN}/auth/login`,userDetails)
-        return result.response
+        const response=await axios.post(`${DOMAIN}/auth/login`,userDetails)
+        console.log('RES',response)
+        return response
 
     }catch(err){
+        console.log('errRES',err.response)
         return err.response
     }
 }

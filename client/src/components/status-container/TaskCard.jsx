@@ -5,31 +5,30 @@ import arrUp from "../../assets/arrUp.svg";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-const TaskCard = (props) => {
+const TaskCard = ({priority,title,checkList,collapseAll}) => {
   const [showMore, setShowMore] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
-  // const ca=
+ 
   const toggleCollapseHandler = () => {
     setShowMore((prev) => !prev);
   };
 
   const toggleMenuHandler = () => {
-    console.log('hey')
+    
     setShowMenu((prev) => !prev);
   };
 
   useEffect(()=>{
-    console.log('hey')
     setShowMore(false)
-  },[props.collapseAll])
+  },[collapseAll])
 
-  // console.log("running taskCard", showMore);
+  
   return (
     <div className={styles.card}>
       <div className={styles.cardHeader}>
         <div className={styles.dotWrapper}>
           <p className={styles.greenDot}></p>
-          <span>HIGH PRIORITY</span>
+          <span>{priority?.toUpperCase()} PRIORITY</span>
         </div>
         <div className={styles.dotIconWrapper} onClick={toggleMenuHandler} onBlur={toggleMenuHandler}>
           <img src={menuIcon} alt="doticon"  />
@@ -42,9 +41,9 @@ const TaskCard = (props) => {
           )}
         </div>
       </div>
-      <p className={styles.cardTitle}>Hero Section</p>
+      <p className={styles.cardTitle}>{title}</p>
       <div className={styles.checkListWrapper}>
-        <div className={styles.checkListHeading}>Checklist (0/3)</div>
+        <div className={styles.checkListHeading}>Checklist (0/{checkList?.length})</div>
         <img
           src={showMore ? arrUp : arrDown}
           alt="arr icon"
@@ -53,18 +52,15 @@ const TaskCard = (props) => {
       </div>
       {showMore && (
         <div className={styles.optionsContainer}>
-          <div className={styles.singleOption}>
-            <input type="checkbox" className={styles.checkInput} />
-            <input type="text" className={styles.input} />
-          </div>
-          <div className={styles.singleOption}>
-            <input type="checkbox" className={styles.checkInput} />
-            <input type="text" className={styles.input} />
-          </div>
-          <div className={styles.singleOption}>
-            <input type="checkbox" className={styles.checkInput} />
-            <input type="text" className={styles.input} />
-          </div>
+          {
+            checkList?.map((option)=>{
+              return <div className={styles.singleOption} key={option.optionId}>
+              <input type="checkbox" checked={option?.isTick} className={styles.checkInput} />
+              <input type="text" value={option?.checkText} className={styles.input} />
+            </div>
+            })
+          }
+          
         </div>
       )}
       <div className={styles.cardFooter}>
@@ -81,7 +77,11 @@ const TaskCard = (props) => {
 
 TaskCard.propTypes = {
  
-  collapseAll:PropTypes.bool
+  collapseAll:PropTypes.bool,
+  priority:PropTypes.string,
+  title:PropTypes.string,
+  checkList:PropTypes.array,
+
 };
 
 export default TaskCard;

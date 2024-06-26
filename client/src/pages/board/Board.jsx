@@ -1,10 +1,31 @@
 import styles from "./Board.module.css";
 import peopleIcon from "../../assets/pepleIcon.svg";
 import StatusComponent from "../../components/status-container/StatusComponent";
+import { useEffect, useState } from "react";
+import { fetchAllStatusTask } from "../../services/task";
 
 
 
 const Board = () => {
+  const [todoList,setTodList]=useState([])
+  const [backlogList,setBacklogList]=useState([])
+  const [progressList,setProgressList]=useState([])
+  const [doneList,setDoneList]=useState([])
+
+  useEffect(()=>{
+    async function fetchAll(){
+      const response = await fetchAllStatusTask()
+      console.log('useEffect fetchAll status task',response)
+      setTodList(response?.data?.todoList)
+      setBacklogList(response?.data?.backlogList)
+      setProgressList(response?.data?.progressList)
+      setDoneList(response?.data?.doneList)
+      
+      // setAllStatusTask(response.data.data)
+
+    }
+    fetchAll()
+  },[])
   
   return (
     <main className={styles.boardPage}>
@@ -28,10 +49,10 @@ const Board = () => {
         </select>
       </div>
       <div className={styles.allStatusContainer}>
-        <StatusComponent status="Backlog"/>
-        <StatusComponent status="To do"/>
-        <StatusComponent status="In progress"/>
-        <StatusComponent status="Done"/>
+        <StatusComponent status="Backlog" taskList={backlogList}/>
+        <StatusComponent status="To do" taskList={todoList}/>
+        <StatusComponent status="In progress" taskList={progressList}/>
+        <StatusComponent status="Done" taskList={doneList}/>
       </div>
     </main>
   );

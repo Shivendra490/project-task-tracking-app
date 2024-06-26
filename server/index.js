@@ -9,6 +9,7 @@ const cors=require("cors")
 const bodyParser=require("body-parser")
 
 const authRoutes=require("./routes/auth")
+const taskRoutes=require("./routes/task")
 
 // app.use("/",(req,res,next)=>{
 //     res.send("hello")
@@ -21,6 +22,7 @@ app.use(express.urlencoded({extended:false}))
 app.use(bodyParser.json())
 
 app.use("/api/auth",authRoutes)
+app.use("/api/task",taskRoutes)
 
 
 

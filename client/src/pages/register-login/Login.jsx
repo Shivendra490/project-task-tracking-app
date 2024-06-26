@@ -6,6 +6,7 @@ import { CiLock } from "react-icons/ci";
 import { PiEyeLight } from "react-icons/pi";
 import { useState } from "react";
 import { loginUser } from "../../services/auth";
+import { storeUserInfo } from "../../services/localStoage";
 
 
 
@@ -19,6 +20,12 @@ const Login = () => {
     e.preventDefault()
     const response =await loginUser(user)
     console.log('lguser',response)
+    if(response.status!==200){
+      //show error toast
+      return
+    }
+    const {token,userId,email}=response.data.data
+    storeUserInfo(token,userId,email)
   }
   return (
     <div className={styles.authPage}>

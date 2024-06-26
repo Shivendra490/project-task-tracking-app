@@ -4,11 +4,13 @@ import styles from "./AddEditTask.module.css";
 import deleteIcon from "../../assets/deleteIcon.svg";
 import plusIcon from "../../assets/plusIcon.svg";
 import {  useState } from "react";
+import { createTask } from "../../services/task";
+import { useNavigate } from "react-router-dom";
 
 const initialTask = {
-  taskTitle: "",
+  title: "",
   priority: "",
-  taskStatus: "todo",
+  status: "todo",
   checkList: [],
   dueDate:"",
   tickCount:0
@@ -16,6 +18,7 @@ const initialTask = {
 
 const AddEditTask = (props) => {
   const [task, setTask] = useState(initialTask);
+  const navigate=useNavigate()
   // const dateRef=useRef()
 
   const priorityClickHandler = (selectedPriority) => {
@@ -27,14 +30,14 @@ const AddEditTask = (props) => {
       ...task,
       checkList: [
         ...task.checkList,
-        { oid: new Date().getTime().toString(), checkText: "", isTick: false },
+        { optionId: new Date().getTime().toString(), checkText: "", isTick: false },
       ],
     });
   };
 
-  const removeCheckListOptionHandler = (oid) => {
+  const removeCheckListOptionHandler = (optionId) => {
     const updatedCheckList = task?.checkList?.filter((currentOption) => {
-      return currentOption.oid !== oid;
+      return currentOption.optionId !== optionId;
     });
 
     setTask({ ...task, checkList: updatedCheckList });
@@ -45,10 +48,10 @@ const AddEditTask = (props) => {
     setTask({...task,[name]:value})
   }
 
-  const onChangeOptionHandler=(e,oid)=>{
+  const onChangeOptionHandler=(e,optionId)=>{
     const {value}=e.target
     const updatedCheckList=task?.checkList.map(currentOption=>{
-      if(currentOption.oid===oid){
+      if(currentOption.optionId===optionId){
         return {...currentOption,checkText:value}
       }else{
         return currentOption
@@ -61,12 +64,12 @@ const AddEditTask = (props) => {
 
   }
 
-  const onChangeTickHandler=(e,oid)=>{
+  const onChangeTickHandler=(e,optionId)=>{
   
     const {checked}=e.target
     const updatedCheckList=task?.checkList.map(currentOption=>{
       
-      if(currentOption.oid===oid){
+      if(currentOption.optionId===optionId){
         return {...currentOption,isTick:checked}
       }else{
         return currentOption
@@ -93,8 +96,12 @@ const AddEditTask = (props) => {
   }
 
 
-  const submitHandler=()=>{
+  const submitHandler=async()=>{
     console.log('task for submit',task)
+    const response=await createTask(task)
+    console.log('createTask',response)
+    navigate("/board")
+
   }
 
  
@@ -111,10 +118,10 @@ const AddEditTask = (props) => {
             </label>
             <input
               type="text"
-              name="taskTitle"
+              name="title"
               className={styles.titleInput}
               placeholder="Enter Task Title"
-              value={task.taskTitle}
+              value={task.title}
               onChange={onChangeTitleHandler}
             />
           </div>
@@ -168,21 +175,21 @@ const AddEditTask = (props) => {
               task?.checkList.map((currentOption) => {
                 return (
                   <div
-                    key={currentOption.oid}
+                    key={currentOption.optionId}
                     className={styles.singleOptionWrapper}
                   >
                     <input
                       checked={currentOption.isTick}
                       type="checkbox"
-                      onChange={(e)=>onChangeTickHandler(e,currentOption.oid)}
+                      onChange={(e)=>onChangeTickHandler(e,currentOption.optionId)}
                       className={styles.inputCheck}
                     />
-                    <input type="text" className={styles.inputText} value={currentOption.checkText} onChange={(e)=>onChangeOptionHandler(e,currentOption.oid)}/>
+                    <input type="text" className={styles.inputText} value={currentOption.checkText} onChange={(e)=>onChangeOptionHandler(e,currentOption.optionId)}/>
                     <img
                       src={deleteIcon}
                       alt="delete icon"
                       onClick={() =>
-                        removeCheckListOptionHandler(currentOption.oid)
+                        removeCheckListOptionHandler(currentOption.optionId)
                       }
                     />
                   </div>
