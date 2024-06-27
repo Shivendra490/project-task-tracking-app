@@ -2,12 +2,16 @@ import styles from "./StatusComponent.module.css";
 import menuIcon from "../../assets/menuIcon.svg";
 import arrDown from "../../assets/arrDown.svg";
 import arrUp from "../../assets/arrUp.svg";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import BoardContext from "../../store/board-context";
+import { deleteTask } from "../../services/task";
 
-const TaskCard = ({priority,title,checkList,collapseAll}) => {
+const TaskCard = ({priority,title,checkList,collapseAll,taskId}) => {
+  const boardCtx=useContext(BoardContext)
   const [showMore, setShowMore] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  console.log('taskcomponent','taskId',taskId,typeof taskId,collapseAll,priority)
  
   const toggleCollapseHandler = () => {
     setShowMore((prev) => !prev);
@@ -18,12 +22,24 @@ const TaskCard = ({priority,title,checkList,collapseAll}) => {
     setShowMenu((prev) => !prev);
   };
 
+  const onClickDeleteHandler=async(taskId)=>{
+    const response=await deleteTask(taskId)
+    console.log('deleteHandle in task comp',response)
+    boardCtx?.removeTask(taskId)
+  }
+
+  const onClickEditHandler=()=>{
+
+  }
+
   useEffect(()=>{
     setShowMore(false)
   },[collapseAll])
 
   
   return (
+    <>
+    
     <div className={styles.card}>
       <div className={styles.cardHeader}>
         <div className={styles.dotWrapper}>
@@ -34,9 +50,9 @@ const TaskCard = ({priority,title,checkList,collapseAll}) => {
           <img src={menuIcon} alt="doticon"  />
           {showMenu && (
             <div className={styles.menuPopup}>
-              <div className={styles.popupText}>Edit</div>
+              <div className={styles.popupText} onClick={()=>onClickEditHandler(taskId)}>Edit</div>
               <div className={styles.popupText}>Share</div>
-              <div className={styles.deletePopupText}>Delete</div>
+              <div className={styles.deletePopupText} onClick={()=>onClickDeleteHandler(taskId)}>Delete</div>
             </div>
           )}
         </div>
@@ -72,6 +88,7 @@ const TaskCard = ({priority,title,checkList,collapseAll}) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
@@ -81,6 +98,7 @@ TaskCard.propTypes = {
   priority:PropTypes.string,
   title:PropTypes.string,
   checkList:PropTypes.array,
+  taskId:PropTypes.string,
 
 };
 

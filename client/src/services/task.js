@@ -18,7 +18,7 @@ const createTask=async(task)=>{
 
 const fetchAllStatusTask=async()=>{
     const {token}=getUserInfo()
-    console.log('fetchAllStatusTask token',token)
+  
     try{
         const headers={
             authorization:token,
@@ -31,4 +31,20 @@ const fetchAllStatusTask=async()=>{
     }
 }
 
-export {createTask,fetchAllStatusTask} 
+
+const deleteTask=async(taskId)=>{
+    const {token}=getUserInfo()
+  
+    try{
+        const headers={
+            authorization:token,
+            "Content-Type":"application/json"
+        }
+        const response=axios.delete(`${DOMAIN}/task/delete-task/${taskId}`,{headers})
+        return response
+    }catch(err){
+        return err.response
+    }
+}
+
+export {createTask,fetchAllStatusTask,deleteTask} 

@@ -8,5 +8,7 @@ router.post("/create-task",verifyAuth,taskController.createTask)
 
 router.get("/all-status-task",verifyAuth,taskController.getAllStatusTask)
 
+router.delete("/delete-task/:taskId",verifyAuth,taskController.deleteTask)
+
 
 module.exports=router;

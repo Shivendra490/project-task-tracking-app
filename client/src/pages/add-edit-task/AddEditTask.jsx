@@ -3,24 +3,23 @@ import Modal from "../../components/UI/Modal";
 import styles from "./AddEditTask.module.css";
 import deleteIcon from "../../assets/deleteIcon.svg";
 import plusIcon from "../../assets/plusIcon.svg";
-import {  useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { createTask } from "../../services/task";
 // import { useNavigate } from "react-router-dom";
 import BoardContext from "../../store/board-context";
-
 
 const initialTask = {
   title: "",
   priority: "",
   status: "todo",
   checkList: [],
-  dueDate:"",
-  tickCount:0
+  dueDate: "",
+  tickCount: 0,
 };
 
 const AddEditTask = (props) => {
   const [task, setTask] = useState(initialTask);
-  const boardCtx=useContext(BoardContext)
+  const boardCtx = useContext(BoardContext);
   // const navigate=useNavigate()
   // const dateRef=useRef()
 
@@ -33,7 +32,11 @@ const AddEditTask = (props) => {
       ...task,
       checkList: [
         ...task.checkList,
-        { optionId: new Date().getTime().toString(), checkText: "", isTick: false },
+        {
+          optionId: new Date().getTime().toString(),
+          checkText: "",
+          isTick: false,
+        },
       ],
     });
   };
@@ -46,70 +49,68 @@ const AddEditTask = (props) => {
     setTask({ ...task, checkList: updatedCheckList });
   };
 
-  const onChangeTitleHandler=(e)=>{
-    const {name,value}=e.target 
-    setTask({...task,[name]:value})
-  }
+  const onChangeTitleHandler = (e) => {
+    const { name, value } = e.target;
+    setTask({ ...task, [name]: value });
+  };
 
-  const onChangeOptionHandler=(e,optionId)=>{
-    const {value}=e.target
-    const updatedCheckList=task?.checkList.map(currentOption=>{
-      if(currentOption.optionId===optionId){
-        return {...currentOption,checkText:value}
-      }else{
-        return currentOption
+  const onChangeOptionHandler = (e, optionId) => {
+    const { value } = e.target;
+    const updatedCheckList = task?.checkList.map((currentOption) => {
+      if (currentOption.optionId === optionId) {
+        return { ...currentOption, checkText: value };
+      } else {
+        return currentOption;
       }
-    })
-    setTask({...task,checkList:updatedCheckList})
+    });
+    setTask({ ...task, checkList: updatedCheckList });
     // console.log(value,'changeoption','target',e)
-    
-    
-    
+  };
 
-  }
-
-  const onChangeTickHandler=(e,optionId)=>{
-  
-    const {checked}=e.target
-    const updatedCheckList=task?.checkList.map(currentOption=>{
-      
-      if(currentOption.optionId===optionId){
-        return {...currentOption,isTick:checked}
-      }else{
-        return currentOption
+  const onChangeTickHandler = (e, optionId) => {
+    const { checked } = e.target;
+    const updatedCheckList = task?.checkList.map((currentOption) => {
+      if (currentOption.optionId === optionId) {
+        return { ...currentOption, isTick: checked };
+      } else {
+        return currentOption;
       }
-    })
-    
-    if(checked){
-      setTask({...task,tickCount:task.tickCount+1,checkList:updatedCheckList})
-    }else{
-      setTask({...task,tickCount:task.tickCount-1,checkList:updatedCheckList})
+    });
+
+    if (checked) {
+      setTask({
+        ...task,
+        tickCount: task.tickCount + 1,
+        checkList: updatedCheckList,
+      });
+    } else {
+      setTask({
+        ...task,
+        tickCount: task.tickCount - 1,
+        checkList: updatedCheckList,
+      });
     }
-    
+
     // console.log(checked,'changetick','target',e)
-  }
+  };
 
-  const dateClickHandler=()=>{
-    console.log('dateClick handler with ref')
-    
-  }
+  const dateClickHandler = () => {
+    console.log("dateClick handler with ref");
+  };
 
-  const onChangeDateHandler=(e)=>{
-    console.log('dateonchange',e)
-    setTask({...task,dueDate:e.target.value})
-  }
+  const onChangeDateHandler = (e) => {
+    console.log("dateonchange", e);
+    setTask({ ...task, dueDate: e.target.value });
+  };
 
+  const submitHandler = async () => {
+    console.log("task for submit", task);
+    const response = await createTask(task);
+    console.log("createTasklllllll", response);
+    boardCtx?.addTask(response?.data?.data);
+    props.onToggleModal();
+  };
 
-  const submitHandler=async()=>{
-    console.log('task for submit',task)
-    const response=await createTask(task)
-    console.log('createTask',response)
-    boardCtx.addTask(task)
-    
-
-  }
-
- 
   return (
     <Modal
       onToggleModal={props.onToggleModal}
@@ -173,7 +174,8 @@ const AddEditTask = (props) => {
         </div>
         <div className={styles.createBody}>
           <label className={styles.titleText}>
-            Checklist ({task?.tickCount}/{task?.checkList?.length})<span className={styles.star}>*</span>
+            Checklist ({task?.tickCount}/{task?.checkList?.length})
+            <span className={styles.star}>*</span>
           </label>
           <div className={styles.optionsContainer}>
             {task?.checkList?.length > 0 &&
@@ -186,10 +188,19 @@ const AddEditTask = (props) => {
                     <input
                       checked={currentOption.isTick}
                       type="checkbox"
-                      onChange={(e)=>onChangeTickHandler(e,currentOption.optionId)}
+                      onChange={(e) =>
+                        onChangeTickHandler(e, currentOption.optionId)
+                      }
                       className={styles.inputCheck}
                     />
-                    <input type="text" className={styles.inputText} value={currentOption.checkText} onChange={(e)=>onChangeOptionHandler(e,currentOption.optionId)}/>
+                    <input
+                      type="text"
+                      className={styles.inputText}
+                      value={currentOption.checkText}
+                      onChange={(e) =>
+                        onChangeOptionHandler(e, currentOption.optionId)
+                      }
+                    />
                     <img
                       src={deleteIcon}
                       alt="delete icon"
@@ -208,10 +219,17 @@ const AddEditTask = (props) => {
         </div>
         <div className={styles.createFooter}>
           {/* <button className={styles.dueDateBtn} onClick={dateClickHandler}>Due Date</button> */}
-          <input type="date"  name="dueDate" onClick={dateClickHandler} onChange={onChangeDateHandler}/>
+          <input
+            type="date"
+            name="dueDate"
+            onClick={dateClickHandler}
+            onChange={onChangeDateHandler}
+          />
           <div className={styles.actionBtnsWrapper}>
             <button className={styles.secondaryBtn}>Cancel</button>
-            <button className={styles.primaryBtn} onClick={submitHandler}>Save</button>
+            <button className={styles.primaryBtn} onClick={submitHandler}>
+              Save
+            </button>
           </div>
         </div>
       </div>

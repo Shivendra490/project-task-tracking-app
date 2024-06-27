@@ -12,6 +12,8 @@ const StatusComponent = (props) => {
   const [isModalShow, setIsModalShow] = useState(false);
   const [collapseAll, setCollapseAll] = useState(true);
 
+  console.log('Status Comp tasklist prop',props.taskList)
+
   const triggerCollapse = () => {
     setCollapseAll((prev) => !prev);
   };
@@ -37,6 +39,7 @@ const StatusComponent = (props) => {
       </div>
       <div className={styles.cardsContainer}>
         {props?.taskList?.map((task) => {
+          console.log('status comp map,task',task)
           return (
             <TaskCard
               priority={task?.priority}
@@ -44,6 +47,7 @@ const StatusComponent = (props) => {
               title={task?.title}
               collapseAll={collapseAll}
               key={task._id}
+              taskId={task._id}
             />
           );
         })}

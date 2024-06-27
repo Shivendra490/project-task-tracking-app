@@ -1,51 +1,31 @@
 import { useReducer } from "react";
 import BoardContext from "./board-context";
-import { ADD_COMBINE, ADD_TASK, REMOVE_TASK, UPDATE_TASK } from "../constant";
+import { ADD_TASK, REMOVE_TASK, REPLACE_ALL_TASK, UPDATE_TASK } from "../constant";
+import PropTypes from "prop-types";
 
 const defaultBoardState = {
-  allTaskList: [],
-  todoList: [],
-  backlogList: [],
-  progressList: [],
-  doneList: [],
+  allTaskList: []
 };
 
 const boardReducer = (state, action) => {
+  if (action.type === REPLACE_ALL_TASK) {
+   //
+   return {allTaskList:action.payload} 
+  }
   if (action.type === ADD_TASK) {
-    console.log("payload", action.payload);
-    const updatedTodoTasks = [...state.todoList, action.payload];
-    console.log("updatedTodoTask", updatedTodoTasks);
-    console.log("state", { ...state, todoList: updatedTodoTasks });
-    return { ...state, todoList: updatedTodoTasks };
+    //
+    const updatedAllTaskList=[...state.allTaskList,action.payload]
+    return {allTaskList:updatedAllTaskList}
   }
   if (action.type === REMOVE_TASK) {
+    const updatedAllTaskList=state.allTaskList.filter((task)=>task._id.toString()!==action.payload.toString())
+    return {allTaskList:updatedAllTaskList}
     //
   }
   if (action.type === UPDATE_TASK) {
     //
   }
-  if (action.type === ADD_COMBINE) {
-    const updatedTodoTask = action?.payload?.filter(
-      (task) => task.status === "todo"
-    );
-    const updatedBacklogTask = action?.payload?.filter(
-      (task) => task.status === "backlog"
-    );
-    const updatedProgressTask = action?.payload?.filter(
-      (task) => task.status === "progress"
-    );
-    const updatedDoneTask = action?.payload?.filter(
-      (task) => task.status === "done"
-    );
-    return {
-      ...state,
-      allTaskList: action.payload,
-      todoList: updatedTodoTask,
-      backlogList: updatedBacklogTask,
-      progressList: updatedProgressTask,
-      doneList: updatedDoneTask,
-    };
-  }
+ 
 
   return defaultBoardState;
 };
@@ -56,28 +36,28 @@ const BoardProvider = (props) => {
     defaultBoardState
   );
 
-  const addTaskToBoard = (task) => {
-    console.log("33 task", task);
-    dispatchBoardAction({ type: ADD_TASK, payload: task });
+  const replaceAll = (taskList) => {
+    dispatchBoardAction({ type: REPLACE_ALL_TASK, payload: taskList });
   };
 
-  const removeTaskFromBoard = () => {};
+  const addSingleTask=(task)=>{
+    dispatchBoardAction({type:ADD_TASK,payload:task})
+  }
+
+  const removeSingleTask = (taskId) => {
+    dispatchBoardAction({type:REMOVE_TASK,payload:taskId})
+  };
 
   const updateStatus = () => {};
 
-  const addTaskToCombinedList = (combinedTasks) => {
-    dispatchBoardAction({ type: ADD_COMBINE, payload: combinedTasks });
-  };
+ 
 
   const boardContext = {
-    allTasks: boardState.allTaskList,
-    todoTasks: boardState.todoList,
-    backlogTasks: boardState.backlogList,
-    progressTasks: boardState.progressList,
-    doneTasks: boardState.doneList,
-    addTocombinedTasks: addTaskToCombinedList,
-    addTask: addTaskToBoard,
-    removeTask: removeTaskFromBoard,
+   
+    allTask:boardState.allTaskList,
+    replaceAllTask: replaceAll,
+    addTask:addSingleTask,
+    removeTask: removeSingleTask,
     updateTaskStatus: updateStatus,
   };
   return (

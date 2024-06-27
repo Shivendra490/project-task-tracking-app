@@ -1,15 +1,19 @@
 import React from 'react'
 const BoardContext=React.createContext({
-    allTasks:[],
-    todoTasks:[],
-    backlogTasks:[],
-    progressTasks:[],
-    doneTasks:[],
+    allTask:[],
+    replaceAllTask:()=>{},
     addTask:()=>{},
-    addTocombinedTasks:()=>{},
     removeTask:()=>{},
     updateTaskStatus:()=>{}
     
 })
 
 export default BoardContext
+
+
+
+
+// todoTasks:[],
+//     backlogTasks:[],
+//     progressTasks:[],
+//     doneTasks:[],

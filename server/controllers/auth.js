@@ -79,7 +79,7 @@ exports.loginUser = async (req, res, next) => {
   const token=jwt.sign({
     userId:existingUser._id,
     email:existingUser.email
-  }, process.env.SECRET_KEY, { expiresIn: '10h' });
+  }, process.env.SECRET_KEY, { expiresIn: '240h' });
 
   res
     .status(200)
