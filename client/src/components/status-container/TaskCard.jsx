@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import BoardContext from "../../store/board-context";
 import { deleteTask } from "../../services/task";
 
-const TaskCard = ({priority,title,checkList,collapseAll,taskId}) => {
+const TaskCard = ({priority,title,checkList,collapseAll,taskId,onToggleModal,tickCount}) => {
   const boardCtx=useContext(BoardContext)
   const [showMore, setShowMore] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
@@ -28,8 +28,8 @@ const TaskCard = ({priority,title,checkList,collapseAll,taskId}) => {
     boardCtx?.removeTask(taskId)
   }
 
-  const onClickEditHandler=()=>{
-
+  const onClickEditHandler=(taskId)=>{
+    onToggleModal(taskId)
   }
 
   useEffect(()=>{
@@ -59,7 +59,7 @@ const TaskCard = ({priority,title,checkList,collapseAll,taskId}) => {
       </div>
       <p className={styles.cardTitle}>{title}</p>
       <div className={styles.checkListWrapper}>
-        <div className={styles.checkListHeading}>Checklist (0/{checkList?.length})</div>
+        <div className={styles.checkListHeading}>Checklist ({tickCount}/{checkList?.length})</div>
         <img
           src={showMore ? arrUp : arrDown}
           alt="arr icon"
@@ -99,6 +99,8 @@ TaskCard.propTypes = {
   title:PropTypes.string,
   checkList:PropTypes.array,
   taskId:PropTypes.string,
+  onToggleModal:PropTypes.func,
+  tickCount:PropTypes.number
 
 };
 

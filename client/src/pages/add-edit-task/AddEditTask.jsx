@@ -3,8 +3,8 @@ import Modal from "../../components/UI/Modal";
 import styles from "./AddEditTask.module.css";
 import deleteIcon from "../../assets/deleteIcon.svg";
 import plusIcon from "../../assets/plusIcon.svg";
-import { useContext, useState } from "react";
-import { createTask } from "../../services/task";
+import { useContext, useEffect, useState } from "react";
+import { createTask, getTask, updateTask } from "../../services/task";
 // import { useNavigate } from "react-router-dom";
 import BoardContext from "../../store/board-context";
 
@@ -22,6 +22,7 @@ const AddEditTask = (props) => {
   const boardCtx = useContext(BoardContext);
   // const navigate=useNavigate()
   // const dateRef=useRef()
+  console.log('editIt',props.editId)
 
   const priorityClickHandler = (selectedPriority) => {
     setTask({ ...task, priority: selectedPriority });
@@ -104,12 +105,32 @@ const AddEditTask = (props) => {
   };
 
   const submitHandler = async () => {
-    console.log("task for submit", task);
+    if(props.editId){
+      const response=await updateTask(task)
+      console.log('Inside edit mode')
+      return
+    }
+   
+    
     const response = await createTask(task);
     console.log("createTasklllllll", response);
     boardCtx?.addTask(response?.data?.data);
     props.onToggleModal();
   };
+
+  const fetchTask=async(editId)=>{
+    const response=await getTask(editId)
+    setTask(response?.data?.data)
+    console.log('useEff Res single task',response)
+  }
+
+  useEffect(()=>{
+    
+    if(props.editId){
+      fetchTask(props.editId)
+    console.log('useRunning in ADDEDIT','ppppp',props.editId)
+    }
+  },[])
 
   return (
     <Modal
@@ -239,6 +260,7 @@ const AddEditTask = (props) => {
 
 AddEditTask.propTypes = {
   onToggleModal: PropTypes.bool,
+  editId:PropTypes.string
 };
 
 export default AddEditTask;

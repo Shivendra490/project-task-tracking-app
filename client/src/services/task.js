@@ -47,4 +47,35 @@ const deleteTask=async(taskId)=>{
     }
 }
 
-export {createTask,fetchAllStatusTask,deleteTask} 
+const getTask=async(taskId)=>{
+    const {token}=getUserInfo()
+  
+    try{
+        const headers={
+            authorization:token,
+            "Content-Type":"application/json"
+        }
+        const response=axios.get(`${DOMAIN}/task/get-task/${taskId}`,{headers})
+        return response
+    }catch(err){
+        return err.response
+    }
+}
+
+
+const updateTask=async(task)=>{
+    const {token}=getUserInfo()
+    // console.log('check token',token)
+    try{
+        const headers={
+            authorization:token,
+            "Content-Type":"application/json"
+        }
+        const response=axios.put(`${DOMAIN}/task/update-task/${task._id}`,task,{headers})
+        return response
+    }catch(err){
+        return err.response
+    }
+}
+
+export {createTask,fetchAllStatusTask,deleteTask,getTask,updateTask} 
