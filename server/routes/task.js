@@ -12,7 +12,7 @@ router.get("/all-status-task",verifyAuth,taskController.getAllStatusTask)
 
 router.delete("/delete-task/:taskId",verifyAuth,taskController.deleteTask)
 
-router.put("/update-task/:taskId",verifyAuth,taskController.updateTask)
+router.patch("/update-task/:taskId",verifyAuth,taskController.updateTask)
 
 
 module.exports=router;
