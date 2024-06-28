@@ -65,13 +65,13 @@ const getTask=async(taskId)=>{
 
 const updateTask=async(task)=>{
     const {token}=getUserInfo()
-    // console.log('check token',token)
+    console.log('check bbbbbbbb token',task)
     try{
         const headers={
             authorization:token,
             "Content-Type":"application/json"
         }
-        const response=axios.put(`${DOMAIN}/task/update-task/${task._id}`,task,{headers})
+        const response=axios.patch(`${DOMAIN}/task/update-task/${task._id}`,task,{headers})
         return response
     }catch(err){
         return err.response

@@ -30,9 +30,9 @@ const StatusComponent = (props) => {
     <div className={styles.singleStatusContainer}>
       {isModalShow && <AddEditTask editId={editId} onToggleModal={toggleModal} />}
       <div className={styles.statusIconWrapper}>
-        <div className={styles.statusHeading}>{props.status}</div>
+        <div className={styles.statusHeading}>{props.container}</div>
         <div className={styles.addCollapseIconWrapper}>
-          {props.status === "To do" && (
+          {props.container === "To do" && (
             <img src={addIcon} alt="add icon" onClick={()=>toggleModal()} />
           )}
           <img
@@ -51,10 +51,11 @@ const StatusComponent = (props) => {
               checkList={task?.checkList}
               title={task?.title}
               collapseAll={collapseAll}
-              key={task._id}
+              key={task?._id}
               onToggleModal={toggleModal}
               tickCount={task?.tickCount}
-              taskId={task._id}
+              taskId={task?._id}
+              status={task?.status}
             />
           );
         })}
@@ -64,7 +65,7 @@ const StatusComponent = (props) => {
 };
 
 StatusComponent.propTypes = {
-  status: PropTypes.string,
+  container: PropTypes.string,
   taskList: PropTypes.array,
 };
 

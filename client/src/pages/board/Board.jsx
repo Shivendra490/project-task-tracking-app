@@ -1,12 +1,14 @@
 import styles from "./Board.module.css";
 import peopleIcon from "../../assets/pepleIcon.svg";
 import StatusComponent from "../../components/status-container/StatusComponent";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { fetchAllStatusTask } from "../../services/task";
 
 import BoardContext from "../../store/board-context";
+import AddMember from "./AddMember";
 
 const Board = () => {
+  const [addMemberMode,setAddMemberMode]=useState(false)
   const boardCtx = useContext(BoardContext);
 
   const todoList = [];
@@ -30,6 +32,10 @@ const Board = () => {
   });
   // console.log("xxxx", todoList, progressList, backlogList, doneList);
 
+  const toggleAddMemberMode=()=>{
+    setAddMemberMode(prev=>!prev)
+  }
+
   async function fetchAll() {
     const response = await fetchAllStatusTask();
     console.log("useEffect fetchAll status task", response);
@@ -42,6 +48,7 @@ const Board = () => {
 
   return (
     <main className={styles.boardPage}>
+      {addMemberMode && <AddMember onToggleAddMemberMode={toggleAddMemberMode}/>}
       <div className={styles.nameDateWrapper}>
         <h2 className={styles.name}>Welcome! Username</h2>
         <div className={styles.date}>12 Jan,2024</div>
@@ -49,7 +56,7 @@ const Board = () => {
       <div className={styles.headingFilterWrapper}>
         <div className={styles.boardIconWrapper}>
           <h1 className={styles.heading}>Board</h1>
-          <div className={styles.peopleIconWrapper}>
+          <div className={styles.peopleIconWrapper} onClick={toggleAddMemberMode}>
             <img src={peopleIcon} alt="people Icon" />
             <span>Add People</span>
           </div>
@@ -61,10 +68,10 @@ const Board = () => {
         </select>
       </div>
       <div className={styles.allStatusContainer}>
-        <StatusComponent status="Backlog" taskList={backlogList} />
-        <StatusComponent status="To do" taskList={todoList} />
-        <StatusComponent status="In progress" taskList={progressList} />
-        <StatusComponent status="Done" taskList={doneList} />
+        <StatusComponent container="Backlog" taskList={backlogList} />
+        <StatusComponent container="To do" taskList={todoList} />
+        <StatusComponent container="In progress" taskList={progressList} />
+        <StatusComponent container="Done" taskList={doneList} />
       </div>
     </main>
   );

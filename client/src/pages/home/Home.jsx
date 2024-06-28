@@ -16,7 +16,7 @@ const Home = () => {
             <div className={styles.projectName}>Pro Manage</div>
           </div>
           <NavLink
-            to="/"
+            to="/home"
             className={(isActive) =>
               isActive
                 ? `${styles.linkWrapper} ${styles.active}`
@@ -27,7 +27,7 @@ const Home = () => {
             <div className={styles.label}>Board</div>
           </NavLink>
           <NavLink
-            to="/analytics"
+            to="/home/analytics"
             className={(isActive) =>
               isActive
                 ? `${styles.linkWrapper} ${styles.active}`
@@ -38,7 +38,7 @@ const Home = () => {
             <div className={styles.label}>Analytics</div>
           </NavLink>
           <NavLink
-            to="/setting"
+            to="/home/setting"
             className={(isActive) =>
               isActive
                 ? `${styles.linkWrapper} ${styles.active}`

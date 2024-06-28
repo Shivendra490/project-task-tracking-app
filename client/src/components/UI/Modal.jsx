@@ -38,7 +38,7 @@ const Modal = (props) => {
 };
 
 Backdrop.propTypes = {
-  onToggleModal: PropTypes.bool,
+  onToggleModal: PropTypes.func,
 };
 
 ModalOverlay.propTypes = {
@@ -47,7 +47,7 @@ ModalOverlay.propTypes = {
 };
 
 Modal.propTypes = {
-  onToggleModal: PropTypes.bool,
+  onToggleModal: PropTypes.func,
   children: PropTypes.element,
   onCustomModal:PropTypes.element
 };

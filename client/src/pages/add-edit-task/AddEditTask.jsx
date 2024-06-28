@@ -107,7 +107,8 @@ const AddEditTask = (props) => {
   const submitHandler = async () => {
     if(props.editId){
       const response=await updateTask(task)
-      console.log('Inside edit mode')
+      console.log('Inside edit mode rrrrrrrrrrrresponse',response)
+      boardCtx.editTask(response?.data?.data)
       return
     }
    
@@ -259,7 +260,7 @@ const AddEditTask = (props) => {
 };
 
 AddEditTask.propTypes = {
-  onToggleModal: PropTypes.bool,
+  onToggleModal: PropTypes.func,
   editId:PropTypes.string
 };
 

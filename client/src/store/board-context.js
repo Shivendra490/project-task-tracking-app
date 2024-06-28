@@ -4,7 +4,7 @@ const BoardContext=React.createContext({
     replaceAllTask:()=>{},
     addTask:()=>{},
     removeTask:()=>{},
-    updateTaskStatus:()=>{}
+    editTask:()=>{}
     
 })
 
