@@ -10,6 +10,7 @@ const bodyParser=require("body-parser")
 
 const authRoutes=require("./routes/auth")
 const taskRoutes=require("./routes/task")
+const boardRoutes=require("./routes/board")
 
 // app.use("/",(req,res,next)=>{
 //     res.send("hello")
@@ -23,6 +24,7 @@ app.use(bodyParser.json())
 
 app.use("/api/auth",authRoutes)
 app.use("/api/task",taskRoutes)
+app.use("/api/board",boardRoutes)
 
 
 

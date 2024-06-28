@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 
 const defaultBoardState = {
   allTaskList: [],
+  // memberList:[]
 };
 
 const boardReducer = (state, action) => {

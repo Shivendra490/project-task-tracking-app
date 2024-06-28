@@ -16,7 +16,8 @@ const taskSchema = new Schema(
         checkText: { type: String, required: true },
       },
     ],
-    tickCount:{type:Number,required:true}
+    tickCount:{type:Number,required:true},
+    assignTo:{type:String}
     
   },
   { timestamps: true }
