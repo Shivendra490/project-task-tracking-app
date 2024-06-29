@@ -7,9 +7,9 @@ const userSchema = new Schema(
     userName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    memberList:[]
+    memberList: [],
   },
   { timestamps: true }
 );
 
-module.exports=mongoose.model("User", userSchema);
+module.exports = mongoose.model("User", userSchema);

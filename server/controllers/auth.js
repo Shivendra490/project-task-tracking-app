@@ -1,13 +1,14 @@
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const dotenv=require("dotenv").config()
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 exports.registerUser = async (req, res, next) => {
   try {
     const { userName, email, password } = req.body;
-    console.log(typeof userName, typeof password, typeof email);
+    
     if (!userName?.trim() || !email?.trim() || !password?.trim()) {
       res.status(403).json({ message: "All Fields are mandatory" });
       return;
@@ -39,14 +40,14 @@ exports.registerUser = async (req, res, next) => {
 
     res.status(201).json({ message: "User Created Successfully" });
   } catch (err) {
-    console.log(err)
+    next(err)
   }
 };
 
 exports.loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    console.log(typeof userName, typeof password, typeof email);
+    
     if (!email?.trim() || !password?.trim()) {
       res.status(403).json({ message: "All Fields are mandatory" });
       return;
@@ -94,5 +95,7 @@ exports.loginUser = async (req, res, next) => {
         token: token,
       },
     });
-  } catch (err) {}
+  } catch (err) {
+    next(err)
+  }
 };

@@ -1,14 +1,12 @@
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const user = require("../models/user");
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 exports.addMember = async (req, res, next) => {
   try {
     const { memberEmail } = req.body;
-    console.log("bbbodyyy", req.body);
+
     if (!memberEmail?.trim()) {
       res.status(403).json({ message: "Email is required" });
       return;
@@ -40,26 +38,12 @@ exports.addMember = async (req, res, next) => {
     const addedEmailId =
       updatedUser.memberList[updatedUser.memberList.length - 1];
 
-    // if (existingUser) {
-    //   res.status(403).json({ message: "Email is already registered" });
-    //   return;
-    // }
-
-    // const hashedPassword = await bcrypt.hash(password, 10);
-
-    // const user = new User({
-    //   userName: userName,
-    //   email: email.toLowerCase(),
-    //   password: hashedPassword,
-    // });
-
-    // await user.save();
     res.status(201).json({
       message: `${addedEmailId} added to the board`,
       memberList: updatedUser.memberList,
     });
   } catch (err) {
-    console.log(err);
+    next(err)
   }
 };
 
@@ -87,12 +71,12 @@ exports.updateUser = async (req, res, next) => {
         res.status(400).json({ message: "Please enter valid email" });
         return;
       }
-      console.log('email',email)
+
       if (email.toLowerCase() !== userTobeUpdated.email) {
         const isNewEmailAlreadyExist = await User.findOne({
-          email: email
+          email: email?.toLowerCase(),
         });
-        console.log('isNewEmailAlreadyExist',isNewEmailAlreadyExist,'dddddddddddddddddddddddd')
+
         if (isNewEmailAlreadyExist) {
           res.status(400).json({
             message: "This emailId is already exist,use another emailId",
@@ -132,25 +116,26 @@ exports.updateUser = async (req, res, next) => {
       },
     });
   } catch (err) {
-    console.log("EERRRRR", err);
+    next(err)
   }
 };
 
 exports.getUser = async (req, res, next) => {
   try {
     const { userId } = req.params;
-    // console.log("get single task", req.headers);
 
     const user = await User.findOne({ _id: userId });
     if (!user) {
       res.status(404).json({ message: "User not found" });
+      return;
     }
-    // console.log("task", task);
-    const data={userName:user.userName,email:user.email}
 
-    res.status(200).json({ message: "User Details fetched successfully", data: data });
+    const data = { userName: user.userName, email: user.email };
+
+    res
+      .status(200)
+      .json({ message: "User Details fetched successfully", data: data });
   } catch (err) {
-    console.log(err);
+    next(err)
   }
 };
-
