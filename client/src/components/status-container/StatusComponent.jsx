@@ -56,6 +56,7 @@ const StatusComponent = (props) => {
               tickCount={task?.tickCount}
               taskId={task?._id}
               status={task?.status}
+              assignTo={task?.assignTo}
             />
           );
         })}

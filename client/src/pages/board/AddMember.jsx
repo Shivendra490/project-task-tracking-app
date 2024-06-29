@@ -1,19 +1,22 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Modal from "../../components/UI/Modal";
 import styles from "./AddMember.module.css";
 import PropTypes from "prop-types";
 import { addMember } from "../../services/board";
+import BoardContext from "../../store/board-context";
 
 const AddMember = (props) => {
   const [email, setEmail] = useState("");
   const [updatedMessage, setUpdatedMessage] = useState("");
+  const boardCtx=useContext(BoardContext)
   const onChangeEmailHandler = (e) => {
     setEmail(e.target.value);
   };
 
   const onClickAddEmailHandler = async () => {
     const response = await addMember(email);
-    setUpdatedMessage(response.data.message);
+    setUpdatedMessage(response?.data?.message);
+    boardCtx?.updateMemberList(response?.data?.memberList)
     console.log("addMember", response);
   };
 

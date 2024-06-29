@@ -38,8 +38,9 @@ const Board = () => {
 
   async function fetchAll() {
     const response = await fetchAllStatusTask();
-    console.log("useEffect fetchAll status task", response);
+    console.log("useEffect fetchAll status taskkkkkkkkkkkkkkkkkkkkkkkkkkk", response);
     boardCtx?.replaceAllTask(response?.data?.data);
+    boardCtx?.updateMemberList(response?.data?.memberList)
   }
 
   useEffect(() => {

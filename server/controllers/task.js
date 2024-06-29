@@ -1,7 +1,8 @@
 const Task = require("../models/task");
+const User=require(("../models/user"))
 exports.createTask = async (req, res, next) => {
   try {
-    const { title, status, priority, checkList, dueDate, tickCount } = req.body;
+    const { title, status, priority, checkList, dueDate, tickCount,assignTo } = req.body;
     console.log(req.body);
 
     if (
@@ -27,6 +28,7 @@ exports.createTask = async (req, res, next) => {
       checkList,
       userId: req.userId,
       dueDate,
+      assignTo,
       tickCount: tickCount || 0,
     });
 
@@ -40,10 +42,11 @@ exports.getAllStatusTask = async (req, res, next) => {
     console.log("getAllstatustask", req.headers);
 
     const allStatusTask = await Task.find({ userId: req.userId });
-
+    const user=await User.findOne({_id:req.userId})
+    console.log('gggggggggggggggggggg',user)
     res
       .status(200)
-      .json({ message: "All tasks fetched successfully", data: allStatusTask });
+      .json({ message: "All tasks fetched successfully", data: allStatusTask,memberList:user.memberList });
   } catch (err) {
     console.log(err);
   }
@@ -102,6 +105,7 @@ exports.updateTask = async (req, res, next) => {
       tickCount,
       optionId,
       isCheck,
+      assignTo
     } = req.body;
 
     if (
@@ -126,7 +130,7 @@ exports.updateTask = async (req, res, next) => {
       return;
     }
 
-    console.log("oooppppppptionnnn id", optionId, "checklist", checkList);
+   console.log('asssssssssing TToooooo',assignTo)
     if (optionId) {
       taskTobeUpdated.checkList = taskTobeUpdated.checkList.map(
         (currentOption) => {
@@ -147,6 +151,7 @@ exports.updateTask = async (req, res, next) => {
     // taskTobeUpdated.checkList = checkList;
     taskTobeUpdated.userId = userId || taskTobeUpdated.userId;
     taskTobeUpdated.dueDate = dueDate || taskTobeUpdated.dueDate;
+    taskTobeUpdated.assignTo=assignTo || taskTobeUpdated.assignTo;
     taskTobeUpdated.tickCount = taskTobeUpdated?.checkList?.reduce(
       (acc, current) => {
         if (current.isTick) {

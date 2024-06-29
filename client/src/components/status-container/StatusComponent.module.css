@@ -206,6 +206,17 @@
 
 }
 
+.avatar{
+    width:1.5rem;
+    height:1.5rem;
+    background-color:#FFEBEB;
+    display: grid;
+    place-content: center;
+    font-size: 10px;
+    font-weight: 400;
+    border-radius: 50%;
+}
+
 
 
 

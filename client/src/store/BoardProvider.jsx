@@ -5,29 +5,30 @@ import {
   EDIT_TASK,
   REMOVE_TASK,
   REPLACE_ALL_TASK,
+  UPDATE_MEMBERS,
 } from "../constant";
 import PropTypes from "prop-types";
 
 const defaultBoardState = {
   allTaskList: [],
-  // memberList:[]
+  memberList:[]
 };
 
 const boardReducer = (state, action) => {
   if (action.type === REPLACE_ALL_TASK) {
     //
-    return { allTaskList: action.payload };
+    return { ...state,allTaskList: action.payload };
   }
   if (action.type === ADD_TASK) {
     //
     const updatedAllTaskList = [...state.allTaskList, action.payload];
-    return { allTaskList: updatedAllTaskList };
+    return {...state, allTaskList: updatedAllTaskList };
   }
   if (action.type === REMOVE_TASK) {
     const updatedAllTaskList = state.allTaskList.filter(
       (task) => task._id.toString() !== action.payload.toString()
     );
-    return { allTaskList: updatedAllTaskList };
+    return { ...state,allTaskList: updatedAllTaskList };
     //
   }
   if (action.type === EDIT_TASK) {
@@ -43,7 +44,12 @@ const boardReducer = (state, action) => {
       console.log('UPDATEDALLTASKLIST',updatedAllTaskList)
     }
     
-    return { allTaskList: updatedAllTaskList };
+    return { ...state,allTaskList: updatedAllTaskList };
+  }
+  if(action.type===UPDATE_MEMBERS){
+    console.log('rrrrrrrrrrrreducer',action.payload)
+    console.log('stateeee',state)
+    return {...state,memberList:action.payload}
   }
 
   return defaultBoardState;
@@ -71,12 +77,19 @@ const BoardProvider = (props) => {
     dispatchBoardAction({ type: EDIT_TASK, payload: task });
   };
 
+  const updateMembers=(memberList)=>{
+    console.log('bboooooooooooooooooooord',memberList)
+    dispatchBoardAction({type:UPDATE_MEMBERS,payload:memberList})
+  }
+
   const boardContext = {
     allTask: boardState.allTaskList,
+    allMember:boardState.memberList,
     replaceAllTask: replaceAll,
     addTask: addSingleTask,
     removeTask: removeSingleTask,
     editTask: editSingleTask,
+    updateMemberList:updateMembers,
   };
   return (
     <BoardContext.Provider value={boardContext}>

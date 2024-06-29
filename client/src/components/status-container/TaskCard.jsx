@@ -22,6 +22,7 @@ const TaskCard = ({
   taskId,
   onToggleModal,
   tickCount,
+  assignTo,
 }) => {
   const boardCtx = useContext(BoardContext);
   const [showMore, setShowMore] = useState(false);
@@ -44,21 +45,22 @@ const TaskCard = ({
     setShowMenu((prev) => !prev);
   };
 
+  const onClickChangeStatusHandler = async (taskId, moveTo) => {
+    console.log("moveto", moveTo, taskId);
+    const response = await updateTask({ _id: taskId, status: moveTo });
+    boardCtx.editTask(response?.data?.data);
+  };
 
-  const onClickChangeStatusHandler=async(taskId,moveTo)=>{
-    console.log('moveto',moveTo,taskId)
-    const response=await updateTask({_id:taskId,status:moveTo})
-    boardCtx.editTask(response?.data?.data)
-    
-  }
-
-  const onChangeCheckHandler=async(e,optionId,taskId)=>{
-    console.log('event',taskId,optionId,e.target.checked)
-    const response=await updateTask({_id:taskId,optionId:optionId,isCheck:e.target.checked})
-    boardCtx.editTask(response?.data?.data)
+  const onChangeCheckHandler = async (e, optionId, taskId) => {
+    console.log("event", taskId, optionId, e.target.checked);
+    const response = await updateTask({
+      _id: taskId,
+      optionId: optionId,
+      isCheck: e.target.checked,
+    });
+    boardCtx.editTask(response?.data?.data);
     // console.log('onChangeCheckHandler',response)
-    
-  }
+  };
 
   const onClickDeleteHandler = async (taskId) => {
     const response = await deleteTask(taskId);
@@ -81,6 +83,11 @@ const TaskCard = ({
           <div className={styles.dotWrapper}>
             <p className={styles.greenDot}></p>
             <span>{priority?.toUpperCase()} PRIORITY</span>
+            {assignTo && (
+              <div className={styles.avatar} title={assignTo}>
+                {assignTo?.substring(0, 2).toUpperCase()}
+              </div>
+            )}
           </div>
           <div
             className={styles.dotIconWrapper}
@@ -126,7 +133,9 @@ const TaskCard = ({
                   <input
                     type="checkbox"
                     checked={option?.isTick}
-                    onChange={(e)=>onChangeCheckHandler(e,option.optionId,taskId)}
+                    onChange={(e) =>
+                      onChangeCheckHandler(e, option.optionId, taskId)
+                    }
                     className={styles.checkInput}
                   />
                   <input
@@ -142,10 +151,38 @@ const TaskCard = ({
         <div className={styles.cardFooter}>
           <p className={styles.dueDate}>Feb10th</p>
           <div className={styles.actionBtnWrapper}>
-            {status!=="backlog" && <button className={styles.actionBtn} onClick={()=>onClickChangeStatusHandler(taskId,"backlog")}>BACKLOG</button>}
-            {status!=="todo" && <button className={styles.actionBtn} onClick={()=>onClickChangeStatusHandler(taskId,"todo")}>TO-DO</button>}
-            {status!=="progress" && <button className={styles.actionBtn} onClick={()=>onClickChangeStatusHandler(taskId,"progress")}>PROGRESS</button>}
-            {status!=="done" && <button className={styles.actionBtn} onClick={()=>onClickChangeStatusHandler(taskId,"done")}>DONE</button>}
+            {status !== "backlog" && (
+              <button
+                className={styles.actionBtn}
+                onClick={() => onClickChangeStatusHandler(taskId, "backlog")}
+              >
+                BACKLOG
+              </button>
+            )}
+            {status !== "todo" && (
+              <button
+                className={styles.actionBtn}
+                onClick={() => onClickChangeStatusHandler(taskId, "todo")}
+              >
+                TO-DO
+              </button>
+            )}
+            {status !== "progress" && (
+              <button
+                className={styles.actionBtn}
+                onClick={() => onClickChangeStatusHandler(taskId, "progress")}
+              >
+                PROGRESS
+              </button>
+            )}
+            {status !== "done" && (
+              <button
+                className={styles.actionBtn}
+                onClick={() => onClickChangeStatusHandler(taskId, "done")}
+              >
+                DONE
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -162,6 +199,7 @@ TaskCard.propTypes = {
   onToggleModal: PropTypes.func,
   tickCount: PropTypes.number,
   status: PropTypes.string,
+  assignTo: PropTypes.string,
 };
 
 export default TaskCard;
