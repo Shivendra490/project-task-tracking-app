@@ -43,7 +43,7 @@ Backdrop.propTypes = {
 
 ModalOverlay.propTypes = {
   children: PropTypes.element,
-  onCustomModal:PropTypes.string
+  onCustomModal:PropTypes.element
 };
 
 Modal.propTypes = {

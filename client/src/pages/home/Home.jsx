@@ -7,21 +7,27 @@ import logoutIcon from "../../assets/logoutIcon.svg";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { removeUserInfo } from "../../services/localStoage";
 import { useState } from "react";
+import Confirmation from "../../components/UI/Confirmation";
 
 const Home = () => {
   const [logoutModal,setLogoutModal]=useState(false)
   const navigate=useNavigate()
+ 
 
-  const toggleModal=()=>{
+  const toggleConfirmModal=()=>{
     setLogoutModal(prev=>!prev)
   }
 
-  const logoutHandler=()=>{
-    removeUserInfo()
-    navigate("/")
+  const  logoutHandler=()=>{
+    removeUserInfo();
+    toggleConfirmModal();
+    navigate("/");
   }
+
+  
   return (
     <div className={styles.homePage}>
+      {logoutModal && <Confirmation onToggleConfirmModal={toggleConfirmModal} action="Logout" actionHandler={logoutHandler}/>}
       <aside className={styles.aside}>
         <div className={styles.asideNav}>
           <div className={styles.projectNameWrapper}>
@@ -63,7 +69,7 @@ const Home = () => {
           </NavLink>
         </div>
         <div className={styles.logoutWrapper}>
-          <div className={styles.linkWrapper} onClick={logoutHandler}>
+          <div className={styles.linkWrapper} onClick={toggleConfirmModal}>
             <img className={styles.logo} src={logoutIcon} />
             <div className={styles.logout}>Logout</div>
           </div>

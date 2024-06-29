@@ -6,6 +6,7 @@ import userIcon from "../../assets/userIcon.svg";
 import { useEffect, useState } from "react";
 import { getUserDetails, updateUserDetails } from "../../services/board";
 import { removeUserInfo } from "../../services/localStoage";
+import { useNavigate } from "react-router-dom";
 
 const initialUser = {
   userName: "",
@@ -15,6 +16,7 @@ const initialUser = {
 };
 const Setting = () => {
   const [user, setUser] = useState(initialUser);
+  const navigate=useNavigate()
 
   const fetchUserDetails = async () => {
     const response = await getUserDetails();
@@ -27,6 +29,7 @@ const Setting = () => {
     setUser({ ...user, ...response?.data?.data });
     if (response?.data?.doLogout) {
       removeUserInfo();
+      navigate("/")
     } else {
       localStorage.setItem(
         "userName",

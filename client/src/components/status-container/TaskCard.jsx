@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import BoardContext from "../../store/board-context";
 import { deleteTask, updateTask } from "../../services/task";
+import Confirmation from "../UI/Confirmation";
 
 // const buttons = [
 //   { label: "BACKLOG", status: "backlog" },
@@ -27,6 +28,8 @@ const TaskCard = ({
   const boardCtx = useContext(BoardContext);
   const [showMore, setShowMore] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const [toggleConfirm,setToggleConfirm]=useState(false)
+  
   console.log(
     "taskcomponent",
     "taskId",
@@ -45,6 +48,10 @@ const TaskCard = ({
     setShowMenu((prev) => !prev);
   };
 
+  const toggleConfirmModal=()=>{
+    setToggleConfirm(prev=>!prev)
+  }
+
   const onClickChangeStatusHandler = async (taskId, moveTo) => {
     console.log("moveto", moveTo, taskId);
     const response = await updateTask({ _id: taskId, status: moveTo });
@@ -62,7 +69,7 @@ const TaskCard = ({
     // console.log('onChangeCheckHandler',response)
   };
 
-  const onClickDeleteHandler = async (taskId) => {
+  const onClickDeleteHandler = async () => {
     const response = await deleteTask(taskId);
     console.log("deleteHandle in task comp", response);
     boardCtx?.removeTask(taskId);
@@ -79,6 +86,7 @@ const TaskCard = ({
   return (
     <>
       <div className={styles.card}>
+        {toggleConfirm && <Confirmation onToggleConfirmModal={toggleConfirmModal} action="Delete" actionHandler={onClickDeleteHandler}/>}
         <div className={styles.cardHeader}>
           <div className={styles.dotWrapper}>
             <p className={styles[priority]}></p>
@@ -106,7 +114,7 @@ const TaskCard = ({
                 <div className={styles.popupText}>Share</div>
                 <div
                   className={styles.deletePopupText}
-                  onClick={() => onClickDeleteHandler(taskId)}
+                  onClick={() => toggleConfirmModal()}
                 >
                   Delete
                 </div>

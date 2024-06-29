@@ -7,7 +7,6 @@ import dropDownIcon from "../../assets/dropDownIcon.svg";
 import { useContext, useEffect, useState } from "react";
 import { createTask, getTask, updateTask } from "../../services/task";
 
-// import { useNavigate } from "react-router-dom";
 import BoardContext from "../../store/board-context";
 
 const initialTask = {
@@ -41,7 +40,6 @@ const AddEditTask = (props) => {
     setTask({ ...task, assignTo: assignee });
     toggleDropdown();
   };
-  console.log("assssssssssssssingeeeeeeee task", task);
 
   const addCheckListOptionHandler = () => {
     setTask({
@@ -80,7 +78,6 @@ const AddEditTask = (props) => {
       }
     });
     setTask({ ...task, checkList: updatedCheckList });
-    // console.log(value,'changeoption','target',e)
   };
 
   const onChangeTickHandler = (e, optionId) => {
@@ -106,8 +103,6 @@ const AddEditTask = (props) => {
         checkList: updatedCheckList,
       });
     }
-
-    // console.log(checked,'changetick','target',e)
   };
 
   const dateClickHandler = () => {
@@ -115,14 +110,13 @@ const AddEditTask = (props) => {
   };
 
   const onChangeDateHandler = (e) => {
-    // console.log("dateonchange", e);
     setTask({ ...task, dueDate: e.target.value });
   };
 
   const submitHandler = async () => {
     if (props.editId) {
       const response = await updateTask(task);
-      // console.log("Inside edit mode rrrrrrrrrrrresponse", response);
+
       boardCtx.editTask(response?.data?.data);
       return;
     }
@@ -136,13 +130,11 @@ const AddEditTask = (props) => {
   const fetchTask = async (editId) => {
     const response = await getTask(editId);
     setTask(response?.data?.data);
-    // console.log("useEff Res single task", response);
   };
 
   useEffect(() => {
     if (props.editId) {
       fetchTask(props.editId);
-      // console.log("useRunning in ADDEDIT", "ppppp", props.editId);
     }
   }, []);
 
@@ -237,13 +229,6 @@ const AddEditTask = (props) => {
               )}
             </div>
           </div>
-
-          {/* <div className={styles.assignField}>
-            <label className={styles.titleText}>Assign to</label>
-            <select className={styles.select}>
-              <option>abc@gmail.com</option>
-            </select>
-          </div> */}
         </div>
         <div className={styles.createBody}>
           <label className={styles.titleText}>
@@ -299,7 +284,12 @@ const AddEditTask = (props) => {
             onChange={onChangeDateHandler}
           />
           <div className={styles.actionBtnsWrapper}>
-            <button className={styles.secondaryBtn}>Cancel</button>
+            <button
+              className={styles.secondaryBtn}
+              onClick={() => props.onToggleModal()}
+            >
+              Cancel
+            </button>
             <button className={styles.primaryBtn} onClick={submitHandler}>
               Save
             </button>

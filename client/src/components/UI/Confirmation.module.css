@@ -1,0 +1,53 @@
+.customModal {
+    top: 35vh;
+    left: 35%;
+    width: 30%;
+    min-height:30vh;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+  }
+
+  .confirmLogoutContainer{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    gap:1.5rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .question{
+    font-family: "Noto Sans", sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+
+  }
+
+
+.primaryBtn,.secondaryBtn{
+    width:100%;
+    padding:1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+    border-radius: 12px;
+
+  }
+
+  
+  .primaryBtn{
+    color:#FFFFFF;
+    background-color:#17A2B8;
+    border:none;
+  }
+
+  .secondaryBtn{
+    
+    color:#CF3636;
+    background-color: #FFFFFF;
+    border:1px solid #CF3636;
+
+  }
