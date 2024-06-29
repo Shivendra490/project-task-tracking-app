@@ -76,11 +76,13 @@ exports.deleteTask = async (req, res, next) => {
 exports.getTask = async (req, res, next) => {
   try {
     const { taskId } = req.params;
-    console.log("get single task", req.headers);
+    // console.log("get single task", req.headers);
 
     const task = await Task.findOne({ _id: taskId });
+    console.log('taskkkkkkkkkkkkkkk find onee',task)
     if (!task) {
       res.status(404).json({ message: "Task not found" });
+      return
     }
     console.log("task", task);
 

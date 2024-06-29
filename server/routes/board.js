@@ -6,7 +6,9 @@ const { verifyAuth } = require("../middlewares/verifyAuth");
 
 router.post("/add-member",verifyAuth,boardController.addMember)
 
-// router.get("/get-task/:taskId",verifyAuth,taskController.getTask)
+router.patch("/update-user/:userId",verifyAuth,boardController.updateUser)
+
+router.get("/get-user/:userId",verifyAuth,boardController.getUser)
 
 // router.get("/all-status-task",verifyAuth,taskController.getAllStatusTask)
 

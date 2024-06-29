@@ -69,11 +69,25 @@
   /* flex:1; */
 }
 
-.greenDot {
-  width: 8px;
-  height: 8px;
+.low{
+  width:8px;
+  height:8px;
   border-radius: 50%;
-  background-color: green;
+  background-color:#63C05B;
+}
+
+.high{
+  width:8px;
+  height:8px;
+  border-radius: 50%;
+  background-color:#FF2473;
+}
+
+.moderate{
+  width:8px;
+  height:8px;
+  border-radius: 50%;
+  background-color:#18B0FF;
 }
 
 .priorityBtn span {
@@ -158,6 +172,7 @@
   width:2.5rem;
   height: 2.5rem;
   border-radius: 50%;
+  font-family: "DM Sans", sans-serif;
   background-color:#FFEBEB;
   display: grid;
   place-content: center;

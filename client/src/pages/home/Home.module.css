@@ -20,12 +20,17 @@
   gap: 1rem;
 }
 
-.linkWrapper {
+.projectNameWrapper,.linkWrapper {
   display: flex;
   align-items: center;
   gap: 1rem;
   padding: 0.5rem 0;
   padding-left: 2.5vw;
+}
+
+.linkWrapper:hover{
+  background-color:#ecf3fd;
+  cursor:pointer;
 }
 
 .logo {

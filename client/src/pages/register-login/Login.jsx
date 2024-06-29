@@ -4,14 +4,19 @@ import authImg from "../../assets/authImg.png";
 import { PiEnvelopeSimpleLight } from "react-icons/pi";
 import { CiLock } from "react-icons/ci";
 import { PiEyeLight } from "react-icons/pi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { loginUser } from "../../services/auth";
-import { storeUserInfo } from "../../services/localStoage";
+import { getUserInfo, storeUserInfo } from "../../services/localStoage";
+import { useNavigate } from "react-router-dom";
+
+
 
 
 
 const Login = () => {
   const [user,setUser]=useState({email:"",password:""})
+  const navigate=useNavigate()
+  const {token,email,userId,userName}=getUserInfo()
   const onChangeHandler=(e)=>{
     const {name,value}=e.target;
     setUser({...user,[name]:value})
@@ -24,9 +29,20 @@ const Login = () => {
       //show error toast
       return
     }
-    const {token,userId,email}=response.data.data
-    storeUserInfo(token,userId,email)
+    console.log("USERNAMELOGIN",response)
+    const {token,userId,email,userName}=response.data.data
+    storeUserInfo(token,userId,email,userName)
+    navigate("/home")
   }
+
+  useEffect(()=>{
+    if(token && email && userId && userName){
+      navigate("/home")
+    }
+
+  },[])
+
+
   return (
     <div className={styles.authPage}>
       <section className={styles.left}>
@@ -62,7 +78,7 @@ const Login = () => {
           <div className={styles.formFooter}>
             <button type="submit" className={styles.primaryBtn}>Login</button>
             <p className={styles.haveAccount}>Have no account yet?</p>
-            <button type="button" className={styles.secondaryBtn}>Register</button>
+            <button type="button" className={styles.secondaryBtn} onClick={()=>navigate("/register")}>Register</button>
           </div>
         </form>
       </section>

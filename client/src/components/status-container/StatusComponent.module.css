@@ -74,11 +74,25 @@
     color:#707070
 }
 
-.greenDot{
+.low{
     width:8px;
     height:8px;
     border-radius: 50%;
-    background-color: green;
+    background-color:#63C05B;
+}
+
+.high{
+    width:8px;
+    height:8px;
+    border-radius: 50%;
+    background-color:#FF2473;
+}
+
+.moderate{
+    width:8px;
+    height:8px;
+    border-radius: 50%;
+    background-color:#18B0FF;
 }
 
 .dotIconWrapper{
@@ -215,6 +229,7 @@
     font-size: 10px;
     font-weight: 400;
     border-radius: 50%;
+    font-family: "DM Sans", sans-serif;
 }
 
 

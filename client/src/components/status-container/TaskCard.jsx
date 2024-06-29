@@ -81,7 +81,7 @@ const TaskCard = ({
       <div className={styles.card}>
         <div className={styles.cardHeader}>
           <div className={styles.dotWrapper}>
-            <p className={styles.greenDot}></p>
+            <p className={styles[priority]}></p>
             <span>{priority?.toUpperCase()} PRIORITY</span>
             {assignTo && (
               <div className={styles.avatar} title={assignTo}>

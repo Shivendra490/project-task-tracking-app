@@ -1,0 +1,65 @@
+.analyticsPage {
+    background-color:#FFFFFF;
+    height: 100vh;
+    padding:1.25rem;
+    font-family: "Open Sans", sans-serif;
+  }
+
+  .heading {
+    font-weight: 600;
+    font-size: 22px;
+    padding-bottom: 1.25rem;
+  }
+
+
+  .infoSection{
+    display:flex;
+    justify-content: flex-start;
+    gap:1.5rem;
+    padding:1rem;
+  }
+
+  .ulContainer{
+    display: flex;
+    flex-direction: column;
+    background-color:#F9FCFF;
+    width:30%;
+    padding:1rem;
+    gap:1rem;
+  }
+
+  .detailField{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+ .dotLabelWrapper{
+  display: flex;
+  align-items: center;
+  gap:.5rem;
+
+ }
+
+ .label{
+  font-size: 18px;
+  font-weight: 400;
+ }
+
+ .count{
+  font-size: 1.25rem;
+  font-weight: 600;
+ }
+
+ .dot{
+  width:12px;
+  height:12px;
+  background-color:#90C4CC;
+  border-radius: 50%;
+ }
+
+  
+
+
+
+ 

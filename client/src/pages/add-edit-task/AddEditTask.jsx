@@ -177,7 +177,7 @@ const AddEditTask = (props) => {
               }`}
               onClick={() => priorityClickHandler("high")}
             >
-              <p className={styles.greenDot}></p>
+              <p className={styles.high}></p>
               <span>HIGH PRIORITY</span>
             </button>
             <button
@@ -186,7 +186,7 @@ const AddEditTask = (props) => {
               }`}
               onClick={() => priorityClickHandler("moderate")}
             >
-              <p className={styles.greenDot}></p>
+              <p className={styles.moderate}></p>
               <span>MODERATE PRIORITY</span>
             </button>
             <button
@@ -195,7 +195,7 @@ const AddEditTask = (props) => {
               }`}
               onClick={() => priorityClickHandler("low")}
             >
-              <p className={styles.greenDot}></p>
+              <p className={styles.low}></p>
               <span>LOW PRIORITY</span>
             </button>
           </div>

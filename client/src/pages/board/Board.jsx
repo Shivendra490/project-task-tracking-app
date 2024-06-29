@@ -6,10 +6,12 @@ import { fetchAllStatusTask } from "../../services/task";
 
 import BoardContext from "../../store/board-context";
 import AddMember from "./AddMember";
+import { getUserInfo } from "../../services/localStoage";
 
 const Board = () => {
   const [addMemberMode,setAddMemberMode]=useState(false)
   const boardCtx = useContext(BoardContext);
+  const {userName}=getUserInfo()
 
   const todoList = [];
   const progressList = [];
@@ -51,7 +53,7 @@ const Board = () => {
     <main className={styles.boardPage}>
       {addMemberMode && <AddMember onToggleAddMemberMode={toggleAddMemberMode}/>}
       <div className={styles.nameDateWrapper}>
-        <h2 className={styles.name}>Welcome! Username</h2>
+        <h2 className={styles.name}>Welcome! {userName || "User"}</h2>
         <div className={styles.date}>12 Jan,2024</div>
       </div>
       <div className={styles.headingFilterWrapper}>

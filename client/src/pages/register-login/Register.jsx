@@ -6,18 +6,24 @@ import { PiEnvelopeSimpleLight } from "react-icons/pi";
 import { CiLock } from "react-icons/ci";
 import { PiEyeLight } from "react-icons/pi";
 import userIcon from "../../assets/userIcon.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { registerUser } from "../../services/auth";
+import { useNavigate } from "react-router-dom";
+import { getUserInfo } from "../../services/localStoage";
 
 const initialUser={userName:"",email:"",password:"",confirmPassword:""}
 
 const Register = () => {
   const [user,setUser]=useState(initialUser)
+  const navigate=useNavigate()
+  const {token,email,userId,userName}=getUserInfo()
 
   const onChangeHandler=(e)=>{
     const {name,value}=e.target
     setUser({...user,[name]:value})
   }
+
+
 
   const onSubmitHandler=async(e)=>{
     e.preventDefault()
@@ -32,6 +38,13 @@ const Register = () => {
     console.log('user',user,'res',response)
 
   }
+
+  useEffect(()=>{
+    if(token && email && userId && userName){
+      navigate("/home")
+    }
+
+  },[])
   return (
     <div className={styles.authPage}>
       <section className={styles.left}>
@@ -82,7 +95,7 @@ const Register = () => {
           <div className={styles.formFooter}>
             <button type="submit" className={styles.primaryBtn}>Register</button>
             <p className={styles.haveAccount}>Have an account ?</p>
-            <button type="button" className={styles.secondaryBtn}>Login</button>
+            <button type="button" className={styles.secondaryBtn} onClick={()=>navigate("/")}>Login</button>
           </div>
         </form>
       </section>

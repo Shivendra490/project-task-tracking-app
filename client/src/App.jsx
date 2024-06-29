@@ -6,6 +6,8 @@ import Register from "./pages/register-login/Register";
 import Board from "./pages/board/Board";
 import Analytics from "./pages/analytics/Analytics";
 import Setting from "./pages/setting/Setting";
+import ProtectedRoute from "./components/ProtectedRoute";
+
 
 // import BoardProvider from "./store/BoardProvider";
 // import AddEditTask from "./pages/add-edit-task/AddEditTask";
@@ -16,7 +18,7 @@ function App() {
       <BrowserRouter>
         <Routes>
         <Route path="/" element={<Login />} />
-          <Route path="/home" element={<Home/>}>
+          <Route path="/home" element={<ProtectedRoute><Home/></ProtectedRoute>}>
             <Route index element={<Board/>} />
             <Route path="/home/analytics" element={<Analytics/>} />
             <Route path="/home/setting" element={<Setting/>} />
