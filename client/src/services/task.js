@@ -16,15 +16,16 @@ const createTask=async(task)=>{
     }
 }
 
-const fetchAllStatusTask=async()=>{
+const fetchAllStatusTask=async(filter)=>{
     const {token}=getUserInfo()
+    console.log('IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII',filter)
   
     try{
         const headers={
             authorization:token,
             "Content-Type":"application/json"
         }
-        const response=axios.get(`${DOMAIN}/task/all-status-task`,{headers})
+        const response=axios.get(`${DOMAIN}/task/all-status-task?filter=${filter}`,{headers})
         return response
     }catch(err){
         return err.response
@@ -78,4 +79,20 @@ const updateTask=async(task)=>{
     }
 }
 
-export {createTask,fetchAllStatusTask,deleteTask,getTask,updateTask} 
+
+const fetchTaskStatusCounts=async()=>{
+    const {token,userId}=getUserInfo()
+  
+    try{
+        const headers={
+            authorization:token,
+            "Content-Type":"application/json"
+        }
+        const response=axios.get(`${DOMAIN}/task/task-status-counts/${userId}`,{headers})
+        return response
+    }catch(err){
+        return err.response
+    }
+}
+
+export {createTask,fetchAllStatusTask,deleteTask,getTask,updateTask,fetchTaskStatusCounts} 

@@ -1,4 +1,7 @@
+import { useEffect, useState } from "react";
 import styles from "./Analytics.module.css";
+import { fetchTaskStatusCounts } from "../../services/task";
+
 
 const initialInfoList = [
   { label: "Backlog Tasks", count: 0 },
@@ -12,12 +15,21 @@ const initialInfoList = [
 ];
 
 const Analytics = () => {
+  const [infoList,setInfoList]=useState(initialInfoList)
+  console.log(setInfoList)
+  const fetchTaskInfo=async()=>{
+    const response=await fetchTaskStatusCounts()
+    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaarr',response.data.taskCount)
+  }
+  useEffect(()=>{
+    fetchTaskInfo()
+  },[])
   return (
     <div className={styles.analyticsPage}>
       <h1 className={styles.heading}>Analytics</h1>
       <section className={styles.infoSection}>
         <ul className={styles.ulContainer}>
-          {initialInfoList?.slice(0,4).map((info,index) => {
+          {infoList?.slice(0,4).map((info,index) => {
             return (
               <div className={styles.detailField} key={index}>
                 <div className={styles.dotLabelWrapper}>
@@ -31,7 +43,7 @@ const Analytics = () => {
         </ul>
 
         <ul className={styles.ulContainer}>
-          {initialInfoList?.slice(4).map((info,index) => {
+          {infoList?.slice(4).map((info,index) => {
             return (
               <div className={styles.detailField} key={index}>
                 <div className={styles.dotLabelWrapper}>

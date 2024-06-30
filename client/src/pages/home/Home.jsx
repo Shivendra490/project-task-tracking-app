@@ -10,24 +10,28 @@ import { useState } from "react";
 import Confirmation from "../../components/UI/Confirmation";
 
 const Home = () => {
-  const [logoutModal,setLogoutModal]=useState(false)
-  const navigate=useNavigate()
- 
+  const [logoutModal, setLogoutModal] = useState(false);
+  const navigate = useNavigate();
 
-  const toggleConfirmModal=()=>{
-    setLogoutModal(prev=>!prev)
-  }
+  const toggleConfirmModal = () => {
+    setLogoutModal((prev) => !prev);
+  };
 
-  const  logoutHandler=()=>{
+  const logoutHandler = () => {
     removeUserInfo();
     toggleConfirmModal();
     navigate("/");
-  }
+  };
 
-  
   return (
     <div className={styles.homePage}>
-      {logoutModal && <Confirmation onToggleConfirmModal={toggleConfirmModal} action="Logout" actionHandler={logoutHandler}/>}
+      {logoutModal && (
+        <Confirmation
+          onToggleConfirmModal={toggleConfirmModal}
+          action="Logout"
+          actionHandler={logoutHandler}
+        />
+      )}
       <aside className={styles.aside}>
         <div className={styles.asideNav}>
           <div className={styles.projectNameWrapper}>
@@ -83,5 +87,3 @@ const Home = () => {
 };
 
 export default Home;
-
-

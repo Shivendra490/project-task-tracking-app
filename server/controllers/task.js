@@ -41,24 +41,41 @@ exports.createTask = async (req, res, next) => {
 
 exports.getAllStatusTask = async (req, res, next) => {
   try {
-    console.log("getAllstatustask", req.headers);
+    const { filter } = req.query;
+    console.log("qqqqqqqqqqqreyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy_filter", filter);
+    let day = 7;
+    if (filter === "today") {
+      day = 1;
+    } else if (filter === "month") {
+      day = 30;
+    } else {
+      day = 7;
+    }
+    const daysAgo = new Date();
+    daysAgo.setDate(daysAgo.getDate() - day);
 
-    const allStatusTask = await Task.find({ userId: req.userId });
+    const allStatusTask = await Task.find({
+      $and: [
+        {
+          $or: [{ userId: req.userId }, { assignTo: req.email }],
+        },
+        { createdAt: { $gte: daysAgo } },
+      ],
+    }).sort({ createdAt: 1 });
+
     const user = await User.findOne({ _id: req.userId });
-    if(!allStatusTask || !user){
-      res.status(404).json({message:"tasks or user does not exist"})
-      return 
+    if (!allStatusTask || !user) {
+      res.status(404).json({ message: "tasks or user does not exist" });
+      return;
     }
 
-    res
-      .status(200)
-      .json({
-        message: "All tasks fetched successfully",
-        data: allStatusTask,
-        memberList: user.memberList || [],
-      });
+    res.status(200).json({
+      message: "All tasks fetched successfully",
+      data: allStatusTask,
+      memberList: user.memberList || [],
+    });
   } catch (err) {
-    next(err)
+    next(err);
   }
 };
 
@@ -70,14 +87,20 @@ exports.deleteTask = async (req, res, next) => {
     if (!taskTobeDeleted) {
       res.status(404).json({ message: "Task not found" });
     }
-    if (taskTobeDeleted.userId.toString() !== req.userId.toString()) {
-      res.status(402).json({ message: "Unauthorized to deleted" });
+
+    if (
+      taskTobeDeleted.userId.toString() !== req.userId.toString() &&
+      taskTobeDeleted.assignTo !== req.email
+    ) {
+      res.status(402).json({ message: "Unauthorized to delete" });
+      return;
     }
+
     const deletedTask = await Task.findOneAndDelete({ _id: taskId });
 
     res.status(200).json({ message: "Task Deleted", data: deletedTask });
   } catch (err) {
-    next(err)
+    next(err);
   }
 };
 
@@ -94,7 +117,7 @@ exports.getTask = async (req, res, next) => {
 
     res.status(200).json({ message: "Task fetched successfully", data: task });
   } catch (err) {
-    next(err)
+    next(err);
   }
 };
 
@@ -133,7 +156,10 @@ exports.updateTask = async (req, res, next) => {
       res.status(404).json({ message: "Task not found" });
       return;
     }
-    if (taskTobeUpdated.userId.toString() !== req.userId.toString()) {
+    if (
+      taskTobeUpdated.userId.toString() !== req.userId.toString() &&
+      taskTobeUpdated.assignTo !== req.email
+    ) {
       res.status(402).json({ message: "Unauthorized to update" });
       return;
     }
@@ -175,6 +201,48 @@ exports.updateTask = async (req, res, next) => {
       .status(200)
       .json({ message: "Task Updated successfully", data: updatedTask });
   } catch (err) {
-    next(err)
+    next(err);
+  }
+};
+
+exports.getTaskStatusCounts = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+
+    const allTasks = await Task.find({
+      $or: [{ userId: userId }, { assignTo: req.email }],
+    });
+
+    let taskCount = {
+      high: 0,
+      low: 0,
+      moderate: 0,
+      backlog: 0,
+      progress: 0,
+      todo: 0,
+      done: 0,
+      dueDate: 0,
+    };
+    allTasks?.map((task) => {
+      taskCount[task["priority"]] += 1;
+      taskCount[task["status"]] += 1;
+      if (task?.dueDate) {
+        taskCount.dueDate = taskCount.dueDate + 1;
+      }
+    });
+
+    const arrayOfObjects = Object.entries(taskCount).map((arr) => {
+      return { [arr[0]]: arr[1] };
+    });
+
+    console.log("ttttttCCCCCC", taskCount);
+
+    res.status(200).json({
+      message: "All tasks Status Counhtssss",
+      userId: userId,
+      taskCount: arrayOfObjects,
+    });
+  } catch (err) {
+    next(err);
   }
 };

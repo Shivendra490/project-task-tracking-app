@@ -14,4 +14,6 @@ router.delete("/delete-task/:taskId", verifyAuth, taskController.deleteTask);
 
 router.patch("/update-task/:taskId", verifyAuth, taskController.updateTask);
 
+router.get("/task-status-counts/:userId", verifyAuth, taskController.getTaskStatusCounts);
+
 module.exports = router;

@@ -11,6 +11,7 @@ exports.verifyAuth = async (req, res, next) => {
     const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
 
     req.userId = decodedToken.userId;
+    req.email=decodedToken.email
     next();
   } catch (err) {
     res.status(400).json({ message: "Invalid Token" });

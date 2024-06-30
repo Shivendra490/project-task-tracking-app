@@ -7,17 +7,25 @@ import { fetchAllStatusTask } from "../../services/task";
 import BoardContext from "../../store/board-context";
 import AddMember from "./AddMember";
 import { getUserInfo } from "../../services/localStoage";
+import { formatDate } from "../../utility";
 
 const Board = () => {
-  const [addMemberMode,setAddMemberMode]=useState(false)
+  const [addMemberMode, setAddMemberMode] = useState(false);
   const boardCtx = useContext(BoardContext);
-  const {userName}=getUserInfo()
+  const [filter, setFilter] = useState("week");
+  const { userName } = getUserInfo();
+
+  const onChangeFilterHandler=(e)=>{
+    // console.log('client filter change',e.target.value)
+    setFilter(e.target.value)
+  }
+  console.log('filllllllllllllllllllllllterrrrrrrrrrrr',filter)
 
   const todoList = [];
   const progressList = [];
   const backlogList = [];
   const doneList = [];
- 
+
   boardCtx?.allTask?.forEach((task) => {
     // console.log("insideforeach", task, index);
 
@@ -34,39 +42,49 @@ const Board = () => {
   });
   // console.log("xxxx", todoList, progressList, backlogList, doneList);
 
-  const toggleAddMemberMode=()=>{
-    setAddMemberMode(prev=>!prev)
-  }
+  const toggleAddMemberMode = () => {
+    setAddMemberMode((prev) => !prev);
+  };
 
-  async function fetchAll() {
-    const response = await fetchAllStatusTask();
-    console.log("useEffect fetchAll status taskkkkkkkkkkkkkkkkkkkkkkkkkkk", response);
+  async function fetchAll(filter) {
+    const response = await fetchAllStatusTask(filter);
+    console.log(
+      "useEffect fetchAll status taskkkkkkkkkkkkkkkkkkkkkkkkkkk",
+      response
+    );
     boardCtx?.replaceAllTask(response?.data?.data);
-    boardCtx?.updateMemberList(response?.data?.memberList)
+    boardCtx?.updateMemberList(response?.data?.memberList);
   }
 
   useEffect(() => {
-    fetchAll();
-  }, []);
+    fetchAll(filter);
+  }, [filter]);
+
+  const currentDate=new Date()
 
   return (
     <main className={styles.boardPage}>
-      {addMemberMode && <AddMember onToggleAddMemberMode={toggleAddMemberMode}/>}
+      {addMemberMode && (
+        <AddMember onToggleAddMemberMode={toggleAddMemberMode} />
+      )}
       <div className={styles.nameDateWrapper}>
         <h2 className={styles.name}>Welcome! {userName || "User"}</h2>
-        <div className={styles.date}>12 Jan,2024</div>
+        <div className={styles.date}>{formatDate(currentDate)}</div>
       </div>
       <div className={styles.headingFilterWrapper}>
         <div className={styles.boardIconWrapper}>
           <h1 className={styles.heading}>Board</h1>
-          <div className={styles.peopleIconWrapper} onClick={toggleAddMemberMode}>
+          <div
+            className={styles.peopleIconWrapper}
+            onClick={toggleAddMemberMode}
+          >
             <img src={peopleIcon} alt="people Icon" />
             <span>Add People</span>
           </div>
         </div>
-        <select className={styles.filter}>
-          <option value="week">This Week</option>
+        <select className={styles.filter} value={filter} onChange={onChangeFilterHandler}>
           <option value="today">Today</option>
+          <option value="week">This Week</option>
           <option value="month">This Month</option>
         </select>
       </div>
