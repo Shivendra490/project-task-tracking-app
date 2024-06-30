@@ -24,7 +24,7 @@ const initialTask = {
 const AddEditTask = (props) => {
   const [task, setTask] = useState(initialTask);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [error,setError]=useState(null)
+  const [error, setError] = useState(null);
   const boardCtx = useContext(BoardContext);
   const { userId } = getUserInfo();
   console.log(userId);
@@ -32,7 +32,6 @@ const AddEditTask = (props) => {
   // const dateRef=useRef()
   // console.log("editIt", props.editId);
   // console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv TASK", task);
-  
 
   const toggleDropdown = () => {
     setShowDropdown((prev) => !prev);
@@ -161,14 +160,25 @@ const AddEditTask = (props) => {
     }
   }, []);
 
-  const checking=!props?.editId && !task?._id && boardCtx?.allMember?.length>0
-  
+  const checking =
+    !props?.editId && !task?._id && boardCtx?.allMember?.length > 0;
 
-  console.log('checkinggggggggggggggggggggggggggggggggggggggg',checking)
-  console.log('editid',props?.editId,'taaaask Id',task?._id,'boooooooord',boardCtx?.allMember?.length)
+  console.log("checkinggggggggggggggggggggggggggggggggggggggg", checking);
+  console.log(
+    "editid",
+    props?.editId,
+    "taaaask Id",
+    task?._id,
+    "boooooooord",
+    boardCtx?.allMember?.length
+  );
 
-  const adminEditMode=props?.editId  && task?.userId?.toString()===userId?.toString()
-  const assigneeEditMode=props?.editId && task._id && task?.userId?.toString()!==userId?.toString()
+  const adminEditMode =
+    props?.editId && task?.userId?.toString() === userId?.toString();
+  const assigneeEditMode =
+    props?.editId &&
+    task._id &&
+    task?.userId?.toString() !== userId?.toString();
 
   return (
     <Modal
@@ -193,39 +203,39 @@ const AddEditTask = (props) => {
           </div>
 
           <div className={styles.errorFieldWrapper}>
-          <div className={styles.priorityField}>
-            <label className={styles.titleText}>
-              Select Priority<span className={styles.star}>*</span>
-            </label>
-            <button
-              className={`${styles.priorityBtn} ${
-                task.priority === "high" ? styles.active : ""
-              }`}
-              onClick={() => priorityClickHandler("high")}
-            >
-              <p className={styles.high}></p>
-              <span>HIGH PRIORITY</span>
-            </button>
-            <button
-              className={`${styles.priorityBtn} ${
-                task.priority === "moderate" ? styles.active : ""
-              }`}
-              onClick={() => priorityClickHandler("moderate")}
-            >
-              <p className={styles.moderate}></p>
-              <span>MODERATE PRIORITY</span>
-            </button>
-            <button
-              className={`${styles.priorityBtn} ${
-                task.priority === "low" ? styles.active : ""
-              }`}
-              onClick={() => priorityClickHandler("low")}
-            >
-              <p className={styles.low}></p>
-              <span>LOW PRIORITY</span>
-            </button>
-          </div>
-          {error && <p className={styles.error}>{error?.priority}</p>}
+            <div className={styles.priorityField}>
+              <label className={styles.titleText}>
+                Select Priority<span className={styles.star}>*</span>
+              </label>
+              <button
+                className={`${styles.priorityBtn} ${
+                  task.priority === "high" ? styles.active : ""
+                }`}
+                onClick={() => priorityClickHandler("high")}
+              >
+                <p className={styles.high}></p>
+                <span>HIGH PRIORITY</span>
+              </button>
+              <button
+                className={`${styles.priorityBtn} ${
+                  task.priority === "moderate" ? styles.active : ""
+                }`}
+                onClick={() => priorityClickHandler("moderate")}
+              >
+                <p className={styles.moderate}></p>
+                <span>MODERATE PRIORITY</span>
+              </button>
+              <button
+                className={`${styles.priorityBtn} ${
+                  task.priority === "low" ? styles.active : ""
+                }`}
+                onClick={() => priorityClickHandler("low")}
+              >
+                <p className={styles.low}></p>
+                <span>LOW PRIORITY</span>
+              </button>
+            </div>
+            {error && <p className={styles.error}>{error?.priority}</p>}
           </div>
 
           <div className={styles.assignField}>
@@ -243,46 +253,58 @@ const AddEditTask = (props) => {
               </div>
               {showDropdown && (
                 <div className={styles.customDropDown}>
-                  {assigneeEditMode && <p className={styles.emailText}>only task creator can reassign</p>}
+                  {assigneeEditMode && (
+                    <p className={styles.emailText}>
+                      only task creator can reassign
+                    </p>
+                  )}
                   {adminEditMode &&
-                  boardCtx?.allMember.map((memberEmail) => {
-                    return (
-                      <div key={memberEmail} className={styles.optionWrapper}>
-                        <div className={styles.avatar}>
-                          {memberEmail?.substring(0, 2)?.toUpperCase()}
+                    boardCtx?.allMember.map((memberEmail) => {
+                      return (
+                        <div key={memberEmail} className={styles.optionWrapper}>
+                          <div className={styles.avatar}>
+                            {memberEmail?.substring(0, 2)?.toUpperCase()}
+                          </div>
+                          <p className={styles.emailText}>{memberEmail}</p>
+                          <button
+                            className={`${styles.assignBtn} ${
+                              memberEmail === task?.assignTo
+                                ? styles.active
+                                : ""
+                            }`}
+                            onClick={() => onClickAssignHandler(memberEmail)}
+                          >
+                            Assign
+                          </button>
                         </div>
-                        <p className={styles.emailText}>{memberEmail}</p>
-                        <button
-                          className={`${styles.assignBtn} ${
-                            memberEmail === task?.assignTo ? styles.active : ""
-                          }`}
-                          onClick={() => onClickAssignHandler(memberEmail)}
-                        >
-                          Assign
-                        </button>
-                      </div>
-                    );
-                  })}
-                  {(!props?.editId && !task?._id && boardCtx?.allMember?.length>0) ?
-                  boardCtx?.allMember.map((memberEmail) => {
-                    return (
-                      <div key={memberEmail} className={styles.optionWrapper}>
-                        <div className={styles.avatar}>
-                          {memberEmail?.substring(0, 2)?.toUpperCase()}
+                      );
+                    })}
+                  {!props?.editId &&
+                  !task?._id &&
+                  boardCtx?.allMember?.length > 0 ? (
+                    boardCtx?.allMember.map((memberEmail) => {
+                      return (
+                        <div key={memberEmail} className={styles.optionWrapper}>
+                          <div className={styles.avatar}>
+                            {memberEmail?.substring(0, 2)?.toUpperCase()}
+                          </div>
+                          <p className={styles.emailText}>{memberEmail}</p>
+                          <button
+                            className={`${styles.assignBtn} ${
+                              memberEmail === task?.assignTo
+                                ? styles.active
+                                : ""
+                            }`}
+                            onClick={() => onClickAssignHandler(memberEmail)}
+                          >
+                            rssign
+                          </button>
                         </div>
-                        <p className={styles.emailText}>{memberEmail}</p>
-                        <button
-                          className={`${styles.assignBtn} ${
-                            memberEmail === task?.assignTo ? styles.active : ""
-                          }`}
-                          onClick={() => onClickAssignHandler(memberEmail)}
-                        >
-                          rssign
-                        </button>
-                      </div>
-                    );
-                  })
-                :  <p className={styles.emailText}>0</p>}
+                      );
+                    })
+                  ) : (
+                    <p className={styles.emailText}>0</p>
+                  )}
                 </div>
               )}
             </div>

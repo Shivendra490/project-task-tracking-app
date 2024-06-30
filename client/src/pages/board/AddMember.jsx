@@ -8,7 +8,7 @@ import BoardContext from "../../store/board-context";
 const AddMember = (props) => {
   const [email, setEmail] = useState("");
   const [updatedMessage, setUpdatedMessage] = useState("");
-  const boardCtx=useContext(BoardContext)
+  const boardCtx = useContext(BoardContext);
   const onChangeEmailHandler = (e) => {
     setEmail(e.target.value);
   };
@@ -16,8 +16,7 @@ const AddMember = (props) => {
   const onClickAddEmailHandler = async () => {
     const response = await addMember(email);
     setUpdatedMessage(response?.data?.message);
-    boardCtx?.updateMemberList(response?.data?.memberList)
-    console.log("addMember", response);
+    boardCtx?.updateMemberList(response?.data?.memberList);
   };
 
   return (
@@ -28,10 +27,13 @@ const AddMember = (props) => {
       <div className={styles.addMemberContainer}>
         {updatedMessage ? (
           <>
-            <h1 className={styles.heading}>
-              {updatedMessage}
-            </h1>
-            <button className={styles.okBtn} onClick={props.onToggleAddMemberMode}>Okay, got it!</button>{" "}
+            <h1 className={styles.heading}>{updatedMessage}</h1>
+            <button
+              className={styles.okBtn}
+              onClick={props.onToggleAddMemberMode}
+            >
+              Okay, got it!
+            </button>{" "}
           </>
         ) : (
           <>

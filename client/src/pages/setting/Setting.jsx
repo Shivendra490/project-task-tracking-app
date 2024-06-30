@@ -16,12 +16,12 @@ const initialUser = {
 };
 const Setting = () => {
   const [user, setUser] = useState(initialUser);
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
   const fetchUserDetails = async () => {
     const response = await getUserDetails();
     setUser({ ...user, ...response?.data?.data });
-    console.log("eeeeeeeeeeeeeeerrrrrrrrrrrrrrrrrrresponse setting", response);
+    console.log("setting", response);
   };
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -29,15 +29,13 @@ const Setting = () => {
     setUser({ ...user, ...response?.data?.data });
     if (response?.data?.doLogout) {
       removeUserInfo();
-      navigate("/")
+      navigate("/");
     } else {
       localStorage.setItem(
         "userName",
         JSON.stringify(response?.data?.data?.userName)
       );
     }
-
-    console.log("updateuser res", response);
   };
 
   const onChangeHandler = (e) => {

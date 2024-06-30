@@ -1,5 +1,3 @@
-
-
 const getOrdinalIndicator = (day) => {
   if (day === 1 || day === 21 || day === 31) {
     return "st";
@@ -12,7 +10,7 @@ const getOrdinalIndicator = (day) => {
   }
 };
 
-const formatDate = (date, length="short") => {
+const formatDate = (date, length = "short") => {
   const day = date.getDate();
   const suffix = getOrdinalIndicator(day);
   const month = date.toLocaleString("default", { month: "short" });
@@ -31,6 +29,5 @@ const dueDatePassed = (jsDueDate) => {
   } else {
     return true;
   }
-
 };
 export { formatDate, dueDatePassed };

@@ -32,20 +32,8 @@ const TaskCard = ({
   const [showMenu, setShowMenu] = useState(false);
   const [toggleConfirm, setToggleConfirm] = useState(false);
   const jsDueDate = dueDate && new Date(dueDate);
-  // console.log("JSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS",dueDate,jsDueDate)
 
   const isDueDatePassed = jsDueDate && dueDatePassed(jsDueDate);
-  console.log("REEEEEEEEEEEEEEEEEEEESUUUUUUUUULTTTTTTTT", isDueDatePassed);
-
-  console.log(
-    "taskcomponent",
-    "taskId",
-    taskId,
-    typeof taskId,
-    collapseAll,
-    priority,
-    checkList
-  );
 
   const toggleCollapseHandler = () => {
     setShowMore((prev) => !prev);
@@ -60,20 +48,17 @@ const TaskCard = ({
   };
 
   const onClickChangeStatusHandler = async (taskId, moveTo) => {
-    console.log("moveto", moveTo, taskId);
     const response = await updateTask({ _id: taskId, status: moveTo });
     boardCtx.editTask(response?.data?.data);
   };
 
   const onChangeCheckHandler = async (e, optionId, taskId) => {
-    console.log("event", taskId, optionId, e.target.checked);
     const response = await updateTask({
       _id: taskId,
       optionId: optionId,
       isCheck: e.target.checked,
     });
     boardCtx.editTask(response?.data?.data);
-    // console.log('onChangeCheckHandler',response)
   };
 
   const onClickDeleteHandler = async () => {
@@ -163,6 +148,7 @@ const TaskCard = ({
                     type="text"
                     value={option?.checkText}
                     className={styles.input}
+                    onChange={()=>{console.log('replace ip to p')}}
                   />
                 </div>
               );
@@ -232,7 +218,7 @@ TaskCard.propTypes = {
   tickCount: PropTypes.number,
   status: PropTypes.string,
   assignTo: PropTypes.string,
-  dueDate:PropTypes.string
+  dueDate: PropTypes.string,
 };
 
 export default TaskCard;

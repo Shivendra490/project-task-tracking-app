@@ -12,14 +12,12 @@ import { useNavigate } from "react-router-dom";
 import { getUserInfo } from "../../services/localStoage";
 import { validateRegisterForm } from "../../utility/validateForm";
 
-
 const initialUser = {
   userName: "",
   email: "",
   password: "",
   confirmPassword: "",
 };
-// const error={userName:"",email:"",password:"",confirmPassword:""}
 
 const Register = () => {
   const [user, setUser] = useState(initialUser);

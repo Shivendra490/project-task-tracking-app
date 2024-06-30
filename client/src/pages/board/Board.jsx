@@ -15,11 +15,9 @@ const Board = () => {
   const [filter, setFilter] = useState("week");
   const { userName } = getUserInfo();
 
-  const onChangeFilterHandler=(e)=>{
-    // console.log('client filter change',e.target.value)
-    setFilter(e.target.value)
-  }
-  console.log('filllllllllllllllllllllllterrrrrrrrrrrr',filter)
+  const onChangeFilterHandler = (e) => {
+    setFilter(e.target.value);
+  };
 
   const todoList = [];
   const progressList = [];
@@ -27,8 +25,6 @@ const Board = () => {
   const doneList = [];
 
   boardCtx?.allTask?.forEach((task) => {
-    // console.log("insideforeach", task, index);
-
     if (task?.status === "todo") {
       console.log("st", task?.status);
       todoList.push(task);
@@ -40,7 +36,6 @@ const Board = () => {
       doneList.push(task);
     }
   });
-  // console.log("xxxx", todoList, progressList, backlogList, doneList);
 
   const toggleAddMemberMode = () => {
     setAddMemberMode((prev) => !prev);
@@ -48,10 +43,7 @@ const Board = () => {
 
   async function fetchAll(filter) {
     const response = await fetchAllStatusTask(filter);
-    console.log(
-      "useEffect fetchAll status taskkkkkkkkkkkkkkkkkkkkkkkkkkk",
-      response
-    );
+
     boardCtx?.replaceAllTask(response?.data?.data);
     boardCtx?.updateMemberList(response?.data?.memberList);
   }
@@ -60,7 +52,7 @@ const Board = () => {
     fetchAll(filter);
   }, [filter]);
 
-  const currentDate=new Date()
+  const currentDate = new Date();
 
   return (
     <main className={styles.boardPage}>
@@ -69,7 +61,7 @@ const Board = () => {
       )}
       <div className={styles.nameDateWrapper}>
         <h2 className={styles.name}>Welcome! {userName || "User"}</h2>
-        <div className={styles.date}>{formatDate(currentDate,'full')}</div>
+        <div className={styles.date}>{formatDate(currentDate, "full")}</div>
       </div>
       <div className={styles.headingFilterWrapper}>
         <div className={styles.boardIconWrapper}>
@@ -82,7 +74,11 @@ const Board = () => {
             <span>Add People</span>
           </div>
         </div>
-        <select className={styles.filter} value={filter} onChange={onChangeFilterHandler}>
+        <select
+          className={styles.filter}
+          value={filter}
+          onChange={onChangeFilterHandler}
+        >
           <option value="today">Today</option>
           <option value="week">This Week</option>
           <option value="month">This Month</option>

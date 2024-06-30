@@ -14,7 +14,6 @@ const Backdrop = (props) => {
 };
 
 const ModalOverlay = (props) => {
-  // console.log('pp',props)
   return (
     <div className={`${styles.modal} ${props.onCustomModal}`}>
       {props.children}
@@ -30,7 +29,9 @@ const Modal = (props) => {
         document.getElementById("new-root")
       )}
       {ReactDOM.createPortal(
-        <ModalOverlay onCustomModal={props.onCustomModal}>{props.children}</ModalOverlay>,
+        <ModalOverlay onCustomModal={props.onCustomModal}>
+          {props.children}
+        </ModalOverlay>,
         document.getElementById("new-root")
       )}
     </>
@@ -43,13 +44,13 @@ Backdrop.propTypes = {
 
 ModalOverlay.propTypes = {
   children: PropTypes.element,
-  onCustomModal:PropTypes.elementType
+  onCustomModal: PropTypes.elementType,
 };
 
 Modal.propTypes = {
   onToggleModal: PropTypes.func,
   children: PropTypes.element,
-  onCustomModal:PropTypes.elementType
+  onCustomModal: PropTypes.elementType,
 };
 
 export default Modal;

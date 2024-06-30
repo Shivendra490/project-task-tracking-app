@@ -11,29 +11,26 @@ import TaskCard from "./TaskCard";
 const StatusComponent = (props) => {
   const [isModalShow, setIsModalShow] = useState(false);
   const [collapseAll, setCollapseAll] = useState(true);
-  const [editId,setEditId]=useState(null)
-
-  console.log('Status Comp tasklist prop',props.taskList)
+  const [editId, setEditId] = useState(null);
 
   const triggerCollapse = () => {
     setCollapseAll((prev) => !prev);
   };
-  const toggleModal = (editId=null) => {
-    console.log('togglemodal',editId)
-    setEditId(editId)
+  const toggleModal = (editId = null) => {
+    setEditId(editId);
     setIsModalShow((prev) => !prev);
   };
 
-  
-
   return (
     <div className={styles.singleStatusContainer}>
-      {isModalShow && <AddEditTask editId={editId} onToggleModal={toggleModal} />}
+      {isModalShow && (
+        <AddEditTask editId={editId} onToggleModal={toggleModal} />
+      )}
       <div className={styles.statusIconWrapper}>
         <div className={styles.statusHeading}>{props.container}</div>
         <div className={styles.addCollapseIconWrapper}>
           {props.container === "To do" && (
-            <img src={addIcon} alt="add icon" onClick={()=>toggleModal()} />
+            <img src={addIcon} alt="add icon" onClick={() => toggleModal()} />
           )}
           <img
             src={collapseIcon}
@@ -44,7 +41,7 @@ const StatusComponent = (props) => {
       </div>
       <div className={styles.cardsContainer}>
         {props?.taskList?.map((task) => {
-          console.log('status comp map,task',task)
+          console.log("status comp map,task", task);
           return (
             <TaskCard
               priority={task?.priority}

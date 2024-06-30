@@ -7,25 +7,31 @@ import Board from "./pages/board/Board";
 import Analytics from "./pages/analytics/Analytics";
 import Setting from "./pages/setting/Setting";
 import ProtectedRoute from "./components/ProtectedRoute";
+import NotFound from "./pages/not-found/NotFound";
 
 
-// import BoardProvider from "./store/BoardProvider";
-// import AddEditTask from "./pages/add-edit-task/AddEditTask";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-        <Route path="/" element={<Login />} />
-          <Route path="/home" element={<ProtectedRoute><Home/></ProtectedRoute>}>
-            <Route index element={<Board/>} />
-            <Route path="/home/analytics" element={<Analytics/>} />
-            <Route path="/home/setting" element={<Setting/>} />
+          <Route path="/" element={<Login />} />
+          <Route
+            path="/home"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<Board />} />
+            <Route path="/home/analytics" element={<Analytics />} />
+            <Route path="/home/setting" element={<Setting />} />
           </Route>
 
-          
           <Route path="/register" element={<Register />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </>

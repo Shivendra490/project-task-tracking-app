@@ -2,14 +2,9 @@ import PropTypes from "prop-types";
 import Modal from "./Modal";
 import styles from "./Confirmation.module.css";
 
-
-
 const Confirmation = (props) => {
-
-
   const confirmHandler = () => {
-    props.actionHandler()
-    
+    props.actionHandler();
   };
   return (
     <Modal
@@ -17,7 +12,9 @@ const Confirmation = (props) => {
       onCustomModal={styles.customModal}
     >
       <div className={styles.confirmLogoutContainer}>
-        <h2 className={styles.question}>Are you sure you want to {props?.action}</h2>
+        <h2 className={styles.question}>
+          Are you sure you want to {props?.action}
+        </h2>
         <button className={styles.primaryBtn} onClick={confirmHandler}>
           Yes, {props?.action}
         </button>
@@ -34,8 +31,8 @@ const Confirmation = (props) => {
 
 Confirmation.propTypes = {
   onToggleConfirmModal: PropTypes.func,
-  actionHandler:PropTypes.func,
-  action:PropTypes.string
+  actionHandler: PropTypes.func,
+  action: PropTypes.string,
 };
 
 export default Confirmation;
