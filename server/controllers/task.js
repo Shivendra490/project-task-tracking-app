@@ -45,13 +45,17 @@ exports.getAllStatusTask = async (req, res, next) => {
 
     const allStatusTask = await Task.find({ userId: req.userId });
     const user = await User.findOne({ _id: req.userId });
+    if(!allStatusTask || !user){
+      res.status(404).json({message:"tasks or user does not exist"})
+      return 
+    }
 
     res
       .status(200)
       .json({
         message: "All tasks fetched successfully",
         data: allStatusTask,
-        memberList: user.memberList,
+        memberList: user.memberList || [],
       });
   } catch (err) {
     next(err)

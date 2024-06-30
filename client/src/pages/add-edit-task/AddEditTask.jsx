@@ -8,6 +8,7 @@ import { useContext, useEffect, useState } from "react";
 import { createTask, getTask, updateTask } from "../../services/task";
 
 import BoardContext from "../../store/board-context";
+import { getUserInfo } from "../../services/localStoage";
 
 const initialTask = {
   title: "",
@@ -23,10 +24,13 @@ const AddEditTask = (props) => {
   const [task, setTask] = useState(initialTask);
   const [showDropdown, setShowDropdown] = useState(false);
   const boardCtx = useContext(BoardContext);
+  const { userId } = getUserInfo();
+  console.log(userId);
   // const navigate=useNavigate()
   // const dateRef=useRef()
   // console.log("editIt", props.editId);
-  // console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv", boardCtx);
+  // console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv TASK", task);
+  
 
   const toggleDropdown = () => {
     setShowDropdown((prev) => !prev);
@@ -56,11 +60,21 @@ const AddEditTask = (props) => {
   };
 
   const removeCheckListOptionHandler = (optionId) => {
+    let tickUpdated = false;
     const updatedCheckList = task?.checkList?.filter((currentOption) => {
+      if (currentOption.optionId === optionId) {
+        if (currentOption.isTick) {
+          tickUpdated = true;
+        }
+      }
       return currentOption.optionId !== optionId;
     });
 
-    setTask({ ...task, checkList: updatedCheckList });
+    setTask({
+      ...task,
+      tickCount: tickUpdated ? task.tickCount - 1 : task.tickCount,
+      checkList: updatedCheckList,
+    });
   };
 
   const onChangeTitleHandler = (e) => {
@@ -138,6 +152,15 @@ const AddEditTask = (props) => {
     }
   }, []);
 
+  const checking=!props?.editId && !task?._id && boardCtx?.allMember?.length>0
+  
+
+  console.log('checkinggggggggggggggggggggggggggggggggggggggg',checking)
+  console.log('editid',props?.editId,'taaaask Id',task?._id,'boooooooord',boardCtx?.allMember?.length)
+
+  const adminEditMode=props?.editId  && task?.userId?.toString()===userId?.toString()
+  const assigneeEditMode=props?.editId && task._id && task?.userId?.toString()!==userId?.toString()
+
   return (
     <Modal
       onToggleModal={props.onToggleModal}
@@ -198,7 +221,7 @@ const AddEditTask = (props) => {
               <div className={styles.inputIconWrapper} onClick={toggleDropdown}>
                 <input
                   type="text"
-                  placeholder="Enter assignee"
+                  placeholder="Add assignee"
                   className={styles.assignInput}
                   value={task?.assignTo}
                   readOnly
@@ -207,7 +230,9 @@ const AddEditTask = (props) => {
               </div>
               {showDropdown && (
                 <div className={styles.customDropDown}>
-                  {boardCtx?.allMember.map((memberEmail) => {
+                  {assigneeEditMode && <p className={styles.emailText}>only task creator can reassign</p>}
+                  {adminEditMode &&
+                  boardCtx?.allMember.map((memberEmail) => {
                     return (
                       <div key={memberEmail} className={styles.optionWrapper}>
                         <div className={styles.avatar}>
@@ -225,6 +250,26 @@ const AddEditTask = (props) => {
                       </div>
                     );
                   })}
+                  {(!props?.editId && !task?._id && boardCtx?.allMember?.length>0) ?
+                  boardCtx?.allMember.map((memberEmail) => {
+                    return (
+                      <div key={memberEmail} className={styles.optionWrapper}>
+                        <div className={styles.avatar}>
+                          {memberEmail?.substring(0, 2)?.toUpperCase()}
+                        </div>
+                        <p className={styles.emailText}>{memberEmail}</p>
+                        <button
+                          className={`${styles.assignBtn} ${
+                            memberEmail === task?.assignTo ? styles.active : ""
+                          }`}
+                          onClick={() => onClickAssignHandler(memberEmail)}
+                        >
+                          rssign
+                        </button>
+                      </div>
+                    );
+                  })
+                :  <p className={styles.emailText}>0</p>}
                 </div>
               )}
             </div>

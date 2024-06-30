@@ -43,13 +43,13 @@ Backdrop.propTypes = {
 
 ModalOverlay.propTypes = {
   children: PropTypes.element,
-  onCustomModal:PropTypes.element
+  onCustomModal:PropTypes.elementType
 };
 
 Modal.propTypes = {
   onToggleModal: PropTypes.func,
   children: PropTypes.element,
-  onCustomModal:PropTypes.element
+  onCustomModal:PropTypes.elementType
 };
 
 export default Modal;
