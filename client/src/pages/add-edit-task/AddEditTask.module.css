@@ -23,9 +23,18 @@
   color: red;
 }
 
+
+.error{
+  color:#DB371F;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
 .titleField {
   display: flex;
   flex-direction: column;
+  gap:.5rem;
 }
 
 .titleText,
@@ -44,6 +53,12 @@
 }
 .titleInput:focus {
   outline: none;
+}
+
+.errorFieldWrapper{
+  display: flex;
+  flex-direction: column;
+  gap:.5rem;
 }
 
 .priorityField {

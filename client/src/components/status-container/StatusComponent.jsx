@@ -57,6 +57,7 @@ const StatusComponent = (props) => {
               taskId={task?._id}
               status={task?.status}
               assignTo={task?.assignTo}
+              dueDate={task?.dueDate}
             />
           );
         })}

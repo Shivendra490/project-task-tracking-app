@@ -232,7 +232,15 @@
     font-family: "DM Sans", sans-serif;
 }
 
+.red{
+    background-color:#CF3636;
+    color:#FFFFFF;
+}
 
+.green{
+    background-color:#63C05B;
+    color:#FFFFFF;
+}
 
 
 ::-webkit-scrollbar {

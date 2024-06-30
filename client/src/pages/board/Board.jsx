@@ -7,7 +7,7 @@ import { fetchAllStatusTask } from "../../services/task";
 import BoardContext from "../../store/board-context";
 import AddMember from "./AddMember";
 import { getUserInfo } from "../../services/localStoage";
-import { formatDate } from "../../utility";
+import { formatDate } from "../../utility/formatDate";
 
 const Board = () => {
   const [addMemberMode, setAddMemberMode] = useState(false);
@@ -69,7 +69,7 @@ const Board = () => {
       )}
       <div className={styles.nameDateWrapper}>
         <h2 className={styles.name}>Welcome! {userName || "User"}</h2>
-        <div className={styles.date}>{formatDate(currentDate)}</div>
+        <div className={styles.date}>{formatDate(currentDate,'full')}</div>
       </div>
       <div className={styles.headingFilterWrapper}>
         <div className={styles.boardIconWrapper}>

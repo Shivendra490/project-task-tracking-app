@@ -80,6 +80,19 @@
   gap: 1.75rem;
 }
 
+.bothFieldErrorWrapper{
+  display: flex;
+  flex-direction: column;
+  gap:.5rem
+}
+
+.error{
+  color:#DB371F;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
 .fieldWrapper {
   display: flex;
   border: 1.38px solid #d0d0d0;

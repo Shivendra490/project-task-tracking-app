@@ -9,6 +9,7 @@ import { createTask, getTask, updateTask } from "../../services/task";
 
 import BoardContext from "../../store/board-context";
 import { getUserInfo } from "../../services/localStoage";
+import { validateTaskForm } from "../../utility/validateForm";
 
 const initialTask = {
   title: "",
@@ -23,6 +24,7 @@ const initialTask = {
 const AddEditTask = (props) => {
   const [task, setTask] = useState(initialTask);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [error,setError]=useState(null)
   const boardCtx = useContext(BoardContext);
   const { userId } = getUserInfo();
   console.log(userId);
@@ -128,6 +130,13 @@ const AddEditTask = (props) => {
   };
 
   const submitHandler = async () => {
+    setError(null);
+    const errObj = validateTaskForm(task);
+    if (errObj) {
+      setError(errObj);
+      return;
+    }
+
     if (props.editId) {
       const response = await updateTask(task);
 
@@ -180,8 +189,10 @@ const AddEditTask = (props) => {
               value={task.title}
               onChange={onChangeTitleHandler}
             />
+            {error && <p className={styles.error}>{error?.title}</p>}
           </div>
 
+          <div className={styles.errorFieldWrapper}>
           <div className={styles.priorityField}>
             <label className={styles.titleText}>
               Select Priority<span className={styles.star}>*</span>
@@ -213,6 +224,8 @@ const AddEditTask = (props) => {
               <p className={styles.low}></p>
               <span>LOW PRIORITY</span>
             </button>
+          </div>
+          {error && <p className={styles.error}>{error?.priority}</p>}
           </div>
 
           <div className={styles.assignField}>
@@ -280,6 +293,7 @@ const AddEditTask = (props) => {
             Checklist ({task?.tickCount}/{task?.checkList?.length})
             <span className={styles.star}>*</span>
           </label>
+          {error && <p className={styles.error}>{error?.checkList}</p>}
           <div className={styles.optionsContainer}>
             {task?.checkList?.length > 0 &&
               task?.checkList.map((currentOption) => {

@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import BoardContext from "../../store/board-context";
 import { deleteTask, updateTask } from "../../services/task";
 import Confirmation from "../UI/Confirmation";
+import { dueDatePassed, formatDate } from "../../utility/formatDate";
 
 // const buttons = [
 //   { label: "BACKLOG", status: "backlog" },
@@ -24,12 +25,18 @@ const TaskCard = ({
   onToggleModal,
   tickCount,
   assignTo,
+  dueDate,
 }) => {
   const boardCtx = useContext(BoardContext);
   const [showMore, setShowMore] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
-  const [toggleConfirm,setToggleConfirm]=useState(false)
-  
+  const [toggleConfirm, setToggleConfirm] = useState(false);
+  const jsDueDate = dueDate && new Date(dueDate);
+  // console.log("JSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS",dueDate,jsDueDate)
+
+  const isDueDatePassed = jsDueDate && dueDatePassed(jsDueDate);
+  console.log("REEEEEEEEEEEEEEEEEEEESUUUUUUUUULTTTTTTTT", isDueDatePassed);
+
   console.log(
     "taskcomponent",
     "taskId",
@@ -48,9 +55,9 @@ const TaskCard = ({
     setShowMenu((prev) => !prev);
   };
 
-  const toggleConfirmModal=()=>{
-    setToggleConfirm(prev=>!prev)
-  }
+  const toggleConfirmModal = () => {
+    setToggleConfirm((prev) => !prev);
+  };
 
   const onClickChangeStatusHandler = async (taskId, moveTo) => {
     console.log("moveto", moveTo, taskId);
@@ -86,7 +93,13 @@ const TaskCard = ({
   return (
     <>
       <div className={styles.card}>
-        {toggleConfirm && <Confirmation onToggleConfirmModal={toggleConfirmModal} action="Delete" actionHandler={onClickDeleteHandler}/>}
+        {toggleConfirm && (
+          <Confirmation
+            onToggleConfirmModal={toggleConfirmModal}
+            action="Delete"
+            actionHandler={onClickDeleteHandler}
+          />
+        )}
         <div className={styles.cardHeader}>
           <div className={styles.dotWrapper}>
             <p className={styles[priority]}></p>
@@ -157,7 +170,18 @@ const TaskCard = ({
           </div>
         )}
         <div className={styles.cardFooter}>
-          <p className={styles.dueDate}>Feb10th</p>
+          {jsDueDate ? (
+            <p
+              className={`${styles.dueDate} ${
+                isDueDatePassed ? styles.red : ""
+              } ${status === "done" ? styles.green : ""}
+              `}
+            >
+              {formatDate(jsDueDate)}
+            </p>
+          ) : (
+            <span>&nbsp;</span>
+          )}
           <div className={styles.actionBtnWrapper}>
             {status !== "backlog" && (
               <button
@@ -208,6 +232,7 @@ TaskCard.propTypes = {
   tickCount: PropTypes.number,
   status: PropTypes.string,
   assignTo: PropTypes.string,
+  dueDate:PropTypes.string
 };
 
 export default TaskCard;
