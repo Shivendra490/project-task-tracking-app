@@ -19,14 +19,14 @@ const ShareTask = () => {
       setError(null);
       const response = await getTask(taskId);
       console.log("SSSSSShareeeee page", response);
-      if (response.status !== 200) {
+      if (response?.status !== 200) {
         console.log("Err occured");
         setError(response?.data?.message);
         return;
       }
       setTask(response?.data?.data);
     } catch (err) {
-      setError(err.response?.data?.message);
+      setError(err?.response?.data?.message);
       console.log("IIIIIIII", err);
       console.log("ERRRRRRRRRnOOOOOOTTTTRRR");
     }
@@ -67,7 +67,7 @@ const ShareTask = () => {
             <div className={styles.optionsContainer}>
               {task?.checkList?.map((option) => {
                 return (
-                  <div className={styles.singleOption} key={option.optionId}>
+                  <div className={styles.singleOption} key={option?.optionId}>
                     <input
                       type="checkbox"
                       checked={option?.isTick}
