@@ -111,7 +111,7 @@ exports.getTask = async (req, res, next) => {
     const task = await Task.findOne({ _id: taskId });
 
     if (!task) {
-      res.status(404).json({ message: "Task not found" });
+      res.status(404).json({ message: "Task not  found" });
       return;
     }
 
@@ -213,7 +213,7 @@ exports.getTaskStatusCounts = async (req, res, next) => {
       $or: [{ userId: userId }, { assignTo: req.email }],
     });
 
-    let taskCount = {
+    let taskCounts = {
       high: 0,
       low: 0,
       moderate: 0,
@@ -224,23 +224,23 @@ exports.getTaskStatusCounts = async (req, res, next) => {
       dueDate: 0,
     };
     allTasks?.map((task) => {
-      taskCount[task["priority"]] += 1;
-      taskCount[task["status"]] += 1;
+      taskCounts[task["priority"]] += 1;
+      taskCounts[task["status"]] += 1;
       if (task?.dueDate) {
-        taskCount.dueDate = taskCount.dueDate + 1;
+        taskCounts.dueDate = taskCounts.dueDate + 1;
       }
     });
 
-    const arrayOfObjects = Object.entries(taskCount).map((arr) => {
-      return { [arr[0]]: arr[1] };
-    });
+    // const arrayOfObjects = Object.entries(taskCount).map((arr) => {
+    //   return { [arr[0]]: arr[1] };
+    // });
 
-    console.log("ttttttCCCCCC", taskCount);
+    console.log("ttttttCCCCCC", taskCounts);
 
     res.status(200).json({
-      message: "All tasks Status Counhtssss",
+      message: "All tasks Statusxxxxxxx Counhtssss",
       userId: userId,
-      taskCount: arrayOfObjects,
+      taskCountsObj: taskCounts,
     });
   } catch (err) {
     next(err);

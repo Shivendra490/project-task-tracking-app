@@ -6,7 +6,7 @@ const { verifyAuth } = require("../middlewares/verifyAuth");
 
 router.post("/create-task", verifyAuth, taskController.createTask);
 
-router.get("/get-task/:taskId", verifyAuth, taskController.getTask);
+router.get("/get-task/:taskId", taskController.getTask);
 
 router.get("/all-status-task", verifyAuth, taskController.getAllStatusTask);
 

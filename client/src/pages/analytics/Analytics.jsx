@@ -4,14 +4,14 @@ import { fetchTaskStatusCounts } from "../../services/task";
 
 
 const initialInfoList = [
-  { label: "Backlog Tasks", count: 0 },
-  { label: "To-do Tasks", count: 0 },
-  { label: "In-Progess Tasks", count: 0 },
-  { label: "Completed Tasks", count: 0 },
-  { label: "Low Priority", count: 0 },
-  { label: "Moderate Priority", count: 0 },
-  { label: "High Priority", count: 0 },
-  { label: "Due Date Tasks", count: 0 },
+  { label: "Backlog Tasks",info:"backlog", count: 0 },
+  { label: "To-do Tasks",info:"todo", count: 0 },
+  { label: "In-Progess Tasks",info:"progress", count: 0 },
+  { label: "Completed Tasks",info:"done", count: 0 },
+  { label: "Low Priority",info:"low", count: 0 },
+  { label: "Moderate Priority",info:"moderate", count: 0 },
+  { label: "High Priority",info:"high", count: 0 },
+  { label: "Due Date Tasks",info:'dueDate', count: 0 },
 ];
 
 const Analytics = () => {
@@ -19,7 +19,12 @@ const Analytics = () => {
   console.log(setInfoList)
   const fetchTaskInfo=async()=>{
     const response=await fetchTaskStatusCounts()
-    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaarr',response.data.taskCount)
+    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaarr',response?.data?.taskCountsObj)
+    const countObj=response?.data?.taskCountsObj
+    const countArr=initialInfoList.map((curObj)=>{
+      return {...curObj,count:countObj[curObj.info]}
+    })
+    setInfoList(countArr)
   }
   useEffect(()=>{
     fetchTaskInfo()

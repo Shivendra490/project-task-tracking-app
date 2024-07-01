@@ -8,6 +8,7 @@ import Analytics from "./pages/analytics/Analytics";
 import Setting from "./pages/setting/Setting";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/not-found/NotFound";
+import ShareTask from "./pages/share-page/ShareTask";
 
 
 
@@ -31,6 +32,7 @@ function App() {
           </Route>
 
           <Route path="/register" element={<Register />} />
+          <Route path="/sharetask/:taskId" element={<ShareTask />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
