@@ -79,7 +79,7 @@ exports.updateUser = async (req, res, next) => {
 
         if (isNewEmailAlreadyExist) {
           res.status(400).json({
-            message: "This emailId is already exist,use another emailId",
+            message: "Email already exist",
           });
           return;
         }

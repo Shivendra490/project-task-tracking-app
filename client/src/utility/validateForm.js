@@ -2,18 +2,24 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const validateRegisterForm = (user) => {
   const errObj = {};
+  if (user?.userName?.trim().length < 4) {
+    errObj.userName = "Name should be atleast 4 char long";
+  }
   if (user?.userName?.trim() === "") {
     errObj.userName = "Name is required";
   }
-  if (user?.email?.trim() === "") {
-    errObj.email = "Email is required";
-  }
+
   const isValid = emailRegex.test(user?.email);
   if (!isValid) {
     errObj.email = "Enter valid email";
+  } 
+  
+  if (user?.email?.trim() === "") {
+    errObj.email = "Email is required";
   }
+  
   if (user?.confirmPassword === "" || user?.confirmPassword?.length < 4) {
-    errObj.confirmPassword = "Password is required of atleast 4 char";
+    errObj.confirmPassword = "confirm password is required of atleast 4 char";
   }
   if (user?.password === "" || user?.password?.length < 4) {
     errObj.password = "Password is required of atleast 4 char";
@@ -34,12 +40,13 @@ const validateRegisterForm = (user) => {
 const validateLoginForm = (user) => {
   const errObj = {};
 
-  if (user?.email?.trim() === "") {
-    errObj.email = "Email is required";
-  }
+  
   const isValid = emailRegex.test(user?.email);
   if (!isValid) {
     errObj.email = "Enter valid email";
+  }
+  if (user?.email?.trim() === "") {
+    errObj.email = "Email is required";
   }
 
   if (user?.password === "") {

@@ -24,7 +24,7 @@ const Board = () => {
   const backlogList = [];
   const doneList = [];
 
-  boardCtx?.allTask?.forEach((task) => {
+  boardCtx?.allTask?.map((task) => {
     if (task?.status === "todo") {
       console.log("st", task?.status);
       todoList.push(task);

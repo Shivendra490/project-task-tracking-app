@@ -9,12 +9,21 @@ import Setting from "./pages/setting/Setting";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/not-found/NotFound";
 import ShareTask from "./pages/share-page/ShareTask";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Loader from "./components/loader/Loader";
 
 
 
 function App() {
+  const notify = () => toast("Wow so easy!");
+  <button onClick={notify}>Notify!</button>
+
   return (
     <>
+      <ToastContainer/>
+      {/* <Loader/> */}
+      
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />

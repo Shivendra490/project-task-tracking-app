@@ -1,0 +1,31 @@
+.loaderPage {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  width: clamp(.5rem,8vh,2rem);
+  height:clamp(.5rem,8vh,2rem);
+  border: 4px solid lightgrey;
+  border-left-color: blue;
+  border-radius: 50%;
+  -webkit-animation: spin 1.5s linear infinite;
+  animation: loading 2s linear infinite;
+}
+
+@-webkit-keyframes loading {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

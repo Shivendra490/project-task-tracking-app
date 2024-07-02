@@ -20,7 +20,7 @@ const loginUser=async(userDetails)=>{
         return response
 
     }catch(err){
-        console.log('errRES',err.response)
+        console.log('errrangeRES',err.response)
         return err.response
     }
 }

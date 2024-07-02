@@ -9,34 +9,52 @@ import { loginUser } from "../../services/auth";
 import { getUserInfo, storeUserInfo } from "../../services/localStoage";
 import { useNavigate } from "react-router-dom";
 import { validateLoginForm } from "../../utility/validateForm";
+import { notify } from "../../utility/notify";
+import Loader from "../../components/loader/Loader";
+// import {  toast } from 'react-toastify';
 
 const Login = () => {
   const [user, setUser] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
+  const [loading,setLoading]=useState(false)
   const navigate = useNavigate();
   const { token, email, userId, userName } = getUserInfo();
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
+  
+  
   const onSubmitHandler = async (e) => {
-    e.preventDefault();
+    try{
+      e.preventDefault();
     setError(null);
     const errObj = validateLoginForm(user);
     if (errObj) {
       setError(errObj);
       return;
     }
+    setLoading(true)
     const response = await loginUser(user);
-    console.log("lguser", response);
-    if (response.status !== 200) {
-      //show error toast
+    setLoading(false)
+   
+    console.log("checkiiiiiiiiiiiiiig for Toast lguser", response);
+    if (response?.status !== 200) {
+      notify(response?.data?.message,"error")
       return;
     }
+    
+
     console.log("USERNAMELOGIN", response);
     const { token, userId, email, userName } = response.data.data;
     storeUserInfo(token, userId, email, userName);
+    notify(response?.data?.message)
     navigate("/home");
+    }catch(err){
+      notify(err?.response?.data?.message,"error")
+      setLoading(false)
+      console.log('errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr is here',err)
+    }
   };
 
   useEffect(() => {
@@ -46,7 +64,9 @@ const Login = () => {
   }, []);
 
   return (
+    
     <div className={styles.authPage}>
+      {/* <button onClick={notify}>Notify!</button> */}
       <section className={styles.left}>
         <div className={styles.imgTextContainer}>
           <div className={styles.imgWrapper}>
@@ -93,14 +113,15 @@ const Login = () => {
             </div>
           </div>
           <div className={styles.formFooter}>
-            <button type="submit" className={styles.primaryBtn}>
-              Login
+            <button type="submit" className={styles.primaryBtn} disabled={loading}>
+              {loading ? <Loader/> : "Login"}
             </button>
             <p className={styles.haveAccount}>Have no account yet?</p>
             <button
               type="button"
               className={styles.secondaryBtn}
               onClick={() => navigate("/register")}
+              
             >
               Register
             </button>

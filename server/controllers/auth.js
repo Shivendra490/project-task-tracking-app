@@ -9,6 +9,8 @@ exports.registerUser = async (req, res, next) => {
   try {
     const { userName, email, password } = req.body;
     
+    
+    
     if (!userName?.trim() || !email?.trim() || !password?.trim()) {
       res.status(403).json({ message: "All Fields are mandatory" });
       return;
@@ -32,13 +34,13 @@ exports.registerUser = async (req, res, next) => {
 
     const user = new User({
       userName: userName,
-      email: email.toLowerCase(),
+      email: email.trim().toLowerCase(),
       password: hashedPassword,
     });
 
     await user.save();
 
-    res.status(201).json({ message: "User Created Successfully" });
+    res.status(201).json({ message: "User Registered Successfully" });
   } catch (err) {
     next(err)
   }

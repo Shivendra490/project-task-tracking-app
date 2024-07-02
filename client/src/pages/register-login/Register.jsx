@@ -11,6 +11,8 @@ import { registerUser } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
 import { getUserInfo } from "../../services/localStoage";
 import { validateRegisterForm } from "../../utility/validateForm";
+import { notify } from "../../utility/notify";
+import Loader from "../../components/loader/Loader";
 
 const initialUser = {
   userName: "",
@@ -22,6 +24,7 @@ const initialUser = {
 const Register = () => {
   const [user, setUser] = useState(initialUser);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const { token, email, userId, userName } = getUserInfo();
@@ -32,24 +35,38 @@ const Register = () => {
   };
 
   const onSubmitHandler = async (e) => {
-    e.preventDefault();
-    setError(null);
-    const errObj = validateRegisterForm(user);
-    if (errObj) {
-      setError(errObj);
-      return;
+    try {
+      e.preventDefault();
+      setError(null);
+      const errObj = validateRegisterForm(user);
+      if (errObj) {
+        setError(errObj);
+        return;
+      }
+
+      const userDetails = {
+        userName: user.userName,
+        email: user.email,
+        password: user.password,
+      };
+      setLoading(true);
+      const response = await registerUser(userDetails);
+      setLoading(false);
+      console.log("user", user, "ressssssssssRanger", response);
+      if (response?.status !== 201) {
+        notify(response?.data?.message, "error");
+
+        return;
+      }
+
+      setUser(initialUser);
+      notify(response?.data?.message);
+      navigate("/");
+    } catch (err) {
+      // console.log(err?.response?.data?.message)
+      notify(err?.response?.data?.message);
+      setLoading(false);
     }
-
-    const userDetails = {
-      userName: user.userName,
-      email: user.email,
-      password: user.password,
-    };
-    const response = await registerUser(userDetails);
-    setUser(initialUser);
-    navigate("/");
-
-    console.log("user", user, "res", response);
   };
 
   useEffect(() => {
@@ -89,7 +106,7 @@ const Register = () => {
               {error && <p className={styles.error}>{error?.userName}</p>}
             </div>
 
-            <div>
+            <div className={styles.bothFieldErrorWrapper}>
               <div className={styles.fieldWrapper}>
                 <PiEnvelopeSimpleLight className={styles.icon} />
                 <input
@@ -141,8 +158,12 @@ const Register = () => {
             </div>
           </div>
           <div className={styles.formFooter}>
-            <button type="submit" className={styles.primaryBtn}>
-              Register
+            <button
+              type="submit"
+              className={styles.primaryBtn}
+              disabled={loading}
+            >
+              {loading ? <Loader /> : "Register"}
             </button>
             <p className={styles.haveAccount}>Have an account ?</p>
             <button
