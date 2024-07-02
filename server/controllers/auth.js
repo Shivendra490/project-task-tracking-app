@@ -23,6 +23,8 @@ exports.registerUser = async (req, res, next) => {
       return;
     }
 
+    
+
     const existingUser = await User.findOne({ email: email.toLowerCase() });
 
     if (existingUser) {

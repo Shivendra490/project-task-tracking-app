@@ -29,6 +29,12 @@
 
   }
 
+  .errorInputWrapper{
+    display:flex;
+    flex-direction: column;
+    gap:.5rem;
+  }
+
   .input{
     padding:1rem;
     font-family: "Noto Sans", sans-serif;;
@@ -36,6 +42,7 @@
     font-weight: 400;
     border:1px solid #767575;
     border-radius: 10px;
+    width:100%;
   }
 
   .input:focus{
@@ -85,4 +92,11 @@
     background-color: #FFFFFF;
     border:1px solid #CF3636
 
+  }
+
+  .error{
+    color:#DB371F;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
   }

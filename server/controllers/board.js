@@ -15,7 +15,7 @@ exports.addMember = async (req, res, next) => {
     const isValid = emailRegex.test(memberEmail);
 
     if (!isValid) {
-      res.status(400).json({ message: "Please enter valid email" });
+      res.status(400).json({ message: "Please enternnnn valid email" });
       return;
     }
 

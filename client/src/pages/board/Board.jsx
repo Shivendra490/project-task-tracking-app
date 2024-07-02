@@ -8,11 +8,14 @@ import BoardContext from "../../store/board-context";
 import AddMember from "./AddMember";
 import { getUserInfo } from "../../services/localStoage";
 import { formatDate } from "../../utility/formatDate";
+import { notify } from "../../utility/notify";
+import Loader from "../../components/loader/Loader";
 
 const Board = () => {
   const [addMemberMode, setAddMemberMode] = useState(false);
   const boardCtx = useContext(BoardContext);
   const [filter, setFilter] = useState("week");
+  const [loading, setLoading] = useState(false);
   const { userName } = getUserInfo();
 
   const onChangeFilterHandler = (e) => {
@@ -42,10 +45,23 @@ const Board = () => {
   };
 
   async function fetchAll(filter) {
-    const response = await fetchAllStatusTask(filter);
+    try {
+      setLoading(true);
+      const response = await fetchAllStatusTask(filter);
+      setLoading(false);
+      console.log("bard", response);
+      if (response?.status !== 200) {
+        notify(response?.data?.message,"error");
+        return;
+      }
 
-    boardCtx?.replaceAllTask(response?.data?.data);
-    boardCtx?.updateMemberList(response?.data?.memberList);
+      boardCtx?.replaceAllTask(response?.data?.data);
+      boardCtx?.updateMemberList(response?.data?.memberList);
+    } catch (err) {
+      console.log("bard catch", err);
+      notify(err?.response?.data?.message,"error");
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -55,6 +71,7 @@ const Board = () => {
   const currentDate = new Date();
 
   return (
+    
     <main className={styles.boardPage}>
       {addMemberMode && (
         <AddMember onToggleAddMemberMode={toggleAddMemberMode} />
@@ -85,12 +102,19 @@ const Board = () => {
         </select>
       </div>
       <div className={styles.allStatusContainer}>
-        <StatusComponent container="Backlog" taskList={backlogList} />
-        <StatusComponent container="To do" taskList={todoList} />
-        <StatusComponent container="In progress" taskList={progressList} />
-        <StatusComponent container="Done" taskList={doneList} />
+        {loading ? (
+          <Loader />
+        ) : (
+          <>
+            <StatusComponent container="Backlog" taskList={backlogList} />
+            <StatusComponent container="To do" taskList={todoList} />
+            <StatusComponent container="In progress" taskList={progressList} />
+            <StatusComponent container="Done" taskList={doneList} />
+          </>
+        )}
       </div>
     </main>
+    
   );
 };
 

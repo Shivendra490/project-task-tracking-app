@@ -6,5 +6,5 @@ import BoardProvider from "./store/BoardProvider.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BoardProvider>
     <App />
-  </BoardProvider>
+  </BoardProvider> 
 );

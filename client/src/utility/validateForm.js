@@ -12,12 +12,12 @@ const validateRegisterForm = (user) => {
   const isValid = emailRegex.test(user?.email);
   if (!isValid) {
     errObj.email = "Enter valid email";
-  } 
-  
+  }
+
   if (user?.email?.trim() === "") {
     errObj.email = "Email is required";
   }
-  
+
   if (user?.confirmPassword === "" || user?.confirmPassword?.length < 4) {
     errObj.confirmPassword = "confirm password is required of atleast 4 char";
   }
@@ -40,7 +40,6 @@ const validateRegisterForm = (user) => {
 const validateLoginForm = (user) => {
   const errObj = {};
 
-  
   const isValid = emailRegex.test(user?.email);
   if (!isValid) {
     errObj.email = "Enter valid email";
@@ -89,4 +88,22 @@ const validateTaskForm = (task) => {
   }
 };
 
-export { validateRegisterForm, validateLoginForm, validateTaskForm };
+const validateAddMemberForm = (email) => {
+  let isErr = "";
+  const isValid = emailRegex.test(email);
+  if (!isValid) {
+    isErr = "Enter valid email";
+  }
+  if (email?.trim() === "") {
+    isErr = "Email is required";
+  }
+
+  return isErr;
+};
+
+export {
+  validateRegisterForm,
+  validateLoginForm,
+  validateTaskForm,
+  validateAddMemberForm,
+};
