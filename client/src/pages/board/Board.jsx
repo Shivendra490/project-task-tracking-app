@@ -29,7 +29,6 @@ const Board = () => {
 
   boardCtx?.allTask?.map((task) => {
     if (task?.status === "todo") {
-      console.log("st", task?.status);
       todoList.push(task);
     } else if (task?.status === "backlog") {
       backlogList.push(task);
@@ -49,17 +48,16 @@ const Board = () => {
       setLoading(true);
       const response = await fetchAllStatusTask(filter);
       setLoading(false);
-      console.log("bard", response);
+
       if (response?.status !== 200) {
-        notify(response?.data?.message,"error");
+        notify(response?.data?.message, "error");
         return;
       }
 
       boardCtx?.replaceAllTask(response?.data?.data);
       boardCtx?.updateMemberList(response?.data?.memberList);
     } catch (err) {
-      console.log("bard catch", err);
-      notify(err?.response?.data?.message,"error");
+      notify(err?.response?.data?.message, "error");
       setLoading(false);
     }
   }
@@ -71,7 +69,6 @@ const Board = () => {
   const currentDate = new Date();
 
   return (
-    
     <main className={styles.boardPage}>
       {addMemberMode && (
         <AddMember onToggleAddMemberMode={toggleAddMemberMode} />
@@ -114,7 +111,6 @@ const Board = () => {
         )}
       </div>
     </main>
-    
   );
 };
 

@@ -30,7 +30,7 @@ const validateRegisterForm = (user) => {
   }
 
   if (Object.keys(errObj).length !== 0) {
-    console.log("OOOObject", Object.keys(errObj).length);
+    
     return errObj;
   } else {
     return null;
@@ -53,7 +53,7 @@ const validateLoginForm = (user) => {
   }
 
   if (Object.keys(errObj).length !== 0) {
-    console.log("OOOObject", Object.keys(errObj).length);
+  
     return errObj;
   } else {
     return null;
@@ -81,7 +81,7 @@ const validateTaskForm = (task) => {
   }
 
   if (Object.keys(errObj).length !== 0) {
-    console.log("OOOObject", Object.keys(errObj).length);
+   
     return errObj;
   } else {
     return null;
@@ -130,7 +130,7 @@ const validateSettingForm = (user) => {
  
 
   if (Object.keys(errObj).length !== 0) {
-    console.log("OOOObject", Object.keys(errObj).length);
+  
     return errObj;
   } else {
     return null;

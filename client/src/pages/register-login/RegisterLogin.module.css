@@ -13,12 +13,9 @@
 }
 
 .imgTextContainer {
-  /* border:1px solid black; */
-
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* width:50%; */
 }
 
 .imgWrapper {
@@ -49,8 +46,6 @@
   color: white;
 }
 
-
-
 .right {
   flex: 4;
   background-color: #ffffff;
@@ -80,14 +75,14 @@
   gap: 1.75rem;
 }
 
-.bothFieldErrorWrapper{
+.bothFieldErrorWrapper {
   display: flex;
   flex-direction: column;
-  gap:.5rem
+  gap: 0.5rem;
 }
 
-.error{
-  color:#DB371F;
+.error {
+  color: #db371f;
   font-family: "Inter", sans-serif;
   font-size: 14px;
   font-weight: 400;
@@ -96,7 +91,7 @@
 .fieldWrapper {
   display: flex;
   border: 1.38px solid #d0d0d0;
-  /* justify-content: center; */
+
   align-items: center;
   padding: 0 0.5rem;
   border-radius: 11px;
@@ -104,10 +99,9 @@
 
 .icon {
   font-size: 30px;
-  color:#828282;
+  color: #828282;
   object-fit: contain;
-  cursor:pointer;
-  
+  cursor: pointer;
 }
 
 .input {
@@ -118,7 +112,7 @@
   padding: 0.5rem 1rem;
   min-width: 150px;
   border: none;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .input:focus {
@@ -160,8 +154,9 @@
   border: 1.5px solid #17a2b8;
 }
 
-.primaryBtn,.secondaryBtn:hover{
-    cursor:pointer;
+.primaryBtn,
+.secondaryBtn:hover {
+  cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {

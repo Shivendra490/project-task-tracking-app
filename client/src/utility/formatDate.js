@@ -24,6 +24,8 @@ const formatDate = (date, length = "short") => {
 
 const dueDatePassed = (jsDueDate) => {
   const currentDate = new Date();
+  currentDate.setHours(0,0,0,0)
+  jsDueDate.setHours(0,0,0,0)
   if (currentDate <= jsDueDate) {
     return false;
   } else {

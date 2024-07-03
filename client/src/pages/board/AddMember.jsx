@@ -29,7 +29,7 @@ const AddMember = (props) => {
       setLoading(true);
       const response = await addMember(email);
       setLoading(false);
-      console.log("response add member", response);
+
       if (response?.status !== 201) {
         notify(response?.data?.message, "error");
         setError(response?.data?.message);
@@ -43,7 +43,6 @@ const AddMember = (props) => {
       setError(err?.response?.data?.message);
       notify(err?.response?.data?.message, "error");
       setLoading(false);
-      console.log("response catch add member", err);
     }
   };
 
@@ -89,7 +88,7 @@ const AddMember = (props) => {
                 onClick={onClickAddEmailHandler}
                 disabled={loading}
               >
-                {loading ? <Loader /> : "ADD Email"}
+                {loading ? <Loader /> : "Add Email"}
               </button>
             </div>
           </>

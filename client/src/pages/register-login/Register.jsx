@@ -1,6 +1,5 @@
 import styles from "./RegisterLogin.module.css";
 import authImg from "../../assets/authImg.png";
-// import { TiUserOutline } from "react-icons/ti";
 
 import { PiEnvelopeSimpleLight } from "react-icons/pi";
 import { CiLock } from "react-icons/ci";
@@ -61,7 +60,7 @@ const Register = () => {
       setLoading(true);
       const response = await registerUser(userDetails);
       setLoading(false);
-      console.log("user", user, "ressssssssssRanger", response);
+
       if (response?.status !== 201) {
         notify(response?.data?.message, "error");
 
@@ -72,8 +71,7 @@ const Register = () => {
       notify(response?.data?.message);
       navigate("/");
     } catch (err) {
-      // console.log(err?.response?.data?.message)
-      notify(err?.response?.data?.message);
+      notify(err?.response?.data?.message, "error");
       setLoading(false);
     }
   };

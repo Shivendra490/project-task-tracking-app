@@ -54,11 +54,8 @@ const deleteTask = async (taskId) => {
 };
 
 const getTask = async (taskId) => {
-  // const { token } = getUserInfo();
-
   try {
     const headers = {
-      // authorization: token,
       "Content-Type": "application/json",
     };
     const response = axios.get(`${DOMAIN}/task/get-task/${taskId}`, {
@@ -72,7 +69,7 @@ const getTask = async (taskId) => {
 
 const updateTask = async (task) => {
   const { token } = getUserInfo();
-  console.log("check bbbbbbbb token", task);
+
   try {
     const headers = {
       authorization: token,
