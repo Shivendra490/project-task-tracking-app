@@ -1,5 +1,5 @@
-// const DOMAIN="http://localhost:8080/api"
-const DOMAIN="https://pro-manage-ho0w.onrender.com/api"
+const DOMAIN="http://localhost:8080/api"
+// const DOMAIN="https://pro-manage-ho0w.onrender.com/api"
 
 const ADD_TASK="ADD_TASK"
 const REMOVE_TASK="REMOVE_TASK"
