@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Task = require("../models/task");
 const bcrypt = require("bcryptjs");
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -43,13 +44,14 @@ exports.addMember = async (req, res, next) => {
       memberList: updatedUser.memberList,
     });
   } catch (err) {
-    next(err)
+    next(err);
   }
 };
 
 exports.updateUser = async (req, res, next) => {
   try {
     let { userName, email, oldPassword, newPassword } = req.body;
+    console.log("hhhheeeerrrrrrrrrrre");
 
     let emailOrPassUpdated = false;
     const userTobeUpdated = await User.findOne({ _id: req.userId });
@@ -66,6 +68,7 @@ exports.updateUser = async (req, res, next) => {
 
     if (email) {
       const isValid = emailRegex.test(email);
+      console.log("emmmmmmmmail", email);
 
       if (!isValid) {
         res.status(400).json({ message: "Please enter valid email" });
@@ -83,6 +86,16 @@ exports.updateUser = async (req, res, next) => {
           });
           return;
         }
+        const result = await Task.updateMany(
+          { assignTo: userTobeUpdated?.email },
+          { assignTo: email?.toLowerCase()?.trim() }
+        );
+        console.log("resssssssssssssult", result);
+        const res = await User.updateMany(
+          { memberList: userTobeUpdated?.email },
+          { $set: { "memberList.$[elem]": email?.toLowerCase()?.trim() } },
+          { arrayFilters: [{ elem: userTobeUpdated?.email }] }
+        );
         userTobeUpdated.email = email?.toLowerCase().trim();
         emailOrPassUpdated = true;
       }
@@ -116,7 +129,7 @@ exports.updateUser = async (req, res, next) => {
       },
     });
   } catch (err) {
-    next(err)
+    next(err);
   }
 };
 
@@ -136,6 +149,6 @@ exports.getUser = async (req, res, next) => {
       .status(200)
       .json({ message: "User Details fetched successfully", data: data });
   } catch (err) {
-    next(err)
+    next(err);
   }
 };
