@@ -35,7 +35,7 @@ exports.addMember = async (req, res, next) => {
 
     user.memberList.push(memberEmail.toLowerCase());
     const updatedUser = await user.save();
-    console.log("bbbbbbb", updatedUser);
+
     const addedEmailId =
       updatedUser.memberList[updatedUser.memberList.length - 1];
 
@@ -51,7 +51,6 @@ exports.addMember = async (req, res, next) => {
 exports.updateUser = async (req, res, next) => {
   try {
     let { userName, email, oldPassword, newPassword } = req.body;
-    console.log("hhhheeeerrrrrrrrrrre");
 
     let emailOrPassUpdated = false;
     const userTobeUpdated = await User.findOne({ _id: req.userId });
@@ -68,7 +67,6 @@ exports.updateUser = async (req, res, next) => {
 
     if (email) {
       const isValid = emailRegex.test(email);
-      console.log("emmmmmmmmail", email);
 
       if (!isValid) {
         res.status(400).json({ message: "Please enter valid email" });
@@ -90,7 +88,7 @@ exports.updateUser = async (req, res, next) => {
           { assignTo: userTobeUpdated?.email },
           { assignTo: email?.toLowerCase()?.trim() }
         );
-        console.log("resssssssssssssult", result);
+
         const res = await User.updateMany(
           { memberList: userTobeUpdated?.email },
           { $set: { "memberList.$[elem]": email?.toLowerCase()?.trim() } },

@@ -18,15 +18,15 @@ const initialInfoList = [
 const Analytics = () => {
   const [infoList, setInfoList] = useState(initialInfoList);
   const [loading, setLoading] = useState(false);
-  console.log(setInfoList);
+
   const fetchTaskInfo = async () => {
     try {
       setLoading(true);
       const response = await fetchTaskStatusCounts();
       setLoading(false);
-      console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaarryyyy", response);
+
       if (response?.status !== 200) {
-        notify(response?.data?.message,"error");
+        notify(response?.data?.message, "error");
 
         return;
       }
@@ -37,9 +37,8 @@ const Analytics = () => {
       });
       setInfoList(countArr);
     } catch (err) {
-      notify(err?.response?.data?.message,"error");
+      notify(err?.response?.data?.message, "error");
       setLoading(false);
-      console.log("analytics catch", err);
     }
   };
   useEffect(() => {

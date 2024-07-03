@@ -27,7 +27,7 @@ const AddEditTask = (props) => {
   const [error, setError] = useState(null);
   const boardCtx = useContext(BoardContext);
   const { userId } = getUserInfo();
-  console.log(userId);
+
   // const navigate=useNavigate()
   // const dateRef=useRef()
   // console.log("editIt", props.editId);
@@ -140,11 +140,12 @@ const AddEditTask = (props) => {
       const response = await updateTask(task);
 
       boardCtx.editTask(response?.data?.data);
+      props.onToggleModal();
       return;
     }
 
     const response = await createTask(task);
-    console.log("createTasklllllll", response);
+
     boardCtx?.addTask(response?.data?.data);
     props.onToggleModal();
   };
@@ -159,19 +160,6 @@ const AddEditTask = (props) => {
       fetchTask(props.editId);
     }
   }, []);
-
-  const checking =
-    !props?.editId && !task?._id && boardCtx?.allMember?.length > 0;
-
-  console.log("checkinggggggggggggggggggggggggggggggggggggggg", checking);
-  console.log(
-    "editid",
-    props?.editId,
-    "taaaask Id",
-    task?._id,
-    "boooooooord",
-    boardCtx?.allMember?.length
-  );
 
   const adminEditMode =
     props?.editId && task?.userId?.toString() === userId?.toString();
@@ -297,7 +285,7 @@ const AddEditTask = (props) => {
                             }`}
                             onClick={() => onClickAssignHandler(memberEmail)}
                           >
-                            rssign
+                            Assign
                           </button>
                         </div>
                       );

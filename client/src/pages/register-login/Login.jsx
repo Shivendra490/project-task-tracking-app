@@ -12,7 +12,6 @@ import { validateLoginForm } from "../../utility/validateForm";
 import { notify } from "../../utility/notify";
 import Loader from "../../components/loader/Loader";
 import { IoEyeOffOutline } from "react-icons/io5";
-// import {  toast } from 'react-toastify';
 
 const Login = () => {
   const [user, setUser] = useState({ email: "", password: "" });
@@ -42,13 +41,11 @@ const Login = () => {
       const response = await loginUser(user);
       setLoading(false);
 
-      console.log("checkiiiiiiiiiiiiiig for Toast lguser", response);
       if (response?.status !== 200) {
         notify(response?.data?.message, "error");
         return;
       }
 
-      console.log("USERNAMELOGIN", response);
       const { token, userId, email, userName } = response.data.data;
       storeUserInfo(token, userId, email, userName);
       notify(response?.data?.message);
@@ -56,10 +53,6 @@ const Login = () => {
     } catch (err) {
       notify(err?.response?.data?.message, "error");
       setLoading(false);
-      console.log(
-        "errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr is here",
-        err
-      );
     }
   };
 

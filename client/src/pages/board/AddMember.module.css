@@ -1,102 +1,84 @@
 .customModal {
-    top: 35vh;
-    left: 30%;
-    width: 40%;
-    min-height:30vh;
-    padding: 1.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-  }
+  top: 35vh;
+  left: 30%;
+  width: 40%;
+  min-height: 30vh;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+.addMemberContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
 
-  .addMemberContainer{
-    width:100%;
-    display: flex;
-    flex-direction: column;
-    gap:1.5rem;
-    /* justify-content: center;
-    align-items: center; */
+.heading {
+  font-family: "Noto Sans", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
 
-    
-  }
+.errorInputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
 
-  .heading{
-    font-family: "Noto Sans", sans-serif;;
-    font-size: 1.25rem;
-    font-weight: 600;
+.input {
+  padding: 1rem;
+  font-family: "Noto Sans", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  border: 1px solid #767575;
+  border-radius: 10px;
+  width: 100%;
+}
 
-  }
+.input:focus {
+  outline: none;
+}
 
-  .errorInputWrapper{
-    display:flex;
-    flex-direction: column;
-    gap:.5rem;
-  }
+.btnWrapper {
+  display: flex;
+  gap: 1rem;
+}
 
-  .input{
-    padding:1rem;
-    font-family: "Noto Sans", sans-serif;;
-    font-size: 1.25rem;
-    font-weight: 400;
-    border:1px solid #767575;
-    border-radius: 10px;
-    width:100%;
-  }
+.okBtn,
+.primaryBtn,
+.secondaryBtn {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  border-radius: 12px;
+}
 
-  .input:focus{
-    outline:none;
-    
-  }
+.okBtn {
+  width: 250px;
+  color: #ffffff;
+  background-color: #17a2b8;
+  border: none;
+}
+.primaryBtn {
+  color: #ffffff;
+  background-color: #17a2b8;
+  border: none;
+}
 
-  /* ::placeholder{
-    font-family: "Noto Sans", sans-serif;;
-    font-size: 1.25rem;
-    font-weight: 400;
-  } */
+.secondaryBtn {
+  color: #cf3636;
+  background-color: #ffffff;
+  border: 1px solid #cf3636;
+}
 
-  .btnWrapper{
-    display: flex;
-    gap:1rem;
-
-  }
-
-
-  .okBtn,.primaryBtn,.secondaryBtn{
-    flex:1;
-    padding:.5rem 1rem;
-    font-size: 1rem;
-    font-weight: 600;
-    font-family: "Poppins", sans-serif;
-    border-radius: 12px;
-
-  }
-
-  .okBtn{
-    width:250px;
-    color:#FFFFFF;
-    background-color:#17A2B8;
-    border:none;
-    
-  }
-  .primaryBtn{
-    color:#FFFFFF;
-    background-color:#17A2B8;
-    border:none;
-  }
-
-  .secondaryBtn{
-    
-    color:#CF3636;
-    background-color: #FFFFFF;
-    border:1px solid #CF3636
-
-  }
-
-  .error{
-    color:#DB371F;
-    font-family: "Inter", sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-  }
+.error {
+  color: #db371f;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}

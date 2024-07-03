@@ -35,14 +35,14 @@ exports.createTask = async (req, res, next) => {
     const newTask = await task.save();
     res.status(201).json({ message: "All Fields are valid", data: newTask });
   } catch (err) {
-    console.log(err);
+    next(err);
   }
 };
 
 exports.getAllStatusTask = async (req, res, next) => {
   try {
     const { filter } = req.query;
-    console.log("qqqqqqqqqqqreyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy_filter", filter);
+
     let day = 7;
     if (filter === "today") {
       day = 1;
@@ -230,12 +230,6 @@ exports.getTaskStatusCounts = async (req, res, next) => {
         taskCounts.dueDate = taskCounts.dueDate + 1;
       }
     });
-
-    // const arrayOfObjects = Object.entries(taskCount).map((arr) => {
-    //   return { [arr[0]]: arr[1] };
-    // });
-
-    console.log("ttttttCCCCCC", taskCounts);
 
     res.status(200).json({
       message: "All tasks Statusxxxxxxx Counhtssss",

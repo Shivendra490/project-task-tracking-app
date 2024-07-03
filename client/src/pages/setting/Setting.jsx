@@ -44,9 +44,8 @@ const Setting = () => {
         return;
       }
       setUser({ ...user, ...response?.data?.data });
-      console.log("setting", response);
     } catch (err) {
-      notify(err?.response?.data?.message);
+      notify(err?.response?.data?.message, "error");
       setLoading(false);
     }
   };
@@ -70,7 +69,7 @@ const Setting = () => {
         notify(response?.data?.message, "error");
         return;
       }
-      console.log("submit response settin", response);
+
       setUser({ ...user, ...response?.data?.data });
       notify(response?.data?.message);
       setIsAnyDetailModified(false);
@@ -85,7 +84,6 @@ const Setting = () => {
         );
       }
     } catch (err) {
-      console.log("catch ", err);
       notify(err?.response?.data?.message, "error");
       setLoading(false);
     }

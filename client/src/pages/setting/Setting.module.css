@@ -1,47 +1,37 @@
 .settingPage {
-  background-color:#FFFFFF;
+  background-color: #ffffff;
   height: 100vh;
-  padding:1.25rem;
+  padding: 1.25rem;
   font-family: "Open Sans", sans-serif;
 }
 
 .heading {
   font-weight: 600;
   font-size: 22px;
-  
+
   padding-bottom: 1.25rem;
 }
 
-/* .right {
-    flex: 4;
-    background-color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  } */
+.bothFieldErrorWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
 
-  .bothFieldErrorWrapper{
-    display: flex;
-    flex-direction: column;
-    gap:.5rem
-  }
-  
-  .error{
-    color:#DB371F;
-    font-family: "Inter", sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-  }
+.error {
+  color: #db371f;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
 
 .form {
-  width:clamp(350px,40vw,450px);
+  width: clamp(350px, 40vw, 450px);
   display: flex;
   flex-direction: column;
   gap: 1.75rem;
-  background-color:#FFFFFF;
+  background-color: #ffffff;
 }
-
-
 
 .formBody {
   display: flex;
@@ -52,7 +42,7 @@
 .fieldWrapper {
   display: flex;
   border: 1.38px solid #d0d0d0;
-  /* justify-content: center; */
+
   align-items: center;
   padding: 0 0.5rem;
   border-radius: 11px;

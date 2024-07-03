@@ -1,4 +1,4 @@
-import styles from "./StatusComponent.module.css";
+import styles from "./TaskCard.module.css";
 import menuIcon from "../../assets/menuIcon.svg";
 import arrDown from "../../assets/arrDown.svg";
 import arrUp from "../../assets/arrUp.svg";
@@ -11,12 +11,6 @@ import { dueDatePassed, formatDate } from "../../utility/formatDate";
 import { notify } from "../../utility/notify";
 import Loader from "../loader/Loader";
 
-// const buttons = [
-//   { label: "BACKLOG", status: "backlog" },
-//   { label: "TO-DO", status: "todo" },
-//   { label: "PROGRESS", status: "progress" },
-//   { label: "DONE", status: "done" }
-// ];
 const TaskCard = ({
   priority,
   status,
@@ -35,7 +29,7 @@ const TaskCard = ({
   const [toggleConfirm, setToggleConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
   const jsDueDate = dueDate && new Date(dueDate);
-  const [showClipboard,setShowClipboard]=useState(false)
+  const [showClipboard, setShowClipboard] = useState(false);
 
   const isDueDatePassed = jsDueDate && dueDatePassed(jsDueDate);
 
@@ -56,7 +50,7 @@ const TaskCard = ({
       setLoading(true);
       const response = await updateTask({ _id: taskId, status: moveTo });
       setLoading(false);
-      console.log("taskcard,chageStatus", response);
+      
       if (response?.status !== 200) {
         notify(response?.data?.message, "error");
 
@@ -66,20 +60,24 @@ const TaskCard = ({
       notify(response?.data?.message);
     } catch (err) {
       notify(err?.response?.data?.message, "error");
-      console.log(err);
+      
     }
   };
 
-
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(`https://project-task-tracking-app.vercel.app/sharetask/${taskId}`).then(() => {
-      setShowClipboard(true)
-      setTimeout(()=>{
-        setShowClipboard(false)
-      },3000)
-    }).catch(err => {
-      console.error('Failed to copy text: ', err);
-    });
+    navigator.clipboard
+      .writeText(
+        `https://project-task-tracking-app.vercel.app/sharetask/${taskId}`
+      )
+      .then(() => {
+        setShowClipboard(true);
+        setTimeout(() => {
+          setShowClipboard(false);
+        }, 3000);
+      })
+      .catch((err) => {
+        console.error("Failed to copy text: ", err);
+      });
   };
 
   const onChangeCheckHandler = async (e, optionId, taskId) => {
@@ -96,13 +94,12 @@ const TaskCard = ({
         return;
       }
 
-      console.log("checkChange in taskcard", response);
       boardCtx.editTask(response?.data?.data);
       notify(response?.data?.message);
     } catch (err) {
       notify(err?.response?.data?.message);
       setLoading(false);
-      console.log(err);
+      
     }
   };
 
@@ -115,13 +112,12 @@ const TaskCard = ({
         notify(response?.data?.message, "error");
         return;
       }
-      console.log("deleteHandle in task comp", response);
+
       boardCtx?.removeTask(taskId);
       notify(response?.data?.message);
     } catch (err) {
       notify(err?.response?.data?.message, "error");
       setLoading(false);
-      console.log("catch err delete");
     }
   };
 
@@ -171,7 +167,9 @@ const TaskCard = ({
                   >
                     Edit
                   </div>
-                  <div className={styles.popupText} onClick={copyToClipboard}>Share</div>
+                  <div className={styles.popupText} onClick={copyToClipboard}>
+                    Share
+                  </div>
                   <div
                     className={styles.deletePopupText}
                     onClick={() => toggleConfirmModal()}

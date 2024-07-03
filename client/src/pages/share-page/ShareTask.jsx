@@ -24,7 +24,6 @@ const ShareTask = () => {
       setLoading(false);
 
       if (response?.status !== 200) {
-        console.log("Err occured");
         setError(response?.data?.message);
         notify(response?.data?.message, "error");
         return;
