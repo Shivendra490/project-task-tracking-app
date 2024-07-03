@@ -8,7 +8,7 @@ const NotFound = () => {
   return (
     <div className={styles.notFound}>
       <p className={styles.notFoundText}>Page not found</p>
-      <button onClick={()=>navigate("/")} className={styles.backBtn}>Back</button>
+      <div className={styles.center}><button onClick={()=>navigate("/")} className={styles.backBtn}>Back</button></div>
     </div>
   )
 }
