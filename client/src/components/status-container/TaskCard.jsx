@@ -35,6 +35,7 @@ const TaskCard = ({
   const [toggleConfirm, setToggleConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
   const jsDueDate = dueDate && new Date(dueDate);
+  const [showClipboard,setShowClipboard]=useState(false)
 
   const isDueDatePassed = jsDueDate && dueDatePassed(jsDueDate);
 
@@ -67,6 +68,18 @@ const TaskCard = ({
       notify(err?.response?.data?.message, "error");
       console.log(err);
     }
+  };
+
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(`https://project-task-tracking-app.vercel.app/sharetask/${taskId}`).then(() => {
+      setShowClipboard(true)
+      setTimeout(()=>{
+        setShowClipboard(false)
+      },3000)
+    }).catch(err => {
+      console.error('Failed to copy text: ', err);
+    });
   };
 
   const onChangeCheckHandler = async (e, optionId, taskId) => {
@@ -122,6 +135,7 @@ const TaskCard = ({
 
   return (
     <div className={styles.card}>
+      {showClipboard && <div className={styles.clipboardBox}>Link Copied</div>}
       {loading ? (
         <Loader />
       ) : (
@@ -157,7 +171,7 @@ const TaskCard = ({
                   >
                     Edit
                   </div>
-                  <div className={styles.popupText}>Share</div>
+                  <div className={styles.popupText} onClick={copyToClipboard}>Share</div>
                   <div
                     className={styles.deletePopupText}
                     onClick={() => toggleConfirmModal()}
@@ -168,7 +182,9 @@ const TaskCard = ({
               )}
             </div>
           </div>
-          <p className={styles.cardTitle}>{title}</p>
+          <p className={styles.cardTitle} title={title}>
+            {title}
+          </p>
           <div className={styles.checkListWrapper}>
             <div className={styles.checkListHeading}>
               Checklist ({tickCount}/{checkList?.length})
@@ -176,6 +192,7 @@ const TaskCard = ({
             <img
               src={showMore ? arrUp : arrDown}
               alt="arr icon"
+              style={{ cursor: "pointer" }}
               onClick={toggleCollapseHandler}
             />
           </div>
@@ -192,14 +209,9 @@ const TaskCard = ({
                       }
                       className={styles.checkInput}
                     />
-                    <input
-                      type="text"
-                      value={option?.checkText}
-                      className={styles.input}
-                      onChange={() => {
-                        console.log("replace ip to p");
-                      }}
-                    />
+                    <p className={styles.input} title={option?.checkText}>
+                      {option?.checkText}
+                    </p>
                   </div>
                 );
               })}

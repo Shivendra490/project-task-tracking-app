@@ -13,6 +13,7 @@ import { getUserInfo } from "../../services/localStoage";
 import { validateRegisterForm } from "../../utility/validateForm";
 import { notify } from "../../utility/notify";
 import Loader from "../../components/loader/Loader";
+import { IoEyeOffOutline } from "react-icons/io5";
 
 const initialUser = {
   userName: "",
@@ -25,6 +26,8 @@ const Register = () => {
   const [user, setUser] = useState(initialUser);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isHidePwd, setIsHidePwd] = useState(true);
+  const [isHideConfirmPwd, setIsHideConfirmPwd] = useState(true);
 
   const navigate = useNavigate();
   const { token, email, userId, userName } = getUserInfo();
@@ -34,6 +37,12 @@ const Register = () => {
     setUser({ ...user, [name]: value });
   };
 
+  const pwdEyeController = () => {
+    setIsHidePwd((prev) => !prev);
+  };
+  const confirmPwdEyeController = () => {
+    setIsHideConfirmPwd((prev) => !prev);
+  };
   const onSubmitHandler = async (e) => {
     try {
       e.preventDefault();
@@ -126,13 +135,23 @@ const Register = () => {
                 <CiLock className={styles.icon} />
                 <input
                   className={styles.input}
-                  type="password"
-                  placeholder="Confirm Password"
-                  name="confirmPassword"
-                  value={user.confirmPassword}
+                  type={isHidePwd ? "password" : "text"}
+                  placeholder="Password"
+                  name="password"
+                  value={user.password}
                   onChange={onChangeHandler}
                 />
-                <PiEyeLight className={styles.icon} />
+                {isHidePwd ? (
+                  <PiEyeLight
+                    className={styles.icon}
+                    onClick={pwdEyeController}
+                  />
+                ) : (
+                  <IoEyeOffOutline
+                    className={styles.icon}
+                    onClick={pwdEyeController}
+                  />
+                )}
               </div>
               {error && (
                 <p className={styles.error}>{error?.confirmPassword}</p>
@@ -144,13 +163,23 @@ const Register = () => {
                 <CiLock className={styles.icon} />
                 <input
                   className={styles.input}
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  value={user.password}
+                  type={isHideConfirmPwd ? "password" : "text"}
+                  placeholder="Confirm Password"
+                  name="confirmPassword"
+                  value={user.confirmPassword}
                   onChange={onChangeHandler}
                 />
-                <PiEyeLight className={styles.icon} />
+                {isHideConfirmPwd ? (
+                  <PiEyeLight
+                    className={styles.icon}
+                    onClick={confirmPwdEyeController}
+                  />
+                ) : (
+                  <IoEyeOffOutline
+                    className={styles.icon}
+                    onClick={confirmPwdEyeController}
+                  />
+                )}
               </div>
               {error && (
                 <p className={styles.error}>{error?.confirmPassword}</p>

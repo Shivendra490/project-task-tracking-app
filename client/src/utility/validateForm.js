@@ -101,9 +101,46 @@ const validateAddMemberForm = (email) => {
   return isErr;
 };
 
+
+
+const validateSettingForm = (user) => {
+  const errObj = {};
+  if (user?.userName?.trim().length < 4) {
+    errObj.userName = "Name should be atleast 4 char long";
+  }
+  if (user?.userName?.trim() === "") {
+    errObj.userName = "Name is required";
+  }
+
+  const isValid = emailRegex.test(user?.email);
+  if (!isValid) {
+    errObj.email = "Enter valid email";
+  }
+
+  if (user?.email?.trim() === "") {
+    errObj.email = "Email is required";
+  }
+
+  if (user?.oldPassword?.trim() && user?.oldPassword?.length < 4) {
+    errObj.oldPassword = "Old Password is of atleast 4 char long";
+  }
+  if (user?.newPassword?.trim() && user?.newPassword?.length < 4) {
+    errObj.newPassword = "New Password is of atleast 4 char long";
+  }
+ 
+
+  if (Object.keys(errObj).length !== 0) {
+    console.log("OOOObject", Object.keys(errObj).length);
+    return errObj;
+  } else {
+    return null;
+  }
+};
+
 export {
   validateRegisterForm,
   validateLoginForm,
   validateTaskForm,
   validateAddMemberForm,
+  validateSettingForm
 };

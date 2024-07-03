@@ -20,6 +20,19 @@
     align-items: center;
   } */
 
+  .bothFieldErrorWrapper{
+    display: flex;
+    flex-direction: column;
+    gap:.5rem
+  }
+  
+  .error{
+    color:#DB371F;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
 .form {
   width:clamp(350px,40vw,450px);
   display: flex;
