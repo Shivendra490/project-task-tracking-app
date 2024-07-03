@@ -18,9 +18,7 @@ const Home = () => {
   const analyticsRoute=useMatch("/home/analytics")
   
   const settingRoute=useMatch("/home/setting")
-  console.log('home',homeRoute)
-  console.log('analytics',analyticsRoute)
-  console.log('seeting',settingRoute)
+
 
   const toggleConfirmModal = () => {
     setLogoutModal((prev) => !prev);

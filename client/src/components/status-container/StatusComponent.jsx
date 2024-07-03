@@ -41,7 +41,7 @@ const StatusComponent = (props) => {
       </div>
       <div className={styles.cardsContainer}>
         {props?.taskList?.map((task) => {
-          console.log("status comp map,task", task);
+          
           return (
             <TaskCard
               priority={task?.priority}

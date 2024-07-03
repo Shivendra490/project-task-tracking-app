@@ -28,10 +28,7 @@ const AddEditTask = (props) => {
   const boardCtx = useContext(BoardContext);
   const { userId } = getUserInfo();
 
-  // const navigate=useNavigate()
-  // const dateRef=useRef()
-  // console.log("editIt", props.editId);
-  // console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv TASK", task);
+
 
   const toggleDropdown = () => {
     setShowDropdown((prev) => !prev);
@@ -121,7 +118,7 @@ const AddEditTask = (props) => {
   };
 
   const dateClickHandler = () => {
-    console.log("dateClick handler with ref");
+  
   };
 
   const onChangeDateHandler = (e) => {
