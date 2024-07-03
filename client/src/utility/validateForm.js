@@ -77,7 +77,7 @@ const validateTaskForm = (task) => {
       return option?.checkText?.trim() === "";
     })
   ) {
-    errObj.checkList = "Atleast 1 checklist required";
+    errObj.checkList = "checklist cant't be empty";
   }
 
   if (Object.keys(errObj).length !== 0) {

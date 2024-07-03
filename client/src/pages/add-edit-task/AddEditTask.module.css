@@ -74,7 +74,7 @@
   padding: 0.3rem;
   justify-content: center;
   font-family: "Poppins", sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px,10vh,14px);
   font-weight: 500;
   color: #767575;
   border: 1px solid #e2e2e2;
@@ -209,6 +209,9 @@
   color:#767575
 }
 
+.bodyWrapper{
+  min-height:30vh;
+}
 .createBody {
   display: flex;
   flex-direction: column;
@@ -305,4 +308,14 @@
   background-color: #ffffff;
   border: 1px solid #cf3636;
   color:#CF3636
+}
+
+
+@media only screen and (max-width: 900px) {
+  .customModal{
+    top: 15vh;
+    left: 15%;
+    width: 80%;
+    padding: 1rem;
+  }
 }

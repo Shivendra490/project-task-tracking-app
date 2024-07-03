@@ -1,7 +1,7 @@
 .homePage {
   display: flex;
   height: 100vh;
-  overflow:hidden;
+  overflow: hidden;
 }
 
 .aside {
@@ -21,7 +21,8 @@
   gap: 1rem;
 }
 
-.projectNameWrapper,.linkWrapper {
+.projectNameWrapper,
+.linkWrapper {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -29,9 +30,9 @@
   padding-left: 2.5vw;
 }
 
-.linkWrapper:hover{
-  background-color:#ecf3fd;
-  cursor:pointer;
+.linkWrapper:hover {
+  background-color: #ecf3fd;
+  cursor: pointer;
 }
 
 .logo {
@@ -61,9 +62,12 @@
 
 .outlet {
   width: 85%;
-  
 }
 
-.active{
-  background-color: lightgrey;
+.active {
+  background-color: #ecf3fd;
+}
+
+a {
+  text-decoration: none;
 }
