@@ -4,7 +4,7 @@ import settingIcon from "../../assets/settingIcon.svg";
 import analyticsIcon from "../../assets/analyticsIcon.svg";
 import boardIcon from "../../assets/boardIcon.svg";
 import logoutIcon from "../../assets/logoutIcon.svg";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useMatch, useNavigate } from "react-router-dom";
 import { removeUserInfo } from "../../services/localStoage";
 import { useState } from "react";
 import Confirmation from "../../components/UI/Confirmation";
@@ -13,6 +13,14 @@ import { notify } from "../../utility/notify";
 const Home = () => {
   const [logoutModal, setLogoutModal] = useState(false);
   const navigate = useNavigate();
+  // const route=useMatch()
+  const homeRoute=useMatch("/home")
+  const analyticsRoute=useMatch("/home/analytics")
+  
+  const settingRoute=useMatch("/home/setting")
+  console.log('home',homeRoute)
+  console.log('analytics',analyticsRoute)
+  console.log('seeting',settingRoute)
 
   const toggleConfirmModal = () => {
     setLogoutModal((prev) => !prev);
@@ -42,8 +50,8 @@ const Home = () => {
           </div>
           <NavLink
             to="/home"
-            className={(isActive) =>
-              isActive
+            className={() =>
+              homeRoute
                 ? `${styles.linkWrapper} ${styles.active}`
                 : `${styles.linkWrapper}`
             }
@@ -53,8 +61,8 @@ const Home = () => {
           </NavLink>
           <NavLink
             to="/home/analytics"
-            className={(isActive) =>
-              isActive
+            className={() =>
+              analyticsRoute
                 ? `${styles.linkWrapper} ${styles.active}`
                 : `${styles.linkWrapper}`
             }
@@ -64,8 +72,8 @@ const Home = () => {
           </NavLink>
           <NavLink
             to="/home/setting"
-            className={(isActive) =>
-              isActive
+            className={() =>
+              settingRoute
                 ? `${styles.linkWrapper} ${styles.active}`
                 : `${styles.linkWrapper}`
             }

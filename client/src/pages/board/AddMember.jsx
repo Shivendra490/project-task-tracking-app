@@ -55,12 +55,14 @@ const AddMember = (props) => {
         {updatedMessage ? (
           <>
             <h1 className={styles.heading}>{updatedMessage}</h1>
-            <button
-              className={styles.okBtn}
-              onClick={props.onToggleAddMemberMode}
-            >
-              Okay, got it!
-            </button>{" "}
+            <div className={styles.okWrapper}>
+              <button
+                className={styles.okBtn}
+                onClick={props.onToggleAddMemberMode}
+              >
+                Okay, got it!
+              </button>{" "}
+            </div>
           </>
         ) : (
           <>

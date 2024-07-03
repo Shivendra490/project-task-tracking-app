@@ -291,65 +291,70 @@ const AddEditTask = (props) => {
                       );
                     })
                   ) : (
-                    <p className={styles.emailText}>0</p>
+                    <p className={styles.emailText}></p>
                   )}
                 </div>
               )}
             </div>
           </div>
         </div>
-        <div className={styles.createBody}>
-          <label className={styles.titleText}>
-            Checklist ({task?.tickCount}/{task?.checkList?.length})
-            <span className={styles.star}>*</span>
-          </label>
-          {error && <p className={styles.error}>{error?.checkList}</p>}
-          <div className={styles.optionsContainer}>
-            {task?.checkList?.length > 0 &&
-              task?.checkList.map((currentOption) => {
-                return (
-                  <div
-                    key={currentOption.optionId}
-                    className={styles.singleOptionWrapper}
-                  >
-                    <input
-                      checked={currentOption.isTick}
-                      type="checkbox"
-                      onChange={(e) =>
-                        onChangeTickHandler(e, currentOption.optionId)
-                      }
-                      className={styles.inputCheck}
-                    />
-                    <input
-                      type="text"
-                      className={styles.inputText}
-                      value={currentOption.checkText}
-                      onChange={(e) =>
-                        onChangeOptionHandler(e, currentOption.optionId)
-                      }
-                    />
-                    <img
-                      src={deleteIcon}
-                      alt="delete icon"
-                      onClick={() =>
-                        removeCheckListOptionHandler(currentOption.optionId)
-                      }
-                    />
-                  </div>
-                );
-              })}
+        <div className={styles.bodyWrapper}>
+          <div className={styles.createBody}>
+            <label className={styles.titleText}>
+              Checklist ({task?.tickCount}/{task?.checkList?.length})
+              <span className={styles.star}>*</span>
+            </label>
+            {error && <p className={styles.error}>{error?.checkList}</p>}
+            <div className={styles.optionsContainer}>
+              {task?.checkList?.length > 0 &&
+                task?.checkList.map((currentOption) => {
+                  return (
+                    <div
+                      key={currentOption.optionId}
+                      className={styles.singleOptionWrapper}
+                    >
+                      <input
+                        checked={currentOption.isTick}
+                        type="checkbox"
+                        onChange={(e) =>
+                          onChangeTickHandler(e, currentOption.optionId)
+                        }
+                        className={styles.inputCheck}
+                      />
+                      <input
+                        type="text"
+                        className={styles.inputText}
+                        value={currentOption.checkText}
+                        onChange={(e) =>
+                          onChangeOptionHandler(e, currentOption.optionId)
+                        }
+                      />
+                      <img
+                        src={deleteIcon}
+                        alt="delete icon"
+                        onClick={() =>
+                          removeCheckListOptionHandler(currentOption.optionId)
+                        }
+                      />
+                    </div>
+                  );
+                })}
+            </div>
+            <button
+              className={styles.addBtn}
+              onClick={addCheckListOptionHandler}
+            >
+              <img src={plusIcon} alt="add icon" />
+              <span>Add New</span>
+            </button>
           </div>
-          <button className={styles.addBtn} onClick={addCheckListOptionHandler}>
-            <img src={plusIcon} alt="add icon" />
-            <span>Add New</span>
-          </button>
         </div>
         <div className={styles.createFooter}>
-          {/* <button className={styles.dueDateBtn} onClick={dateClickHandler}>Due Date</button> */}
           <input
             type="date"
             name="dueDate"
             onClick={dateClickHandler}
+            value={task?.dueDate}
             onChange={onChangeDateHandler}
           />
           <div className={styles.actionBtnsWrapper}>
