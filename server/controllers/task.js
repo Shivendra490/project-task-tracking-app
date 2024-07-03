@@ -117,7 +117,7 @@ exports.getTask = async (req, res, next) => {
 
     res.status(200).json({ message: "Task fetched successfully", data: task });
   } catch (err) {
-    next(err);
+    res.status(404).json({ message: "Task not found" });
   }
 };
 

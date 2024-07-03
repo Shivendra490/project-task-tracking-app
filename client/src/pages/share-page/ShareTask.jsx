@@ -13,7 +13,6 @@ const ShareTask = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const { taskId } = useParams();
-  console.log("tsssssssssssssssssssssssssssssssssssskkkkkkkkkkkkkkkkk", taskId);
 
   const jsDueDate = task?.dueDate && new Date(task?.dueDate);
 
@@ -23,21 +22,19 @@ const ShareTask = () => {
       setLoading(true);
       const response = await getTask(taskId);
       setLoading(false);
-      console.log("SSSSSShareeeee page", response);
+
       if (response?.status !== 200) {
         console.log("Err occured");
         setError(response?.data?.message);
-        notify(response?.data?.message,"error");
+        notify(response?.data?.message, "error");
         return;
       }
       setTask(response?.data?.data);
       notify(response?.data?.message);
     } catch (err) {
       setError(err?.response?.data?.message);
-      notify(err?.response?.data?.message,"error");
+      notify(err?.response?.data?.message, "error");
       setLoading(false);
-      console.log("IIIIIIII", err);
-      console.log("ERRRRRRRRRnOOOOOOTTTTRRR");
     }
   };
   useEffect(() => {
@@ -70,7 +67,9 @@ const ShareTask = () => {
                     )}
                   </div>
                 </div>
-                <p className={styles.cardTitle}>{task?.title}</p>
+                <p className={styles.cardTitle} title={task?.title}>
+                  {task?.title}
+                </p>
                 <div className={styles.checkListWrapper}>
                   <div className={styles.checkListHeading}>
                     Checklist ({task?.tickCount}/{task?.checkList?.length})
@@ -90,7 +89,12 @@ const ShareTask = () => {
                           readOnly
                           className={styles.checkInput}
                         />
-                        <p className={styles.inputText}>{option?.checkText}</p>
+                        <p
+                          className={styles.inputText}
+                          title={option?.checkText}
+                        >
+                          {option?.checkText}
+                        </p>
                       </div>
                     );
                   })}

@@ -8,6 +8,7 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { removeUserInfo } from "../../services/localStoage";
 import { useState } from "react";
 import Confirmation from "../../components/UI/Confirmation";
+import { notify } from "../../utility/notify";
 
 const Home = () => {
   const [logoutModal, setLogoutModal] = useState(false);
@@ -21,6 +22,7 @@ const Home = () => {
     removeUserInfo();
     toggleConfirmModal();
     navigate("/");
+    notify("Logout successfully")
   };
 
   return (
