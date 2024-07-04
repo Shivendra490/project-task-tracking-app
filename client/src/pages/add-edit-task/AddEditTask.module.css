@@ -266,7 +266,8 @@
   font-size: 16px;
   font-weight: 500;
   font-family: "Inter", sans-serif;
-  color:#767575
+  color:#767575;
+  cursor:pointer;
 }
 
 .createFooter {
@@ -292,13 +293,24 @@
   padding: 0.5rem;
   border-radius: 12px;
   min-width: 100px;
+  
+}
+
+
+.secondaryBtn,
+.primaryBtn:hover{
+  cursor: pointer;
 }
 
 .dueDateBtn {
   color: #707070;
   background-color: #ffffff;
-  min-width: 140px;
+  min-width: 120px;
   border: 1px solid #e2e2e2;
+}
+
+.dueDateBtn:focus{
+  outline:none;
 }
 
 .primaryBtn {
