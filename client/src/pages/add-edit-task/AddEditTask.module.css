@@ -9,7 +9,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  
+
   gap: 1rem;
 }
 
@@ -23,9 +23,8 @@
   color: red;
 }
 
-
-.error{
-  color:#DB371F;
+.error {
+  color: #db371f;
   font-family: "Inter", sans-serif;
   font-size: 14px;
   font-weight: 400;
@@ -34,7 +33,7 @@
 .titleField {
   display: flex;
   flex-direction: column;
-  gap:.5rem;
+  gap: 0.5rem;
 }
 
 .titleText,
@@ -45,20 +44,24 @@
 }
 
 .titleInput {
-  font-weight: 400;
-  color: #9b959f;
+  font-weight: 500;
+  color: #767575;
   padding: 0.7rem 1rem;
   border: 1px solid #e2e2e2;
   border-radius: 4px;
+}
+
+.titleInput::placeholder {
+  color: #9b959f;
 }
 .titleInput:focus {
   outline: none;
 }
 
-.errorFieldWrapper{
+.errorFieldWrapper {
   display: flex;
   flex-direction: column;
-  gap:.5rem;
+  gap: 0.5rem;
 }
 
 .priorityField {
@@ -74,46 +77,39 @@
   padding: 0.3rem;
   justify-content: center;
   font-family: "Poppins", sans-serif;
-  font-size: clamp(10px,7vh,14px);
+  font-size: clamp(10px, 7vh, 14px);
   font-weight: 500;
   color: #767575;
   border: 1px solid #e2e2e2;
   border-radius: 8px;
   background-color: #ffffff;
   cursor: pointer;
-
-  
 }
 
-.low{
-  width:8px;
-  height:8px;
+.low {
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background-color:#63C05B;
+  background-color: #63c05b;
 }
 
-.high{
-  width:8px;
-  height:8px;
+.high {
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background-color:#FF2473;
+  background-color: #ff2473;
 }
 
-.moderate{
-  width:8px;
-  height:8px;
+.moderate {
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background-color:#18B0FF;
+  background-color: #18b0ff;
 }
 
-
-
-.active{
-    background-color:#EEECEC !important;
+.active {
+  background-color: #eeecec !important;
 }
-
-
-
 
 .assignField {
   display: flex;
@@ -124,97 +120,92 @@
 
 .selectWrapper {
   flex: 1;
-  
-  
-  height:40px;
+
+  height: 40px;
   position: relative;
-  box-shadow: 0 1px 2px #4D4055;
+  box-shadow: 0 1px 2px #4d4055;
 }
 
-.inputIconWrapper{
+.inputIconWrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding:0.5rem;
-  
+  padding: 0.5rem;
 }
 
-.assignInput{
+.assignInput {
   font-size: 1rem;
   font-weight: 500;
   font-family: "Inter", sans-serif;
-  flex:1;
-  border:none;
-  cursor:pointer;
+  flex: 1;
+  border: none;
+  cursor: pointer;
 }
 
-.assignInput::placeholder{
+.assignInput::placeholder {
   font-size: 14px;
   font-weight: 400;
   font-family: "Inter", sans-serif;
 }
-.assignInput:focus{
-  outline:none;
+.assignInput:focus {
+  outline: none;
 }
 
+.customDropDown {
+  max-height: 200px;
+  width: 100%;
 
-
-.customDropDown{
-  max-height:200px;
-  width:100%;
-  
-  position:absolute;
-  left:0;
-  top:45px;
+  position: absolute;
+  left: 0;
+  top: 45px;
   display: flex;
   flex-direction: column;
-  padding:.75rem;
+  padding: 0.75rem;
   overflow-y: auto;
-  gap:.5rem;
-  background-color: #FFFFFF;
+  gap: 0.5rem;
+  background-color: #ffffff;
   border-radius: 4px;
-  border: 1px solid #E2E2E2;
+  border: 1px solid #e2e2e2;
 }
 
-.optionWrapper{
+.optionWrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap:1rem;
-  
+  gap: 1rem;
 }
 
-.avatar{
-  width:2.5rem;
+.avatar {
+  width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
   font-family: "DM Sans", sans-serif;
-  background-color:#FFEBEB;
+  background-color: #ffebeb;
   display: grid;
   place-content: center;
 }
 
-.emailText{
-  flex:1;
+.emailText {
+  flex: 1;
   font-family: "Inter", sans-serif;
   font-weight: 500;
   font-size: 1rem;
 }
 
-.assignBtn{
-  width:30%;
-  padding:.5rem;
+.assignBtn {
+  width: 30%;
+  padding: 0.5rem;
   font-family: "Poppins", sans-serif;
   font-weight: 500;
-  background-color: #FFFFFF;
-  border: 1px solid #E2E2E2;
+  background-color: #ffffff;
+  border: 1px solid #e2e2e2;
   border-radius: 8px;
-  color:#767575;
+  color: #767575;
   cursor: pointer;
 }
 
-.bodyWrapper{
-  min-height:30vh;
+.bodyWrapper {
+  min-height: 30vh;
 }
 .createBody {
   display: flex;
@@ -228,7 +219,7 @@
   gap: 1rem;
   max-height: 150px;
   overflow-y: auto;
-  padding:.5rem 0;
+  padding: 0.5rem 0;
 }
 
 .singleOptionWrapper {
@@ -270,8 +261,8 @@
   font-size: 16px;
   font-weight: 500;
   font-family: "Inter", sans-serif;
-  color:#767575;
-  cursor:pointer;
+  color: #767575;
+  cursor: pointer;
 }
 
 .createFooter {
@@ -297,12 +288,10 @@
   padding: 0.5rem;
   border-radius: 12px;
   min-width: 100px;
-  
 }
 
-
 .secondaryBtn,
-.primaryBtn:hover{
+.primaryBtn:hover {
   cursor: pointer;
 }
 
@@ -313,36 +302,30 @@
   border: 1px solid #e2e2e2;
 }
 
-.dueDateBtn:focus{
-  outline:none;
+.dueDateBtn:focus {
+  outline: none;
 }
 
 .primaryBtn {
   background-color: #17a2b8;
-  color:#FFFFFF;
+  color: #ffffff;
 }
 .secondaryBtn {
   background-color: #ffffff;
   border: 1px solid #cf3636;
-  color:#CF3636
+  color: #cf3636;
 }
 
 @media only screen and (max-width: 1200px) {
-  .customModal{
-    
+  .customModal {
     left: 15%;
     width: 70%;
-    
   }
 }
 
 @media only screen and (max-width: 940px) {
-  .customModal{
-   
+  .customModal {
     left: 10%;
     width: 80%;
-    
   }
 }
-
-
