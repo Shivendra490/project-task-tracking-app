@@ -381,6 +381,7 @@ const AddEditTask = (props) => {
           <input
             type="date"
             name="dueDate"
+            className={styles.dueDateBtn}
             value={task?.dueDate && dateShow(task?.dueDate)}
             onChange={onChangeDateHandler}
           />
