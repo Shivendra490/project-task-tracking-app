@@ -59,6 +59,7 @@
   font-weight: 600;
   font-family: "Poppins", sans-serif;
   border-radius: 12px;
+  cursor: pointer;
 }
 
 .okBtn {

@@ -11,7 +11,6 @@ exports.createTask = async (req, res, next) => {
       !status?.trim() ||
       !priority?.trim() ||
       checkList?.some((option) => {
-        console.log(option);
         return option?.checkText?.trim() === "";
       })
     ) {
@@ -33,7 +32,9 @@ exports.createTask = async (req, res, next) => {
     });
 
     const newTask = await task.save();
-    res.status(201).json({ message: "All Fields are valid", data: newTask });
+    res
+      .status(201)
+      .json({ message: "Task created successfully", data: newTask });
   } catch (err) {
     next(err);
   }
@@ -141,12 +142,11 @@ exports.updateTask = async (req, res, next) => {
     if (
       checkList?.length === 0 ||
       checkList?.some((option) => {
-        console.log(option);
         return option?.checkText?.trim() === "";
       })
     ) {
       res.status(403).json({
-        message: "All Fields and atleast one checklist option are mandatory",
+        message: "Due date is optional and rest Fields are mandatory",
       });
       return;
     }
@@ -232,7 +232,7 @@ exports.getTaskStatusCounts = async (req, res, next) => {
     });
 
     res.status(200).json({
-      message: "All tasks Statusxxxxxxx Counhtssss",
+      message: "counts fetched successfully",
       userId: userId,
       taskCountsObj: taskCounts,
     });

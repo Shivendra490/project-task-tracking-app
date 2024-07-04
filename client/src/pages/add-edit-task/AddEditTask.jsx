@@ -10,6 +10,9 @@ import { createTask, getTask, updateTask } from "../../services/task";
 import BoardContext from "../../store/board-context";
 import { getUserInfo } from "../../services/localStoage";
 import { validateTaskForm } from "../../utility/validateForm";
+import { dateShow } from "../../utility/formatDate";
+import { notify } from "../../utility/notify";
+import Loader from "../../components/loader/Loader";
 
 const initialTask = {
   title: "",
@@ -25,10 +28,9 @@ const AddEditTask = (props) => {
   const [task, setTask] = useState(initialTask);
   const [showDropdown, setShowDropdown] = useState(false);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const boardCtx = useContext(BoardContext);
   const { userId } = getUserInfo();
-
-
 
   const toggleDropdown = () => {
     setShowDropdown((prev) => !prev);
@@ -117,39 +119,68 @@ const AddEditTask = (props) => {
     }
   };
 
-  const dateClickHandler = () => {
-  
-  };
-
   const onChangeDateHandler = (e) => {
     setTask({ ...task, dueDate: e.target.value });
   };
 
   const submitHandler = async () => {
-    setError(null);
-    const errObj = validateTaskForm(task);
-    if (errObj) {
-      setError(errObj);
-      return;
-    }
+    try {
+      setError(null);
+      const errObj = validateTaskForm(task);
+      if (errObj) {
+        setError(errObj);
+        return;
+      }
+      setLoading(true);
+      if (props.editId) {
+        const response = await updateTask(task);
+        setLoading(false);
+        
+        if (response?.status !== 200) {
+          
+          notify(response?.data?.message, "error");
+          return;
+        }
 
-    if (props.editId) {
-      const response = await updateTask(task);
+        boardCtx.editTask(response?.data?.data);
+        notify(response?.data?.message);
+        props.onToggleModal();
+        return;
+      }
 
-      boardCtx.editTask(response?.data?.data);
+      const response = await createTask(task);
+      setLoading(false);
+
+      if (response?.status !== 201) {
+        notify(response?.data?.message, "error");
+        return;
+      }
+
+      boardCtx?.addTask(response?.data?.data);
+      notify(response?.data?.message);
       props.onToggleModal();
-      return;
+    } catch (err) {
+      notify(err?.response?.data?.message, "error");
+      setLoading(false);
     }
-
-    const response = await createTask(task);
-
-    boardCtx?.addTask(response?.data?.data);
-    props.onToggleModal();
   };
 
   const fetchTask = async (editId) => {
-    const response = await getTask(editId);
-    setTask(response?.data?.data);
+    try {
+      setLoading(true);
+
+      const response = await getTask(editId);
+      setLoading(false);
+
+      if (response?.status !== 200) {
+        notify(response?.data?.message, "error");
+        return;
+      }
+      setTask(response?.data?.data);
+    } catch (err) {
+      notify(err?.response?.data?.message);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -350,10 +381,10 @@ const AddEditTask = (props) => {
           <input
             type="date"
             name="dueDate"
-            onClick={dateClickHandler}
-            value={task?.dueDate}
+            value={task?.dueDate && dateShow(task?.dueDate)}
             onChange={onChangeDateHandler}
           />
+
           <div className={styles.actionBtnsWrapper}>
             <button
               className={styles.secondaryBtn}
@@ -361,8 +392,12 @@ const AddEditTask = (props) => {
             >
               Cancel
             </button>
-            <button className={styles.primaryBtn} onClick={submitHandler}>
-              Save
+            <button
+              disabled={loading}
+              className={styles.primaryBtn}
+              onClick={submitHandler}
+            >
+              {loading ? <Loader /> : "Save"}
             </button>
           </div>
         </div>
