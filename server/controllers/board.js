@@ -100,6 +100,12 @@ exports.updateUser = async (req, res, next) => {
     }
 
     if (oldPassword && newPassword) {
+      if (oldPassword.length < 4 || newPassword.lenght < 4) {
+        res
+          .status(403)
+          .json({ message: "Password length should be of atleast 4 chars" });
+        return;
+      }
       const verifyPassword = await bcrypt.compare(
         oldPassword,
         userTobeUpdated.password
