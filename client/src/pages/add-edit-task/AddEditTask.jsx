@@ -260,7 +260,7 @@ const AddEditTask = (props) => {
               <div className={styles.inputIconWrapper} onClick={toggleDropdown}>
                 <input
                   type="text"
-                  placeholder="Add assignee"
+                  placeholder="Add a assignee"
                   className={styles.assignInput}
                   value={task?.assignTo}
                   readOnly
@@ -271,7 +271,7 @@ const AddEditTask = (props) => {
                 <div className={styles.customDropDown}>
                   {assigneeEditMode && (
                     <p className={styles.emailText}>
-                      only task creator can reassign
+                      only task creator can re-assign
                     </p>
                   )}
                   {adminEditMode &&
