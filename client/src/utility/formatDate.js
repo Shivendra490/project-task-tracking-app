@@ -24,12 +24,31 @@ const formatDate = (date, length = "short") => {
 
 const dueDatePassed = (jsDueDate) => {
   const currentDate = new Date();
-  currentDate.setHours(0,0,0,0)
-  jsDueDate.setHours(0,0,0,0)
+  currentDate.setHours(0, 0, 0, 0);
+  jsDueDate.setHours(0, 0, 0, 0);
   if (currentDate <= jsDueDate) {
     return false;
   } else {
     return true;
   }
 };
-export { formatDate, dueDatePassed };
+
+
+const dateShow = (dateStr) => {
+  const dateObject = new Date(dateStr);
+  const options = {
+    timeZone: "Asia/Kolkata",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  };
+
+  const formattedDate = dateObject
+    .toLocaleDateString("en-CA", options)
+    .split("/")
+    .reverse()
+    .join("-");
+  return formattedDate;
+};
+
+export { formatDate, dueDatePassed,dateShow };

@@ -30,7 +30,6 @@ const validateRegisterForm = (user) => {
   }
 
   if (Object.keys(errObj).length !== 0) {
-    
     return errObj;
   } else {
     return null;
@@ -53,7 +52,6 @@ const validateLoginForm = (user) => {
   }
 
   if (Object.keys(errObj).length !== 0) {
-  
     return errObj;
   } else {
     return null;
@@ -77,11 +75,10 @@ const validateTaskForm = (task) => {
       return option?.checkText?.trim() === "";
     })
   ) {
-    errObj.checkList = "checklist cant't be empty";
+    errObj.checkList = "checklist can't be empty";
   }
 
   if (Object.keys(errObj).length !== 0) {
-   
     return errObj;
   } else {
     return null;
@@ -101,8 +98,6 @@ const validateAddMemberForm = (email) => {
   return isErr;
 };
 
-
-
 const validateSettingForm = (user) => {
   const errObj = {};
   if (user?.userName?.trim().length < 4) {
@@ -121,16 +116,16 @@ const validateSettingForm = (user) => {
     errObj.email = "Email is required";
   }
 
-  if (user?.oldPassword?.trim() && user?.oldPassword?.length < 4) {
-    errObj.oldPassword = "Old Password is of atleast 4 char long";
+  if (user?.oldPassword || user?.newPassword) {
+    if (user?.oldPassword?.length < 4) {
+      errObj.oldPassword = "Password is of atleast 4 char long";
+    }
+    if (user?.newPassword?.length < 4) {
+      errObj.newPassword = "New Password is of atleast 4 char long";
+    }
   }
-  if (user?.newPassword?.trim() && user?.newPassword?.length < 4) {
-    errObj.newPassword = "New Password is of atleast 4 char long";
-  }
- 
 
   if (Object.keys(errObj).length !== 0) {
-  
     return errObj;
   } else {
     return null;
@@ -142,5 +137,5 @@ export {
   validateLoginForm,
   validateTaskForm,
   validateAddMemberForm,
-  validateSettingForm
+  validateSettingForm,
 };
