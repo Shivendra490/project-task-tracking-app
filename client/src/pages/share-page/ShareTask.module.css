@@ -6,6 +6,7 @@
   flex-direction: column;
   font-family: "Poppins", sans-serif;
   padding: 1rem;
+  overflow-y:hidden;
 }
 
 .header {
@@ -36,7 +37,7 @@
   border-radius: 16px;
   width: 40vw;
   margin: 0 auto;
-  min-width: 300px;
+  min-width: 280px;
   margin-top: 4vw;
   border: 2px solid #edf5fe;
 }
@@ -82,14 +83,14 @@
 
 .cardTitle {
   font-family: "Poppins", sans-serif;
-  font-size: 22px;
+  font-size: clamp(18px,4vw,22px);
   font-weight: 500;
   color: #000000;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
-  line-height: 2rem;
+  line-height:clamp(26px,3vw,32px);
   -webkit-box-orient: vertical;
   padding: 0 0.5rem;
 }
@@ -138,7 +139,7 @@
 
   font-family: Inter;
   font-weight: 400;
-  font-size: 1rem;
+  font-size: clamp(14px,3vw,16px);
   color: #000000;
   border: none;
   min-width: 100px;
@@ -147,6 +148,7 @@
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  line-height: clamp(18px,3vw,22px);
 }
 
 .cardFooter {
@@ -164,7 +166,7 @@
 .dueDate {
   color: #5a5a5a;
   background-color: #dbdbdb;
-  font-size: 14px;
+  font-size: clamp(12px,2vw,14px);
   font-weight: 500;
   font-family: "Poppins", sans-serif;
   border-radius: 8px;
@@ -231,11 +233,12 @@
   font-size: 14px;
   font-weight: 400;
   text-align: center;
+  padding:2.5rem;
 }
 
-@media only screen and (max-width: 350px) {
-  .modal {
-    width: 90%;
-    left: 5%;
-  }
+@media only screen and (max-width: 400px) {
+.card{
+  width:90%;
+
+}
 }
