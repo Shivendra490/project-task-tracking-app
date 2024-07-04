@@ -360,6 +360,7 @@ const AddEditTask = (props) => {
                       <img
                         src={deleteIcon}
                         alt="delete icon"
+                        style={{cursor:"pointer"}}
                         onClick={() =>
                           removeCheckListOptionHandler(currentOption.optionId)
                         }

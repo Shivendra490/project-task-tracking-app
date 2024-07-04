@@ -52,6 +52,7 @@
   font-size: 30px;
   color: #828282;
   object-fit: contain;
+  cursor:pointer;
 }
 
 .input {
