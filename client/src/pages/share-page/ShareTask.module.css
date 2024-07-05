@@ -1,6 +1,6 @@
 .shareTaskPage {
   width: 100%;
-  height: 100vh;
+  /* height: 100vh; */
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -13,6 +13,7 @@
   display: flex;
   gap: 1rem;
   align-items: center;
+  padding-bottom:2.5rem;
 }
 
 .heading {
@@ -38,7 +39,7 @@
   width: 40vw;
   margin: 0 auto;
   min-width: 280px;
-  margin-top: 4vw;
+  /* margin-top: 2vw; */
   border: 2px solid #edf5fe;
 }
 
@@ -92,7 +93,7 @@
   -webkit-line-clamp: 2;
   line-height:clamp(26px,3vw,32px);
   -webkit-box-orient: vertical;
-  padding: 0 0.5rem;
+  padding: 0.2rem 0.5rem;
 }
 
 .checkListWrapper {
@@ -114,7 +115,7 @@
   flex-direction: column;
   gap: 10px;
   margin: 8px 0;
-  max-height: 350px;
+  max-height: 300px;
   overflow-y: auto;
   padding: 0.5rem;
 }
@@ -136,7 +137,7 @@
 }
 .inputText {
   flex: 1;
-
+  /* min-width:100px; */
   font-family: Inter;
   font-weight: 400;
   font-size: clamp(14px,3vw,16px);
@@ -160,13 +161,13 @@
 }
 
 .dueDateLabel {
-  font-size: 14px;
+  font-size: clamp(8px,2vw,14px);
   font-weight: 500;
 }
 .dueDate {
   color: #5a5a5a;
   background-color: #dbdbdb;
-  font-size: clamp(12px,2vw,14px);
+  font-size: clamp(10px,2vw,14px);
   font-weight: 500;
   font-family: "Poppins", sans-serif;
   border-radius: 8px;
@@ -238,7 +239,13 @@
 
 @media only screen and (max-width: 400px) {
 .card{
-  width:90%;
-
+  width:98%;
+  min-width: 150px;
 }
+.optionsContainer {
+  
+  max-height: 280px;
+ 
+}
+
 }
