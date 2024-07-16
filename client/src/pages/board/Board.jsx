@@ -103,10 +103,10 @@ const Board = () => {
           <Loader />
         ) : (
           <>
-            <StatusComponent container="Backlog" taskList={backlogList} />
-            <StatusComponent container="To do" taskList={todoList} />
-            <StatusComponent container="In progress" taskList={progressList} />
-            <StatusComponent container="Done" taskList={doneList} />
+            <StatusComponent id="backlog" container="Backlog" taskList={backlogList} />
+            <StatusComponent id="todo" container="To do" taskList={todoList} />
+            <StatusComponent id="progress" container="In progress" taskList={progressList} />
+            <StatusComponent id="done" container="Done" taskList={doneList} />
           </>
         )}
       </div>

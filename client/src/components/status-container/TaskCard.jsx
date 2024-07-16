@@ -50,7 +50,7 @@ const TaskCard = ({
       setLoading(true);
       const response = await updateTask({ _id: taskId, status: moveTo });
       setLoading(false);
-      
+
       if (response?.status !== 200) {
         notify(response?.data?.message, "error");
 
@@ -60,9 +60,16 @@ const TaskCard = ({
       notify(response?.data?.message);
     } catch (err) {
       notify(err?.response?.data?.message, "error");
-      
     }
   };
+
+  const handleDragStart=(e,taskId)=>{
+    e.dataTransfer.setData('text/plain',taskId.toString())
+  }
+
+  const handleDragEnd=(e)=>{
+    e.dataTransfer.clearData()
+  }
 
   const copyToClipboard = () => {
     navigator.clipboard
@@ -99,7 +106,6 @@ const TaskCard = ({
     } catch (err) {
       notify(err?.response?.data?.message);
       setLoading(false);
-      
     }
   };
 
@@ -130,7 +136,12 @@ const TaskCard = ({
   }, [collapseAll]);
 
   return (
-    <div className={styles.card}>
+    <div
+      className={styles.card}
+      draggable
+      onDragStart={(e) => handleDragStart(e,taskId)}
+      onDragEnd={handleDragEnd}
+    >
       {showClipboard && <div className={styles.clipboardBox}>Link Copied</div>}
       {loading ? (
         <Loader />
