@@ -65,6 +65,7 @@ const TaskCard = ({
 
   const handleDragStart=(e,taskId)=>{
     e.dataTransfer.setData('text/plain',taskId.toString())
+    e.dataTransfer.setData('currentStatus',status)
   }
 
   const handleDragEnd=(e)=>{
